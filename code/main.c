@@ -2,16 +2,14 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "../lib/tomlc99/toml.h"
-#include <curses.h>
-
-//#ifdef _WIN32
-//#include <ncurses/curses.h> // on Windows
-//#elif __linux__
-//#include <curses.h>         // on Linux
-//#endif 
+#include <unistd.h>
+#include <string.h>
 
 int main(int argc, char const *argv[])
 {
-    refresh();
-    return 0;    
+    char str[80];
+
+    // setting initial state
+    getstr(str);
+    return 0;
 }
