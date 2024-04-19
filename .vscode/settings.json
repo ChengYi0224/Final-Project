@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "toml.h": "c",
-        "stdlib.h": "c",
-        "stdint.h": "c",
-        "clflushoptintrin.h": "c"
-    },
-    "cmake.configureOnOpen": true
-}
