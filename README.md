@@ -24,7 +24,9 @@
         1.  path
 5.  dialogue
     1.  (name here)
-        1.  options
+        1.  character
+        2.  text
+        3.  options
             1.  text
             2.  next
 6.  item
