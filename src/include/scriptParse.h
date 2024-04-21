@@ -1,5 +1,4 @@
-#ifdef SCRIPTPARSE_H
-#define SCRIPTPARSE_H
+#pragma once
 
 #include "toml.h"
 
@@ -43,5 +42,3 @@ typedef struct
 
 GameConfig* parse_toml(char* filename);
 void free_game_config(GameConfig* config);
-
-#endif
