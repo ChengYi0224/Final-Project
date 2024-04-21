@@ -29,6 +29,12 @@ typedef struct
 
 typedef struct
 {
+    char* text;
+    char* next_scene;
+} Option;
+
+typedef struct
+{
     char *title;
     char *author;
     char *description;
