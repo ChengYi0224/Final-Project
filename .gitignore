@@ -1,3 +1,2 @@
-.vscode
-.vscode/c_cpp_properties.json
-.vscode/settings.json
+# 忽略的資料夾
+.vscode/
