@@ -1,0 +1,63 @@
+# 游戏全局设置
+[game]
+title = "Adventure in Wonderland"
+author = "Alice Liddell"
+description = "A journey through a magical world full of mysteries and wonders."
+start_scene = "rabbit_hole"
+
+# 场景定义
+[[scenes]]
+id = "rabbit_hole"
+title = "The Rabbit Hole"
+description = "You are standing at the edge of a large hole in the ground. Do you dare to jump in?"
+background = "rabbit_hole.jpg"
+
+  [[scenes.options]]
+  text = "Jump into the hole."
+  next_scene = "hall_of_doors"
+
+  [[scenes.options]]
+  text = "Walk away."
+  next_scene = "end_game"
+
+[[scenes]]
+id = "hall_of_doors"
+title = "Hall of Doors"
+description = "You find yourself in a hall with many doors. Which one will you choose?"
+background = "hall_of_doors.jpg"
+
+  [[scenes.options]]
+  text = "Open the red door."
+  next_scene = "red_room"
+
+  [[scenes.options]]
+  text = "Open the blue door."
+  next_scene = "blue_room"
+
+# 角色定义
+[[characters]]
+name = "White Rabbit"
+description = "A nervous and hurried rabbit, always worried about being late."
+image = "white_rabbit.jpg"
+
+  [[characters.dialogues]]
+  text = "Follow me!"
+  response = "Where are you going in such a hurry?"
+  next_scene = "rabbit_house"
+
+# 物品定义
+[[items]]
+name = "Magic Key"
+description = "A small golden key with an intricate design."
+image = "magic_key.jpg"
+use_effect = "open_secret_door"
+
+# 条件和变量
+[variables]
+rabbit_friendship = 0
+
+[[conditions]]
+variable = "rabbit_friendship"
+value = ">5"
+result_scene = "rabbit_party"
+fallback_scene = "rabbit_sad"
