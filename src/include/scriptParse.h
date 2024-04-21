@@ -5,19 +5,28 @@
 
 typedef struct
 {
-    char *id;
-    char *title;
-    char *description;
-    char *background;
+    char* id;
+    char* title;
+    char* description;
+    char* background;
     int option_count;
-    struct option* options;
+    Option* options;
 } Scene;
 
 typedef struct
 {
-    char *text;
-    char *next_scene;
-} Option;
+    char* name;
+    char* description;
+    char* image;
+} Character;
+
+typedef struct
+{
+    char* name;
+    char* description;
+    char* image;
+    char* use_effect;
+} Item;
 
 typedef struct
 {
@@ -26,6 +35,10 @@ typedef struct
     char *description;
     Scene* scenes;
     int scene_count;
+    Character* characters;
+    int character_count;
+    Item* items;
+    int item_count;
 } GameConfig;
 
 GameConfig* parse_toml(char* filename);
