@@ -1,9 +1,10 @@
 /*
-    This code contains the following function:
-    -   Window control
-    -   Mouse / Keyboard input
-    -   Script display
-    -   Scenery display
-    -   Some animation
+    程式包含以下功能:
+    -   滑鼠 / 鍵盤輸入
+    -   介面顯示
+        -   台詞顯示
+        -   背景顯示
+        -   頭像顯示
+        -   特效
 */
 
