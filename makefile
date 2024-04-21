@@ -1,5 +1,7 @@
+EXEC = sre/code/toml.c
+
 ALL:
-	gcc -o main code/main.c -lncurses
+	gcc -o engine main.c $(EXEC) -lncurses
 
 clean:
-	rm *.exe *.o main
+	rm *.exe *.o engine
