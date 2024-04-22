@@ -16,7 +16,10 @@
 *   character
     *   inventory
         *   item.(item name)
-    *   attribute
+            *   number
+    *   attributes
+        *   name
+        *   value
     *   name
     *   image
 *   dialogue
