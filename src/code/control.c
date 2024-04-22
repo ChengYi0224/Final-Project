@@ -39,13 +39,18 @@ void scriptRun(FILE *fpScript){
 
     // 執行event.start
     toml_table_t *tableStart = toml_table_in(tableEvent, "start");
+    
 
 }
 
-
-
-
-
-
-
-
+void DisplayImg(SDL_Renderer *renderer, char *imgPath){
+    // 讀取圖片
+    SDL_Surface *image = IMG_Load(imgPath);
+    // 建立材質
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
+    // 顯示
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    // 釋放資源
+    SDL_FreeSurface(image);
+    SDL_DestroyTexture(texture);
+}
