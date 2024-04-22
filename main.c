@@ -14,6 +14,7 @@ int main(int argc, char const *argv[])
     {
         return 1;
     }
+    
     // create window
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
     // load image
