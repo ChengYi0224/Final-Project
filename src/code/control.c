@@ -12,8 +12,35 @@
         3.  依序執行
 */
 #include <stdint.h>
+#include <stdlib.h>
+#include <errno.h>
 #include "../include/control.h"
 
+void scriptRun(FILE *fpScript){
+    char *errmsg = calloc( 100, sizeof(char) ); // 錯誤訊息
+    // 讀取劇本
+    toml_table_t *wholeScript   = toml_parse_file(fpScript, errno, 100);
+    if(!wholeScript){
+        perror("Script parsing failed\n");
+        return;
+    }
+    // 讀取標頭資料
+    toml_datum_t title  = toml_string_in(wholeScript, "title");
+    toml_datum_t author = toml_string_in(wholeScript, "author");
+    //toml_datum_t ver    = toml_string_in(wholeScript, "version");
+    //toml_datum_t description = toml_string_in(wholeScript, "description");
+    //toml_datum_t license = toml_string_in(wholeScript, "license");
+
+    // 分類物件
+    toml_table_t *tableEvent    = toml_table_in(wholeScript, "event");
+    toml_table_t *tableScene    = toml_table_in(wholeScript, "scene");
+    toml_table_t *tableDialogue = toml_table_in(wholeScript, "dialogue");
+    toml_table_t *tableCharacter = toml_table_in(wholeScript, "character");
+
+    // 執行event.start
+    toml_table_t *tableStart = toml_table_in(tableEvent, "start");
+
+}
 
 
 

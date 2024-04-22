@@ -14,4 +14,4 @@
 #pragma once
 #include "toml.h"
 
-void scriptParse();
+void scriptRun();
