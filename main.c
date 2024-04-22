@@ -7,22 +7,31 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#define ScriptPath "script.toml"
+
 int main(int argc, char const *argv[])
 {
-    // setting initial state
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        return 1;
+    // 打開劇本檔案
+    FILE *fpScript = NULL;
+    if(fpScript = fopen(ScriptPath, "r") == NULL){
+        perror("Error opening script file");
+        return 0;
     }
-    
-    // create window
+
+    // SDL系統初始化
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+        return 1;
+    // 建立視窗
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
-    // load image
+    // 讀取圖片
     SDL_Surface *image = IMG_Load("assets/images/test.png");
-    // create renderer
+    // 建立渲染器
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
-    // create texture
+    // 建立材質
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
 
+
+    // 程式結束
+    fclose(fpScript);
     return 0;
 }
