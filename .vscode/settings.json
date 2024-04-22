@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "curses.h": "c",
-        "string.h": "c",
-        "scriptparse.h": "c"
-    }
-}
