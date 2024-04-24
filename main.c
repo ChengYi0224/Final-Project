@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "src/include/toml.h"
+#include "src/include/control.h"
 #include <unistd.h>
 #include <string.h>
 #include <SDL2/SDL.h>
@@ -13,11 +14,12 @@ int main(int argc, char const *argv[])
 {
     // 打開劇本檔案
     FILE *fpScript = NULL;
-    if(fpScript = fopen(ScriptPath, "r") == NULL){
+    if((fpScript = fopen(ScriptPath, "r")) == NULL){
         perror("Error opening script file");
         return 0;
     }
-
+    scriptRun(fpScript);
+    /*
     // SDL系統初始化
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         return 1;
@@ -25,11 +27,7 @@ int main(int argc, char const *argv[])
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
     // 建立渲染器
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
-    // 讀取圖片
-    SDL_Surface *image = IMG_Load("assets/images/test.png");
-    // 建立材質
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
-
+    */
 
     // 程式結束
     fclose(fpScript);

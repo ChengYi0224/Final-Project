@@ -19,7 +19,7 @@
 void scriptRun(FILE *fpScript){
     char *errmsg = calloc( 100, sizeof(char) ); // 錯誤訊息
     // 讀取劇本
-    toml_table_t *wholeScript   = toml_parse_file(fpScript, errno, 100);
+    toml_table_t *wholeScript   = toml_parse_file(fpScript, errmsg, 100);
     if(!wholeScript){
         perror("Script parsing failed\n");
         return;
@@ -41,20 +41,16 @@ void scriptRun(FILE *fpScript){
     toml_table_t *tableStart = toml_table_in(tableEvent, "start");
 
     // debugging
-    toml_datum_t next = toml_string_in(tableEvent, "next");
-    printf("%s", next.u.s);
+    toml_datum_t scene  = toml_string_in(tableStart, "scene");
+    toml_datum_t next   = toml_string_in(tableStart, "dialogue");
+    printf("start scene = %s\n", scene.u.s);
+    printf("start dialogue = %s\n", next.u.s);
 
     // 釋放資源
     toml_free(wholeScript);
-    toml_free(tableEvent);
-    toml_free(tableScene);
-    toml_free(tableDialogue);
-    toml_free(tableCharacter);
-    toml_free(tableStart);
     fclose(fpScript);
     free(errmsg);
-    
-
+    printf("Here\n");
 }
 
 void DisplayImg(SDL_Renderer *renderer, char *imgPath){
@@ -67,4 +63,8 @@ void DisplayImg(SDL_Renderer *renderer, char *imgPath){
     // 釋放資源
     SDL_FreeSurface(image);
     SDL_DestroyTexture(texture);
+}
+
+void eventHandler(SDL_Renderer *renderer, toml_table_t *event){
+
 }

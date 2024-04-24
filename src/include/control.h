@@ -13,7 +13,19 @@
 */
 #pragma once
 #include "toml.h"
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 void scriptRun(FILE *fpScript);
+
+void DisplayImg(SDL_Renderer *renderer, char *imgPath);
+
+// display text with font
+void DisplayText(SDL_Renderer *renderer, );
+
+void eventHandler(SDL_Renderer *renderer, toml_table_t *event);
