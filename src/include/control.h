@@ -21,6 +21,22 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+typedef struct tableScript
+{
+
+    toml_datum_t title;
+    toml_datum_t author;
+    toml_datum_t ver;
+    toml_datum_t description;
+    toml_datum_t license;
+
+    toml_table_t *event;
+    toml_table_t *scene;
+    toml_table_t *dialogue;
+    toml_table_t *character;
+
+} script_t;
+
 void scriptRun(FILE *fpScript);
 
 void DisplayImg(SDL_Renderer *renderer, char *imgPath);
