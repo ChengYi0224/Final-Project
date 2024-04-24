@@ -20,13 +20,14 @@
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 typedef struct tableScript
 {
 
     toml_datum_t title;
     toml_datum_t author;
-    toml_datum_t ver;
+    toml_datum_t version;
     toml_datum_t description;
     toml_datum_t license;
 
@@ -37,11 +38,11 @@ typedef struct tableScript
 
 } script_t;
 
-void scriptRun(FILE *fpScript);
+int8_t scriptRun(FILE *fpScript, script_t *script);
 
-void DisplayImg(SDL_Renderer *renderer, char *imgPath);
+int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath);
 
-// display text with font
-// void DisplayText(SDL_Renderer *renderer, );
+int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color,
+                   int32_t x, int32_t y, int32_t w, int32_t h);
 
-void eventHandler(SDL_Renderer *renderer, toml_table_t *event);
+int8_t eventHandler(SDL_Renderer *renderer, toml_table_t *event);

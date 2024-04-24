@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
         perror("Error opening script file");
         return 0;
     }
-    
+    script_t MainScript;
     // SDL系統初始化
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         return 1;
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
     
 
     // 執行劇本&遊戲主程式
-    scriptRun(fpScript);
+    scriptRun(fpScript, &MainScript);
 
     // 程式結束
     fclose(fpScript);
