@@ -39,6 +39,20 @@ void scriptRun(FILE *fpScript){
 
     // 執行event.start
     toml_table_t *tableStart = toml_table_in(tableEvent, "start");
+
+    // debugging
+    toml_datum_t next = toml_string_in(tableEvent, "next");
+    printf("%s", next.u.s);
+
+    // 釋放資源
+    toml_free(wholeScript);
+    toml_free(tableEvent);
+    toml_free(tableScene);
+    toml_free(tableDialogue);
+    toml_free(tableCharacter);
+    toml_free(tableStart);
+    fclose(fpScript);
+    free(errmsg);
     
 
 }
