@@ -31,6 +31,7 @@ typedef struct tableScript
     toml_datum_t description;
     toml_datum_t license;
 
+    toml_table_t *item;
     toml_table_t *event;
     toml_table_t *scene;
     toml_table_t *dialogue;
@@ -40,9 +41,8 @@ typedef struct tableScript
 
 int8_t scriptRead(char *scriptPath, script_t *script);
 
-int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath);
+int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect srcRect, SDL_Rect dstRect);
 
-int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color,
-                   int32_t x, int32_t y, int32_t w, int32_t h);
+int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color, SDL_Rect dstRect);
 
-int8_t eventHandler(SDL_Renderer *renderer, toml_table_t *event);
+int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event);

@@ -43,6 +43,7 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     (*script).description = toml_string_in(wholeScript, "description");
 
     // 分類物件
+    (*script).item      = toml_table_in(wholeScript, "item");
     (*script).event     = toml_table_in(wholeScript, "event");
     (*script).scene     = toml_table_in(wholeScript, "scene");
     (*script).dialogue  = toml_table_in(wholeScript, "dialogue");
@@ -55,20 +56,21 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     return 0;
 }
 
-int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath){
+int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect srcRect, SDL_Rect dstRect)
+{
     // 讀取圖片
     SDL_Surface *image = IMG_Load(imgPath);
     // 建立材質
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
     // 顯示
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderCopy(renderer, texture, &srcRect, &dstRect);
     // 釋放資源
     SDL_FreeSurface(image);
     SDL_DestroyTexture(texture);
 }
 
-int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color,
-                    int32_t x, int32_t y, int32_t w, int32_t h ){
+int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color, SDL_Rect dstRect)
+{
     // 建立材質
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, color);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
@@ -80,7 +82,6 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
         return 0;
     }
 
-    SDL_Rect dstRect = {x, y, w, h};
     SDL_RenderCopy(renderer, texture, NULL, &dstRect);
     SDL_RenderPresent(renderer);
 
@@ -89,6 +90,6 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
     return 1;
 }
 
-int8_t eventHandler(SDL_Renderer *renderer, toml_table_t *event){
+int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event){
 
 }
