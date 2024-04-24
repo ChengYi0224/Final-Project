@@ -18,7 +18,14 @@ int main(int argc, char const *argv[])
         perror("Error opening script file");
         return 0;
     }
-    script_t MainScript;
+    // 讀取劇本
+    script_t mainScript;
+    if (scriptRead(fpScript, &mainScript)) // 如果解析失敗
+    {
+        fclose(fpScript);
+        return 1;
+    }
+
     // SDL系統初始化
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         return 1;
@@ -27,13 +34,24 @@ int main(int argc, char const *argv[])
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, winW, winH, 0);
     // 建立渲染器
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
-    
 
-    // 執行劇本&遊戲主程式
-    scriptRun(fpScript, &MainScript);
+    // 遊戲主迴圈
+    int32_t frame = 0;
+    while (1)
+    {
+        // 清除畫面
+        // SDL_RenderClear(renderer);
 
+        // 更新畫面
+        SDL_RenderPresent(renderer);
+
+        // 終止條件
+        if(1) break;
+    }
     // 程式結束
     fclose(fpScript);
-    SDL_Quit();
+    SDL_DestroyWindow(GameWindow);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit(); // 關閉SDL
     return 0;
 }

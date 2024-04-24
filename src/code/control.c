@@ -16,13 +16,15 @@
 #include <errno.h>
 #include "../include/control.h"
 
-int8_t scriptRun(FILE *fpScript, script_t *script){
+//  return 0 when succeeded
+//  return 1 when failed
+int8_t scriptRead(FILE *fpScript, script_t *script){
     char *errmsg = calloc( 100, sizeof(char) ); // 錯誤訊息
     // 讀取劇本
     toml_table_t *wholeScript   = toml_parse_file(fpScript, errmsg, 100);
     if(!wholeScript){
         printf("Script parsing failed: %s\n", errmsg);
-        return;
+        return 1;
     }
     // 讀取標頭資料
     (*script).title     = toml_string_in(wholeScript, "name");
@@ -41,7 +43,7 @@ int8_t scriptRun(FILE *fpScript, script_t *script){
     toml_free(wholeScript);
     fclose(fpScript);
     free(errmsg);
-    printf("Here\n");
+    return 0;
 }
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath){

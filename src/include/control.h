@@ -38,7 +38,7 @@ typedef struct tableScript
 
 } script_t;
 
-int8_t scriptRun(FILE *fpScript, script_t *script);
+int8_t scriptRead(FILE *fpScript, script_t *script);
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath);
 
