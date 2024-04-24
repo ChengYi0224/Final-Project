@@ -18,16 +18,19 @@ int main(int argc, char const *argv[])
         perror("Error opening script file");
         return 0;
     }
-    scriptRun(fpScript);
-    /*
+    
     // SDL系統初始化
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         return 1;
     // 建立視窗
-    SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
+    int32_t winW = 1280, winH = 720; // width and height of window
+    SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, winW, winH, 0);
     // 建立渲染器
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
-    */
+    
+
+    // 執行劇本&遊戲主程式
+    scriptRun(fpScript);
 
     // 程式結束
     fclose(fpScript);

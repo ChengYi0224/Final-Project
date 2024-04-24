@@ -16,6 +16,21 @@
 #include <errno.h>
 #include "../include/control.h"
 
+typedef struct tableScript{
+
+    toml_datum_t title;
+    toml_datum_t author;
+    toml_datum_t ver;
+    toml_datum_t description;
+    toml_datum_t license;
+
+    toml_table_t *event;
+    toml_table_t *scene;
+    toml_table_t *dialogue;
+    toml_table_t *character;
+
+} Script_t;
+
 void scriptRun(FILE *fpScript){
     char *errmsg = calloc( 100, sizeof(char) ); // 錯誤訊息
     // 讀取劇本
@@ -25,7 +40,7 @@ void scriptRun(FILE *fpScript){
         return;
     }
     // 讀取標頭資料
-    toml_datum_t title  = toml_string_in(wholeScript, "title");
+    toml_datum_t title  = toml_string_in(wholeScript, "name");
     toml_datum_t author = toml_string_in(wholeScript, "author");
     //toml_datum_t ver    = toml_string_in(wholeScript, "version");
     //toml_datum_t description = toml_string_in(wholeScript, "description");
