@@ -18,12 +18,21 @@
 
 //  return 0 when succeeded
 //  return 1 when failed
-int8_t scriptRead(FILE *fpScript, script_t *script){
-    char *errmsg = calloc( 100, sizeof(char) ); // 錯誤訊息
-    // 讀取劇本
+int8_t scriptRead(char *scriptPath, script_t *script)
+{
+    // 打開劇本檔案
+    char *errmsg = calloc(100, sizeof(char)); // 錯誤訊息
+    FILE * fpScript = NULL;
+    if ((fpScript = fopen(scriptPath, "r")) == NULL)
+    {
+        perror("Error opening script file");
+        return 0;
+    }
+    // 解析劇本
     toml_table_t *wholeScript   = toml_parse_file(fpScript, errmsg, 100);
     if(!wholeScript){
         printf("Script parsing failed: %s\n", errmsg);
+        free(errmsg);
         return 1;
     }
     // 讀取標頭資料

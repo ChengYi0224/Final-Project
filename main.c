@@ -12,19 +12,9 @@
 
 int main(int argc, char const *argv[])
 {
-    // 打開劇本檔案
-    FILE *fpScript = NULL;
-    if((fpScript = fopen(ScriptPath, "r")) == NULL){
-        perror("Error opening script file");
-        return 0;
-    }
     // 讀取劇本
     script_t mainScript;
-    if (scriptRead(fpScript, &mainScript)) // 如果解析失敗
-    {
-        fclose(fpScript);
-        return 1;
-    }
+    scriptRead(ScriptPath, &mainScript);
 
     // SDL系統初始化
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -49,7 +39,6 @@ int main(int argc, char const *argv[])
         if(1) break;
     }
     // 程式結束
-    fclose(fpScript);
     SDL_DestroyWindow(GameWindow);
     SDL_DestroyRenderer(renderer);
     SDL_Quit(); // 關閉SDL
