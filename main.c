@@ -7,6 +7,8 @@
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 #define imgtest "assets/scenes/2K.jpg"
 #define ScriptPath "ta.toml"
@@ -19,16 +21,16 @@ int main(int argc, char const *argv[])
     printf("Debug msg 1\n");
 
     // SDL系統初始化
-    if (SDL_Init(SDL_INIT_VIDEO) != 0){
-        printf("Debug msg 2\n");
+    if (SDL_Init(SDL_INIT_VIDEO)){
         printf("SDL_Init failed: %s\n", SDL_GetError() );
         return 1;
     }
-    printf("Debug msg 3\n");
-    if (TTF_Init());
+    printf("Debug msg 2\n");
+    if (TTF_Init()){
+        printf("TTF_Init failed: %s\n", TTF_GetError());
         return 1;
-    printf("Debug msg 4\n");
-
+    }
+    printf("Debug msg 3\n");
     // 建立視窗
     int32_t winW = 1280, winH = 720; // width and height of window
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, winW, winH, 0);
@@ -83,10 +85,10 @@ int main(int argc, char const *argv[])
         if(1) break;
     }
 
-    // 程式結束
-    SDL_DestroyWindow(GameWindow);
+    // 程式結束，以相反順序釋放資源
     SDL_DestroyRenderer(renderer);
-    SDL_Quit(); // 關閉SDL
+    SDL_DestroyWindow(GameWindow);
     TTF_Quit(); // 關閉TTF
+    SDL_Quit(); // 關閉SDL
     return 0;
 }

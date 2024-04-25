@@ -1,14 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include "src/include/toml.h"
-#include "toml_cat.c"
+#include <stdint.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_log.h>
 
 int main(int argc, char const *argv[])
 {
-    toml_table_t *wholeScript = toml_parse_file(fopen("script.toml", "r"), NULL, 0);
-    print_table(wholeScript);
-
+    SDL_Init(SDL_INIT_VIDEO);
     return 0;
 }

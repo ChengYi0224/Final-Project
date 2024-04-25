@@ -21,7 +21,7 @@
 int8_t scriptRead(char *scriptPath, script_t *script)
 {
     // 打開劇本檔案
-    char *errmsg = calloc(100, sizeof(char)); // 錯誤訊息
+    char *sRead_errmsg = calloc(100, sizeof(char)); // 錯誤訊息
     FILE * fpScript = NULL;
     if ((fpScript = fopen(scriptPath, "r")) == NULL)
     {
@@ -29,10 +29,10 @@ int8_t scriptRead(char *scriptPath, script_t *script)
         return 0;
     }
     // 解析劇本
-    toml_table_t *wholeScript   = toml_parse_file(fpScript, errmsg, 100);
+    toml_table_t *wholeScript   = toml_parse_file(fpScript, sRead_errmsg, 100);
     if(!wholeScript){
-        printf("Script parsing failed: %s\n", errmsg);
-        free(errmsg);
+        printf("Script parsing failed: %s\n", sRead_errmsg);
+        free(sRead_errmsg);
         return 1;
     }
     // 讀取標頭資料
@@ -52,7 +52,7 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     // 釋放資源
     toml_free(wholeScript);
     fclose(fpScript);
-    free(errmsg);
+    free(sRead_errmsg);
     return 0;
 }
 
