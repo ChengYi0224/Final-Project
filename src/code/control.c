@@ -56,20 +56,20 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     return 0;
 }
 
-int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect srcRect, SDL_Rect dstRect)
+int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect)
 {
     // 讀取圖片
     SDL_Surface *image = IMG_Load(imgPath);
     // 建立材質
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
     // 顯示
-    SDL_RenderCopy(renderer, texture, &srcRect, &dstRect);
+    SDL_RenderCopy(renderer, texture, srcRect, dstRect);
     // 釋放資源
     SDL_FreeSurface(image);
     SDL_DestroyTexture(texture);
 }
 
-int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color, SDL_Rect dstRect)
+int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
     // 建立材質
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, color);
@@ -82,7 +82,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
         return 0;
     }
 
-    SDL_RenderCopy(renderer, texture, NULL, &dstRect);
+    SDL_RenderCopy(renderer, texture, NULL, dstRect);
     SDL_RenderPresent(renderer);
 
     SDL_DestroyTexture(texture);

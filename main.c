@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#define imgtest "assets/scenes/2K.jpg"
 #define ScriptPath "ta.toml"
 
 int main(int argc, char const *argv[])
@@ -15,21 +16,30 @@ int main(int argc, char const *argv[])
     // 讀取劇本
     script_t mainScript;
     scriptRead(ScriptPath, &mainScript);
-
+    printf("Debug msg 1\n");
+    
     // SDL系統初始化
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    if (SDL_Init(SDL_INIT_VIDEO) != 0){
+        printf("Debug msg 2\n");
+        printf("SDL_Init failed: %s\n", SDL_GetError() );
         return 1;
+    }
+    printf("Debug msg 3\n");
+    if (TTF_Init());
+        return 1;
+    printf("Debug msg 4\n");
+
     // 建立視窗
     int32_t winW = 1280, winH = 720; // width and height of window
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, winW, winH, 0);
     // 建立渲染器
-    SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, 0);
 
     // 圖形介面排版初始化 (建立各個物件需要用的方框)
     // scene顯示方框
     SDL_Rect sceneRect = {0, 0, winW, winH};
     // dialogue顯示方框
-    SDL_Rect dialogue = {10, 10 + winH / 3, winW - 80, winH / 3};
+    SDL_Rect dialRect = {10, 10 + winH / 3, winW - 80, winH / 3};
     // 當前scene的路徑
 
     // 遊戲主迴圈
@@ -48,7 +58,7 @@ int main(int argc, char const *argv[])
         // # 畫面繪製
 
         // 繪製圖像
-        // DisplayImg(); // 背景
+        DisplayImg(renderer, imgtest, NULL, &sceneRect); // 背景
         // DisplayImg(); // 立繪
         // DisplayImg(); // 物品欄
         // DisplayImg(); // 角色頭像
@@ -77,5 +87,6 @@ int main(int argc, char const *argv[])
     SDL_DestroyWindow(GameWindow);
     SDL_DestroyRenderer(renderer);
     SDL_Quit(); // 關閉SDL
+    TTF_Quit(); // 關閉TTF
     return 0;
 }
