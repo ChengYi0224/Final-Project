@@ -4,8 +4,10 @@
 1.  Run `sudo apt update`
 2.  Run `sudo apt install libsdl2-dev`
 3.  Run `sudo apt-get install libsdl2-image-dev`
+4.  Run `sudo apt-get install libsdl2-ttf-dev`
+5.  Run `sudo apt-get install libsdl2-mixer-dev`
 
-## How to write your script
+## How to write your script (still a work-in-progress)
 > The first event of your script must be named "event.start"
 *   event
     *   scene
@@ -38,4 +40,3 @@
     *   path
 *   music
     *   path
-

@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
     script_t mainScript;
     scriptRead(ScriptPath, &mainScript);
     printf("Debug msg 1\n");
-    
+
     // SDL系統初始化
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
         printf("Debug msg 2\n");
