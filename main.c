@@ -1,8 +1,8 @@
+#include "src/include/toml.h"
+#include "src/include/control.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "src/include/toml.h"
-#include "src/include/control.h"
 #include <unistd.h>
 #include <string.h>
 #include <SDL2/SDL.h>

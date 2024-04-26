@@ -1,12 +1,8 @@
 # Final-Project
 
 ## How to build environment
-> You can do `make install-SDL` or do the following command.
-1.  Run `sudo apt update`
-2.  Run `sudo apt install libsdl2-dev`
-3.  Run `sudo apt-get install libsdl2-image-dev`
-4.  Run `sudo apt-get install libsdl2-ttf-dev`
-5.  Run `sudo apt-get install libsdl2-mixer-dev`
+>   You can do `make install-SDL` or do the following command:
+>   `sudo apt-get update && sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev`
 
 ## How to write your script (still a work-in-progress)
 > The first event of your script must be named "event.start"

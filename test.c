@@ -2,10 +2,14 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_log.h>
 
 int main(int argc, char const *argv[])
 {
-    SDL_Init(SDL_INIT_VIDEO);
+    printf("%s\n", SDL_GetError());
+    if (SDL_Init(SDL_INIT_EVERYTHING))
+    {
+        printf("SDL_Init failed: %s\n", SDL_GetError());
+        return 1;
+    }
     return 0;
 }
