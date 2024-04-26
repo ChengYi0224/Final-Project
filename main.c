@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
     printf("Debug msg 1\n");
 
     // SDL系統初始化
-    if (SDL_Init(SDL_INIT_VIDEO)){
+    if (SDL_Init(SDL_INIT_EVERYTHING)){
         printf("SDL_Init failed: %s\n", SDL_GetError() );
         return 1;
     }
@@ -35,7 +35,8 @@ int main(int argc, char const *argv[])
     int32_t winW = 1280, winH = 720; // width and height of window
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, winW, winH, 0);
     // 建立渲染器
-    SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, 0);
+    SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, );
+    printf("Debug msg 4\n");
 
     // 圖形介面排版初始化 (建立各個物件需要用的方框)
     // scene顯示方框

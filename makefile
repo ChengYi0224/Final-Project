@@ -12,7 +12,7 @@ ALL:
 	gcc -o $(EXEC) main.c $(SRC_CFILE) $(SDL_LIB)
 
 debug:
-	gcc -g -o $(EXEC) main.c $(SRC_CFILE) $(SDL_LIB) -DSDL_X11_SHARED=OFF
+	gcc -g -o $(EXEC) main.c $(SRC_CFILE) $(SDL_LIB)
 
 install-SDL:
 	sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
