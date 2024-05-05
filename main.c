@@ -44,14 +44,15 @@ int main(int argc, char const *argv[])
     SDL_Rect sceneRect = {0, 0, winW, winH};
     // dialogue顯示方框
     SDL_Rect dialRect = {30, 10 + winH * 2 / 3, winW - 60, winH / 3 - 30};
-    // 文字
+    // 文字 ?檢查文字大小、行數
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     // 當前scene的路徑
 
     SDL_Event event;
     int32_t game_is_running = 1;
     int32_t ptsize = 40; //測試用
-    char * text = "abcdefu rah rah ah ah ah roma roma-ma gaga ooh -la-la ghijk lmnopq";
+    //wchar_t ctext[] = L"你好";
+    char text[] = "abcdefu rah rah ah ah ah roma roma-ma gaga ooh-la-la ghijk lmnopq"; //測試用
     TTF_Font * font = TTF_OpenFont( "assets/fonts/Amiri-Bold.ttf" , ptsize); //測試用
     SDL_Color color = {255, 255, 255}; //測試用
     // 遊戲主迴圈
