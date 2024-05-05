@@ -81,7 +81,8 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
         printf("Texture could not be created! SDL_Error: %s\n", SDL_GetError());
         return 0;
     }
-
+    if(textSurface->w < dstRect->w) dstRect->w = textSurface->w; //如果寬度小於對話框，改寬度
+    if(textSurface->h < dstRect->h) dstRect->h = textSurface->h;
     SDL_RenderCopy(renderer, texture, NULL, dstRect);
     SDL_RenderPresent(renderer);
 
