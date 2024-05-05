@@ -72,7 +72,8 @@ int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_
 int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
     // 建立材質
-    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, color);
+    //SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, color);
+    SDL_Surface *textSurface = TTF_RenderText_Blended_Wrapped(font, text, color, dstRect->w);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_FreeSurface(textSurface);
     
@@ -81,8 +82,9 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
         printf("Texture could not be created! SDL_Error: %s\n", SDL_GetError());
         return 0;
     }
-    if(textSurface->w < dstRect->w) dstRect->w = textSurface->w; //如果寬度小於對話框，改寬度
-    if(textSurface->h < dstRect->h) dstRect->h = textSurface->h;
+    
+    dstRect->w = textSurface->w;
+    dstRect->h = textSurface->h;
     SDL_RenderCopy(renderer, texture, NULL, dstRect);
     SDL_RenderPresent(renderer);
 
