@@ -9,7 +9,7 @@ EXEC_TEST = es
 SDL_LIB = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 ALL:
-	gcc -o $(EXEC) main.c $(SRC_CFILE) $(SDL_LIB)
+	gcc -o $(EXEC) main.c $(SRC_CFILE) $(SDL_LIB) -g
 
 debug:
 	gcc -g -o $(EXEC) main.c $(SRC_CFILE) $(SDL_LIB)

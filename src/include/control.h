@@ -22,7 +22,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-typedef struct tableScript
+typedef struct _sTableScript
 {
 
     toml_datum_t title;
@@ -38,6 +38,34 @@ typedef struct tableScript
     toml_table_t *character;
 
 } script_t;
+
+typedef struct _sScene
+{
+    char *background;
+    char *character;
+    char *dialogue;
+    char *effect;
+} scene_t;
+
+typedef struct _sItem{
+    int32_t ID;
+    char *name;
+    char *imgPath;
+    char *text;
+    item_t *pNext;
+} item_t;
+
+typedef struct _sInventory{
+    size_t size;
+    item_t *pHead;
+    item_t *pTail;
+} inventory_t;
+
+typedef struct GameSaves{
+    int32_t sizePlayerInventory;
+    inventory_t playerInventory;
+    scene_t nowScene;
+} GameSave_t;
 
 int8_t scriptRead(char *scriptPath, script_t *script);
 
