@@ -1,5 +1,6 @@
 #include "src/include/toml.h"
 #include "src/include/control.h"
+#include "src/code/toml_extra.c"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>

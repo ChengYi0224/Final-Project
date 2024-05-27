@@ -41,29 +41,19 @@ typedef struct _sTableScript
 
 typedef struct _sScene
 {
-    char *background;
-    char *character;
-    char *dialogue;
-    char *effect;
+    toml_datum_t background;
+    toml_datum_t character;
+    toml_datum_t dialogue;
+    toml_datum_t effect;
 } scene_t;
 
-typedef struct _sItem{
-    int32_t ID;
-    char *name;
-    char *imgPath;
-    char *text;
-    item_t *pNext;
-} item_t;
-
-typedef struct _sInventory{
-    size_t size;
-    item_t *pHead;
-    item_t *pTail;
-} inventory_t;
-
 typedef struct GameSaves{
-    int32_t sizePlayerInventory;
-    inventory_t playerInventory;
+    toml_datum_t sizePlayerInventory;
+    struct {
+        toml_datum_t itemID;
+        toml_datum_t name;
+        toml_datum_t count;
+    } *playerInventory; // This is an array
     scene_t nowScene;
 } GameSave_t;
 

@@ -57,7 +57,7 @@ int8_t scriptRead(char *scriptPath, script_t *script)
 }
 
 int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave){
-
+    
 }
 
 int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave){
@@ -72,21 +72,14 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave){
     atexit(fclose(fpSave));
 
     // 開始進行存檔，使用toml格式
-    fprintf(fpSave, "sizePlayerInventory = %d\n", GameSave->sizePlayerInventory);
+    fprintf(fpSave, "sizePlayerInventory = %ld\n", GameSave->sizePlayerInventory.u.i);
     fprintf(fpSave, "[playerInventory]\n");
-    item_t *pItem = GameSave->playerInventory.pHead;
-    while(pItem != NULL){
-        fprintf(fpSave, "ID = %d\n", pItem->ID);
-        fprintf(fpSave, "name = \"%s\"\n", pItem->name);
-        fprintf(fpSave, "imgPath = \"%s\"\n", pItem->imgPath);
-        fprintf(fpSave, "text = \"%s\"\n", pItem->text);
-        pItem = pItem->pNext;
+    for (int i = 0; i < GameSave->sizePlayerInventory.u.i; i++)
+    {
+        fprintf(fpSave, "item%d = %s\n", i, GameSave->playerInventory);
     }
-    fprintf(fpSave, "[nowScene]\n");
-    fprintf(fpSave, "background = \"%s\"\n", GameSave->nowScene.background);
-    fprintf(fpSave, "character = \"%s\"\n", GameSave->nowScene.character);
-    fprintf(fpSave, "dialogue = \"%s\"\n", GameSave->nowScene.dialogue);
-    fprintf(fpSave, "effect = \"%s\"\n", GameSave->nowScene.effect);
+
+    exit(EXIT_SUCCESS);
     
 }
 
@@ -129,6 +122,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 
 int8_t loadGameSaves;
 
-int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event){
+int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, char *option){
 
 }
+

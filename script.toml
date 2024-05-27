@@ -1,0 +1,20 @@
+name = "閉環"
+author = "洪庭安、林美盈、張呈義"
+version = "1.0.0"
+
+[character]
+number = 3
+
+[character.1]
+name = "肖鶴雲"
+description = "主角，遊戲架構師，聰明且觀察入微，發現自己和李詩情被困在死亡循環中。"
+[character.1.imgPath]
+avatar = "assets/character_1/avatar.png"
+
+
+
+[character.2]
+name = "李詩情"
+description = "主角，女大學生，與肖鶴雲一同被困，有堅強的意志力和解決問題的能力。"
+
+[chapter.1]
