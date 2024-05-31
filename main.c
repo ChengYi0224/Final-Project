@@ -107,8 +107,7 @@ int main(int argc, char const *argv[])
         SDL_RenderPresent(renderer);
 
         // # 終止條件
-        if(1) {
-            sleep(1);
+        if(!game_is_running) {
             break;
         }
     }
