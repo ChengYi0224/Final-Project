@@ -41,16 +41,22 @@ int main(int argc, char const *argv[])
     // scene顯示方框
     SDL_Rect sceneRect = {0, 0, winW, winH};
     // dialogue顯示方框
-    SDL_Rect dialRect = {30, 10 + winH * 2 / 3, winW - 60, winH / 3 - 30};
+    SDL_Rect dialRect = {190, 10 + winH * 3 / 5, winW - 210, winH / 3 + 20};
     // 文字 ?檢查文字大小、行數
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
+    //物品
+    SDL_Rect itemRect = {20, 20, 150, winH - 40};
+    //頭像
+    SDL_Rect faceRect = { winW - 110, 20 , 90, winH - dialRect.h - 60 };
+    //立繪
+    SDL_Rect standRect = { 430 , 40, 500, 380};
     // 當前scene的路徑
 
     SDL_Event event;
     int32_t game_is_running = 1;
     int32_t ptsize = 40; //測試用
-    uint8_t *text = "😂一二三四五六七八九十。😂一二三四五六七八九十。一二三四五六七八九十。一二三四五六七八九十。";
-    char text2[] = "abcdefu rah rah ah ah ah roma roma-ma gaga ooh-la-la ghijk lmnopq"; //測試用
+    uint8_t *text = "Aa😂一二三四五六七八九十。😂一二三四五六七八九十。一二三四五六七八九十。一二三四五六七八九十。";
+    //char text2[] = "abcdefu rah rah ah ah ah roma roma-ma gaga ooh-la-la ghijk lmnopq"; //測試用
     TTF_Font * font = TTF_OpenFont( "assets/fonts/kaiu.ttf" , ptsize); //測試用
     SDL_Color color = {255, 255, 255}; //測試用
     // 遊戲主迴圈
@@ -80,8 +86,11 @@ int main(int argc, char const *argv[])
         //textRect.w = winW / 100 * strlen("abcdefu");
         //textRect.h = winH / 15;
         DisplayImg(renderer, imgtest2, NULL, &dialRect);
-        //DisplayUTF8(renderer, text, font, color, &textRect); // 對話
-        DisplayUTF8(renderer, text, font, color, &textRect);
+        DisplayImg(renderer, imgtest2, NULL, &itemRect); //物品位置
+        DisplayImg(renderer, imgtest2, NULL, &faceRect); //頭像位置
+        DisplayImg(renderer, imgtest2, NULL, &standRect); //立繪位置
+        DisplayUTF8(renderer, text, font, color, &textRect); // 對話
+        
 
         // 繪製選項
         // for(size_t i = 0; i < (optionNum); i++){
