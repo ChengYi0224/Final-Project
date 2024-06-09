@@ -123,34 +123,9 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
     // 建立材質
-    SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
+    //SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
     //SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, text, color);
-    //SDL_Surface *textSurface = TTF_RenderUTF8_Blended_Wrapped(font, text, color, dstRect->w);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_FreeSurface(textSurface);
-    
-    if (texture == NULL)
-    {
-        printf("Texture could not be created! SDL_Error: %s\n", SDL_GetError());
-        return 0;
-    }
-
-    dstRect->w = textSurface->w;
-    if (dstRect->h > textSurface->h) dstRect->h = textSurface->h;
-    SDL_RenderCopy(renderer, texture, NULL, dstRect);
-    SDL_RenderPresent(renderer);
-
-    SDL_DestroyTexture(texture);
-
-    return 1;
-}
-
-int8_t DisplayUNICODE(SDL_Renderer *renderer, uint16_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
-{
-    // 建立材質
-    SDL_Surface *textSurface = TTF_RenderUNICODE_Solid_Wrapped(font, text, color, dstRect->w);
-    //SDL_Surface *textSurface = TTF_RenderUNICODE_Solid(font, text, color);
-    //SDL_Surface *textSurface = TTF_RenderUNICODE_Blended_Wrapped(font, text, color, dstRect->w);
+    SDL_Surface *textSurface = TTF_RenderUTF8_Blended_Wrapped(font, text, color, dstRect->w);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_FreeSurface(textSurface);
     
