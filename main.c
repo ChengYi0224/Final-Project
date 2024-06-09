@@ -49,10 +49,9 @@ int main(int argc, char const *argv[])
     SDL_Event event;
     int32_t game_is_running = 1;
     int32_t ptsize = 40; //測試用
-    uint8_t *text = "一二三四五六七八九十";
-    uint16_t *text3 = u"一二三四五六七八九十";
+    uint8_t *text = "😂一二三四五六七八九十。😂一二三四五六七八九十。一二三四五六七八九十。一二三四五六七八九十。";
     char text2[] = "abcdefu rah rah ah ah ah roma roma-ma gaga ooh-la-la ghijk lmnopq"; //測試用
-    TTF_Font * font = TTF_OpenFont( "assets/fonts/Amiri-Bold.ttf" , ptsize); //測試用
+    TTF_Font * font = TTF_OpenFont( "assets/fonts/kaiu.ttf" , ptsize); //測試用
     SDL_Color color = {255, 255, 255}; //測試用
     // 遊戲主迴圈
     while (1)
@@ -82,7 +81,7 @@ int main(int argc, char const *argv[])
         //textRect.h = winH / 15;
         DisplayImg(renderer, imgtest2, NULL, &dialRect);
         //DisplayUTF8(renderer, text, font, color, &textRect); // 對話
-        DisplayUNICODE(renderer, text3, font, color, &textRect);
+        DisplayUTF8(renderer, text, font, color, &textRect);
 
         // 繪製選項
         // for(size_t i = 0; i < (optionNum); i++){
