@@ -69,14 +69,14 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave){
         perror("Error opening save");
         return 0;
     }
-    atexit(fclose(fpSave));
+    //atexit(fclose(fpSave));
 
     // 開始進行存檔，使用toml格式
     fprintf(fpSave, "sizePlayerInventory = %ld\n", GameSave->sizePlayerInventory.u.i);
     fprintf(fpSave, "[playerInventory]\n");
     for (int i = 0; i < GameSave->sizePlayerInventory.u.i; i++)
     {
-        fprintf(fpSave, "item%d = %s\n", i, GameSave->playerInventory);
+        //fprintf(fpSave, "item%d = %s\n", i, GameSave->playerInventory);
     }
 
     exit(EXIT_SUCCESS);
