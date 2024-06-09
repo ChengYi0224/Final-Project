@@ -139,10 +139,14 @@ int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Co
     if (dstRect->h > textSurface->h) dstRect->h = textSurface->h;
     SDL_RenderCopy(renderer, texture, NULL, dstRect);
     SDL_RenderPresent(renderer);
-
     SDL_DestroyTexture(texture);
 
     return 1;
+}
+
+int8_t DisplayItem(SDL_Renderer *renderer, toml_table_t *item, SDL_Rect *srcRect, SDL_Rect *dstRect)
+{
+    //SDL_Texture *texture = LoadTexture(renderer, item->string["image"]);
 }
 
 int8_t loadGameSaves;
