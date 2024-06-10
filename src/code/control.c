@@ -149,6 +149,40 @@ int8_t DisplayItem(SDL_Renderer *renderer, toml_table_t *item, SDL_Rect *srcRect
     //SDL_Texture *texture = LoadTexture(renderer, item->string["image"]);
 }
 
+//起始畫面(標題、作者、版本...)
+int8_t DisplayStart(SDL_Renderer *renderer, script_t *script)
+{
+    TTF_Font *font = TTF_OpenFont( "assets/fonts/kaiu.ttf" , 40);
+    SDL_Color color = {255, 255, 255};
+    SDL_Rect dstRect = {10, 10, 1200, 50};
+    if(script->title.ok == 0)
+    {
+        DisplayUTF8(renderer, script->title.u.s, font, color, &dstRect);
+    }
+    if(script->author.ok == 0)
+    {
+        dstRect.y += dstRect.h;
+        DisplayUTF8(renderer, script->author.u.s, font, color, &dstRect);
+    }
+    if(script->version.ok == 0)
+    {
+        dstRect.y += dstRect.h;
+        DisplayUTF8(renderer, script->version.u.s, font, color, &dstRect);
+    }
+    if(script->description.ok == 0)
+    {
+        dstRect.y += dstRect.h;
+        dstRect.h = 250;
+        DisplayUTF8(renderer, script->description.u.s, font, color, &dstRect);
+    }
+    if(script->license.ok == 0)
+    {
+        dstRect.y += dstRect.h;
+        DisplayUTF8(renderer, script->license.u.s, font, color, &dstRect);
+    }
+}
+
+
 int8_t loadGameSaves;
 
 //int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, char *option){
