@@ -57,6 +57,12 @@ typedef struct GameSaves{
     scene_t nowScene;
 } GameSave_t;
 
+#define STRING_SAVE_DATUM(datum) "%s=\"%s\"",#datum,datum 
+
+#define INT64_SAVE_DATUM(datum) "%s=%ld",#datum,datum
+
+#define DOUBLE_SAVE_DATUM(datum) "%s=%lf",#datum,datum
+
 int8_t scriptRead(char *scriptPath, script_t *script);
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect);

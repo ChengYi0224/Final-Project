@@ -34,6 +34,7 @@ void toml_set_bool(toml_datum_t *datum, int value)
 }
 
 #ifndef __cplusplus__strings__
+// 自動分配字串記憶體
 char *strdup(const char *str)
 {
     if (str == NULL)
