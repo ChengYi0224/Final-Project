@@ -15,11 +15,19 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+
+#include <unistd.h>
+#include <dirent.h>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+
 #include "toml.h"
 #include "toml_extra.h"
 
@@ -31,6 +39,7 @@ typedef struct _sTableScript
     toml_datum_t version;
     toml_datum_t description;
     toml_datum_t license;
+    toml_datum_t startBackgroundPath;
 
     toml_table_t *item;
     toml_table_t *event;
@@ -64,7 +73,10 @@ typedef struct {
     int8_t isHovered;
     int8_t isClicked;
 } Button;
+<<<<<<< Updated upstream
 int64_t gGameVolume = 100;
+=======
+>>>>>>> Stashed changes
 
 #define STRING_SAVE_DATUM(datum) "%s=\"%s\"",#datum,datum 
 
@@ -75,7 +87,7 @@ int64_t gGameVolume = 100;
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
-int8_t GameStartMenu(SDL_Renderer *renderer);
+toml_table_t* GameStartMenu(SDL_Renderer *renderer, script_t mainScript);
 
 int8_t scriptRead(char *scriptPath, script_t *script);
 

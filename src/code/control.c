@@ -11,9 +11,6 @@
         2.  分類物件
         3.  依序執行(取消，移至主程式或是其他function實現)
 */
-#include <stdint.h>
-#include <stdlib.h>
-#include <errno.h>
 #include "../include/control.h"
 
 //  return 0 when succeeded
@@ -56,7 +53,62 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     return EXIT_SUCCESS;
 }
 
+// read the script to configure the start menu
+// otherwise, remain default
+// return a table of the first event
+toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript){
+    struct stat st = {0};
 
+    if (stat("./save", &st) == -1)
+    {
+        mkdir("./save", 0700);
+    }
+
+    DIR *SaveDir;
+    struct dirent *SaveDirEntry;
+    SaveDir = opendir("./save");
+    if (SaveDir == NULL)
+    {
+        perror("Error opening save directory");
+        return NULL;
+    }
+    // 檢查是否存在任何存檔
+    SaveDirEntry = readdir(SaveDir);
+    if(SaveDirEntry == NULL)
+    {
+        while(1){
+            // 顯示開始畫面
+            SDL_Rect startRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+            if(mainScript.startBackgroundPath.ok == 1)
+                DisplayImg(renderer, mainScript.startBackgroundPath.u.s, NULL, &startRect);
+            else
+            {
+                
+            }
+            
+            SDL_RenderPresent(renderer);
+            // 等待使用者輸入
+            SDL_Event event;
+            while (SDL_WaitEvent(&event))
+            {
+                if (event.type == SDL_QUIT)
+                {
+                    return NULL;
+                }
+                if (event.type == SDL_KEYDOWN)
+                {
+                    if (event.key.keysym.sym == SDLK_RETURN)
+                    {
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+    }
+
+
+}
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect)
 {
@@ -140,9 +192,13 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button)
     }
 }
 
+<<<<<<< Updated upstream
 
 int8_t handleButton(SDL_Event *event, Button *button)
 {
+=======
+void handleButton(SDL_Event *event, Button *button) {
+>>>>>>> Stashed changes
     switch (event->type) {
         case SDL_MOUSEMOTION:
             button->isHovered = SDL_PointInRect(&(SDL_Point){event->motion.x, event->motion.y}, &button->rect);
@@ -164,6 +220,7 @@ int8_t handleButton(SDL_Event *event, Button *button)
     }
 }
 
+<<<<<<< Updated upstream
 int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, int32_t optionIdx)
 {
     if(renderer == NULL)
@@ -184,3 +241,7 @@ int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *even
         return EXIT_FAILURE;
     }
 }
+=======
+
+
+>>>>>>> Stashed changes
