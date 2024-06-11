@@ -58,16 +58,13 @@ typedef struct GameSaves{
     scene_t nowScene;
 } GameSave_t;
 
-<<<<<<< Updated upstream
 typedef struct {
     SDL_Rect rect;
     SDL_Color color;
     int8_t isHovered;
     int8_t isClicked;
 } Button;
-=======
 int64_t gGameVolume = 100;
->>>>>>> Stashed changes
 
 #define STRING_SAVE_DATUM(datum) "%s=\"%s\"",#datum,datum 
 
