@@ -57,6 +57,7 @@ int main(int argc, char const *argv[])
     //char text2[] = "abcdefu rah rah ah ah ah roma roma-ma gaga ooh-la-la ghijk lmnopq"; //測試用
     TTF_Font * font = TTF_OpenFont( "assets/fonts/kaiu.ttf" , ptsize); //測試用
     SDL_Color color = {255, 255, 255}; //測試用
+    Button button = {{300, 250, 200, 100}, {0, 0, 255, 255}, 0, 0};
     // 遊戲主迴圈
     while (1)
     {
@@ -107,7 +108,9 @@ int main(int argc, char const *argv[])
                     }
                     break;
             }
+            handleButton(&event, &button);
         }
+        renderButton(renderer, &button);
         // 點擊選項
         // 物品預覽
 
