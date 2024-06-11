@@ -124,39 +124,43 @@ int8_t DisplayItem(SDL_Renderer *renderer, toml_table_t *item, SDL_Rect *srcRect
     //SDL_Texture *texture = LoadTexture(renderer, item->string["image"]);
 }
 
-//起始畫面(標題、作者、版本...)
-int8_t DisplayStart(SDL_Renderer *renderer, script_t *script)
+int8_t renderButton(SDL_Renderer *renderer, Button *button)
 {
-    TTF_Font *font = TTF_OpenFont( "assets/fonts/kaiu.ttf" , 40);
-    SDL_Color color = {255, 255, 255};
-    SDL_Rect dstRect = {10, 10, 1200, 50};
-    if(script->title.ok == 0)
-    {
-        DisplayUTF8(renderer, script->title.u.s, font, color, &dstRect);
+    SDL_SetRenderDrawColor(renderer, button->color.r, button->color.g, button->color.b, 255);
+    SDL_RenderFillRect(renderer, &button->rect);
+
+    if (button->isHovered) {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 50);  // Highlight color
+        SDL_RenderFillRect(renderer, &button->rect);
     }
-    if(script->author.ok == 0)
-    {
-        dstRect.y += dstRect.h;
-        DisplayUTF8(renderer, script->author.u.s, font, color, &dstRect);
-    }
-    if(script->version.ok == 0)
-    {
-        dstRect.y += dstRect.h;
-        DisplayUTF8(renderer, script->version.u.s, font, color, &dstRect);
-    }
-    if(script->description.ok == 0)
-    {
-        dstRect.y += dstRect.h;
-        dstRect.h = 250;
-        DisplayUTF8(renderer, script->description.u.s, font, color, &dstRect);
-    }
-    if(script->license.ok == 0)
-    {
-        dstRect.y += dstRect.h;
-        DisplayUTF8(renderer, script->license.u.s, font, color, &dstRect);
+
+    if (button->isClicked) {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 50);  // Clicked color
+        SDL_RenderFillRect(renderer, &button->rect);
     }
 }
 
+void handleButton(SDL_Event *event, Button *button) {
+    switch (event->type) {
+        case SDL_MOUSEMOTION:
+            button->isHovered = SDL_PointInRect(&(SDL_Point){event->motion.x, event->motion.y}, &button->rect);
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            if (event->button.button == SDL_BUTTON_LEFT && button->isHovered) {
+                button->isClicked = 1;
+            }
+            break;
+        case SDL_MOUSEBUTTONUP:
+            if (event->button.button == SDL_BUTTON_LEFT) {
+                if (button->isClicked && button->isHovered) {
+                    // Button action triggered here
+                    //SDL_Log("Button clicked!");
+                }
+                button->isClicked = 0;
+            }
+            break;
+    }
+}
 
 int8_t loadGameSaves;
 
