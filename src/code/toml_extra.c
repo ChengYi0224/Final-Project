@@ -1,4 +1,3 @@
-#pragma once
 #include "../include/toml.h"
 #include <stdio.h>
 #include <stdint.h>
@@ -33,9 +32,8 @@ void toml_set_bool(toml_datum_t *datum, int value)
     datum->ok = 1; // 標記為有效
 }
 
-#ifndef __cplusplus__strings__
 // 自動分配字串記憶體
-char *strdup(const char *str)
+char *my_strdup(const char *str)
 {
     if (str == NULL)
         return NULL;
@@ -48,4 +46,3 @@ char *strdup(const char *str)
 
     return copy;
 }
-#endif

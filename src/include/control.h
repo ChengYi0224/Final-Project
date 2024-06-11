@@ -12,7 +12,6 @@
         3.  依序執行
 */
 #pragma once
-#include "toml.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -21,6 +20,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include "toml.h"
+#include "toml_extra.h"
 
 typedef struct _sTableScript
 {
@@ -57,18 +58,27 @@ typedef struct GameSaves{
     scene_t nowScene;
 } GameSave_t;
 
+<<<<<<< Updated upstream
 typedef struct {
     SDL_Rect rect;
     SDL_Color color;
     int8_t isHovered;
     int8_t isClicked;
 } Button;
+=======
+int64_t gGameVolume = 100;
+>>>>>>> Stashed changes
 
 #define STRING_SAVE_DATUM(datum) "%s=\"%s\"",#datum,datum 
 
 #define INT64_SAVE_DATUM(datum) "%s=%ld",#datum,datum
 
 #define DOUBLE_SAVE_DATUM(datum) "%s=%lf",#datum,datum
+
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+
+int8_t GameStartMenu(SDL_Renderer *renderer);
 
 int8_t scriptRead(char *scriptPath, script_t *script);
 

@@ -1,6 +1,5 @@
 #include "src/include/toml.h"
 #include "src/include/control.h"
-#include "src/code/toml_extra.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -31,23 +30,22 @@ int main(int argc, char const *argv[])
         return 1;
     }
     // 建立視窗
-    int32_t winW = 1280, winH = 720; // width and height of window
-    SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, winW, winH, 0);
+    SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     // 建立渲染器
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
 
     // 圖形介面排版初始化 (建立各個物件需要用的方框)
     // scene顯示方框
-    SDL_Rect sceneRect = {0, 0, winW, winH};
+    SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
     // dialogue顯示方框
-    SDL_Rect dialRect = {190, 10 + winH * 3 / 5, winW - 210, winH / 3 + 20};
+    SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
     // 文字 ?檢查文字大小、行數
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     //物品
-    SDL_Rect itemRect = {20, 20, 150, winH - 40};
+    SDL_Rect itemRect = {20, 20, 150, WINDOW_HEIGHT - 40};
     //頭像
-    SDL_Rect faceRect = { winW - 110, 20 , 90, winH - dialRect.h - 60 };
+    SDL_Rect faceRect = { WINDOW_WIDTH - 110, 20 , 90, WINDOW_HEIGHT - dialRect.h - 60 };
     //立繪
     SDL_Rect standRect = { 430 , 40, 500, 380};
     // 當前scene的路徑
@@ -83,8 +81,8 @@ int main(int argc, char const *argv[])
         // DisplayImg(); // 角色頭像邊框
 
         // 繪製文字
-        //textRect.w = winW / 100 * strlen("abcdefu");
-        //textRect.h = winH / 15;
+        //textRect.w = WINDOW_WIDTH / 100 * strlen("abcdefu");
+        //textRect.h = WINDOW_HEIGHT / 15;
         DisplayImg(renderer, imgtest2, NULL, &dialRect);
         DisplayImg(renderer, imgtest2, NULL, &itemRect); //物品位置
         DisplayImg(renderer, imgtest2, NULL, &faceRect); //頭像位置
