@@ -45,10 +45,16 @@ bomb =
     description = "引起公車爆炸的主要原因。",
     icon = "assets/item/bomb/icon.png"
 }
-
 [ending]
 number = 3
-
+[event]
+start = {scene = "bus_45", dialogue = "introduction"}
+solo_action = {scene = "bus_45", dialogue = "solo_action"}
+cooperate_action = {scene = "bus_45", dialogue = "cooperate_action"}
+seek_help = {scene = "bus_45", dialogue = "seek_help"}
+police_interrogation = {scene = "police_station", dialogue = "police_interrogation"}
+continue_3 = {scene = "bus_45", dialogue = "continue_3"}
+ending = {
 [ending.1]
 description = "導致更多人死亡 -
 警察接到報警電話攔截車輛，已經驚動兇手提前引爆炸彈。"
@@ -59,15 +65,7 @@ description = "發現幕後黑手 -
 
 [ending.3] #if player back to start 12 times, 觸發結局三
 description = "你和李詩情病重離世 -
-由於身體不堪負荷多次循環造成的傷害，使得整件事情不了了之。"
-
-[event]
-start = {scene = "bus_45", dialogue = "introduction"}
-solo_action = {scene = "bus_45", dialogue = "solo_action"}
-cooperate_action = {scene = "bus_45", dialogue = "cooperate_action"}
-seek_help = {scene = "bus_45", dialogue = "seek_help"}
-police_interrogation = {scene = "police_station", dialogue = "police_interrogation"}
-continue_3 = {scene = "bus_45", dialogue = "continue_3"}
+由於身體不堪負荷多次循環造成的傷害，使得整件事情不了了之。"}
 
 [dialogue]
 introduction = {
@@ -259,7 +257,8 @@ b_option = {
 b_option_continue = {
     character = "heyun",
     text = "
-經過多次循環，肖鶴雲和李詩情成功地阻止了公交車爆炸，並拯救了車上的所有人。幕後黑手是陶映紅和司機王興德，他們因女兒五年前在公交車上被猥褻並發生事故去世，決定通過製造公交車爆炸報復社會。
+經過多次循環，肖鶴雲和李詩情成功地阻止了公交車爆炸，並拯救了車上的所有人。
+幕後黑手是陶映紅和司機王興德，他們因女兒五年前在公交車上被猥褻並發生事故去世，決定通過製造公交車爆炸報復社會。
     ",
     options = [{text = "重新開始", event = "start"}]
 }
