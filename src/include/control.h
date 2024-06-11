@@ -57,6 +57,13 @@ typedef struct GameSaves{
     scene_t nowScene;
 } GameSave_t;
 
+typedef struct {
+    SDL_Rect rect;
+    SDL_Color color;
+    int8_t isHovered;
+    int8_t isClicked;
+} Button;
+
 #define STRING_SAVE_DATUM(datum) "%s=\"%s\"",#datum,datum 
 
 #define INT64_SAVE_DATUM(datum) "%s=%ld",#datum,datum
@@ -72,3 +79,5 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect);
 
 int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event);
+
+int8_t renderButton(SDL_Renderer *renderer, Button *button);
