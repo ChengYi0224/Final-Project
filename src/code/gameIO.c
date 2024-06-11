@@ -1,5 +1,5 @@
-#include "toml.h"
-#include "control.h"
+#include "../include/toml.h"
+#include "../include/control.h"
 
 int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
 {
