@@ -26,14 +26,14 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     if ((fpScript = fopen(scriptPath, "r")) == NULL)
     {
         perror("Error opening script file");
-        return 0;
+        return EXIT_FAILURE;
     }
     // 解析劇本
     toml_table_t *wholeScript   = toml_parse_file(fpScript, sRead_errmsg, 100);
     if(!wholeScript){
         printf("Script parsing failed: %s\n", sRead_errmsg);
         free(sRead_errmsg);
-        return 1;
+        return EXIT_FAILURE;
     }
     // 讀取標頭資料
     (*script).title     = toml_string_in(wholeScript, "name");
@@ -53,7 +53,7 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     toml_free(wholeScript);
     fclose(fpScript);
     free(sRead_errmsg);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 
@@ -75,7 +75,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 {
     // 建立材質
     //SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, color);
-    SDL_Surface *textSurface = TTF_RenderText_Blended_Wrapped(font, text, color, dstRect->w);
+    SDL_Surface *textSurface = TTF_RenderUnicode_Blended_Wrapped(font, text, color, dstRect->w);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_FreeSurface(textSurface);
     
@@ -140,6 +140,7 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button)
     }
 }
 
+<<<<<<< Updated upstream
 void handleButton(SDL_Event *event, Button *button) {
     switch (event->type) {
         case SDL_MOUSEMOTION:
@@ -161,10 +162,27 @@ void handleButton(SDL_Event *event, Button *button) {
             break;
     }
 }
+=======
+int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, int32_t optionIdx){
+    if(renderer == NULL)
+    {
+        return EXIT_FAILURE;
+    }
+    if(event == NULL)
+    {
+        return EXIT_FAILURE;
+    }
+    if(optionIdx < 0)
+    {
+        return EXIT_FAILURE;
+    }
+    toml_array_t *optionArray = toml_array_in(event, "options");
+    if(optionArray == NULL)
+    {
+        return EXIT_FAILURE;
+    }
+    
+>>>>>>> Stashed changes
 
-int8_t loadGameSaves;
-
-//int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, char *option){
-
-//}
+}
 
