@@ -140,8 +140,9 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button)
     }
 }
 
-<<<<<<< Updated upstream
-void handleButton(SDL_Event *event, Button *button) {
+
+int8_t handleButton(SDL_Event *event, Button *button)
+{
     switch (event->type) {
         case SDL_MOUSEMOTION:
             button->isHovered = SDL_PointInRect(&(SDL_Point){event->motion.x, event->motion.y}, &button->rect);
@@ -162,8 +163,9 @@ void handleButton(SDL_Event *event, Button *button) {
             break;
     }
 }
-=======
-int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, int32_t optionIdx){
+
+int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, int32_t optionIdx)
+{
     if(renderer == NULL)
     {
         return EXIT_FAILURE;
@@ -181,8 +183,4 @@ int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *even
     {
         return EXIT_FAILURE;
     }
-    
->>>>>>> Stashed changes
-
 }
-
