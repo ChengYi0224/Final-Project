@@ -91,3 +91,5 @@ int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Co
 int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event);
 
 int8_t renderButton(SDL_Renderer *renderer, Button *button);
+
+int8_t handleButton(SDL_Event *event, Button *button);
