@@ -12,7 +12,7 @@
         3.  依序執行(取消，移至主程式或是其他function實現)
 */
 #include "../include/control.h"
-
+int64_t gGameVolume = 100;
 //  return 0 when succeeded
 //  return 1 when failed
 int8_t scriptRead(char *scriptPath, script_t *script)
@@ -159,7 +159,7 @@ int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_
 int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
     // 建立材質
-    //SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, color);
+    // SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, color);
     SDL_Surface *textSurface = TTF_RenderText_Blended_Wrapped(font, text, color, dstRect->w);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_FreeSurface(textSurface);
