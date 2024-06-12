@@ -106,4 +106,6 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button);
 // 1: button is clicked
 int8_t handleButton(SDL_Event *event, Button *button);
 
-struct tm *getLocalTime()
+// example : struct tm *timeinfo;
+// use asctime(timeinfo) to turn into string.
+struct tm *getLocalTime();
