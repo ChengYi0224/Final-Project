@@ -106,8 +106,6 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript){
             break;
         }
     }
-
-
 }
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect)
@@ -192,13 +190,8 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button)
     }
 }
 
-<<<<<<< Updated upstream
-
 int8_t handleButton(SDL_Event *event, Button *button)
 {
-=======
-void handleButton(SDL_Event *event, Button *button) {
->>>>>>> Stashed changes
     switch (event->type) {
         case SDL_MOUSEMOTION:
             button->isHovered = SDL_PointInRect(&(SDL_Point){event->motion.x, event->motion.y}, &button->rect);
@@ -220,7 +213,6 @@ void handleButton(SDL_Event *event, Button *button) {
     }
 }
 
-<<<<<<< Updated upstream
 int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, int32_t optionIdx)
 {
     if(renderer == NULL)
@@ -241,7 +233,3 @@ int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *even
         return EXIT_FAILURE;
     }
 }
-=======
-
-
->>>>>>> Stashed changes
