@@ -5,15 +5,18 @@
 // read the script to configure the start menu
 // otherwise, remain default
 // return a table of the first event
+// call eventHandler with the retval
 toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving)
 {
+    // 檢查遊戲存檔資料夾狀態
+    // 如果不存在，則創建資料夾
     struct stat st = {0};
-
     if (stat("./save", &st) == -1)
     {
         mkdir("./save", 0700);
     }
 
+    // 開啟存檔資料夾
     DIR *SaveDir;
     struct dirent *SaveDirEntry;
     SaveDir = opendir("./save");
@@ -22,8 +25,10 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSa
         perror("Error opening save directory");
         return NULL;
     }
+
     // 檢查是否存在任何存檔
     SaveDirEntry = readdir(SaveDir);
+    closedir(SaveDir);
 
     while (1)
     {
@@ -67,6 +72,7 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSa
             if (handleButton(&event, &buttonContinue))
             {
                 // 處理 Continue 按鈕被點擊的行為
+
             }
             if (handleButton(&event, &buttonVolume))
             {
@@ -121,7 +127,7 @@ toml_table_t *startNewGame(script_t *mainScript, GameSave_t *saving)
 
     // 設定event
     snprintf(saving->event, sizeof(saving->event), "%s", "start");
-    
+
 
     return toml_table_in(mainScript->event, "start");
 }
