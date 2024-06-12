@@ -73,10 +73,8 @@ typedef struct {
     int8_t isHovered;
     int8_t isClicked;
 } Button;
-<<<<<<< Updated upstream
+
 int64_t gGameVolume = 100;
-=======
->>>>>>> Stashed changes
 
 #define STRING_SAVE_DATUM(datum) "%s=\"%s\"",#datum,datum 
 
@@ -86,6 +84,8 @@ int64_t gGameVolume = 100;
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
+
+#define StartBackgroundPathDefault "assets/scenes/defaultBackground.png"
 
 toml_table_t* GameStartMenu(SDL_Renderer *renderer, script_t mainScript);
 
