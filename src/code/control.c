@@ -150,3 +150,11 @@ int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *even
         return EXIT_FAILURE;
     }
 }
+
+struct tm* getLocalTime(){
+    time_t rawtime;
+    struct tm * timeinfo;
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+    return timeinfo;
+}

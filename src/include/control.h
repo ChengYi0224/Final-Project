@@ -105,3 +105,5 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button);
 // 0: button is not clicked
 // 1: button is clicked
 int8_t handleButton(SDL_Event *event, Button *button);
+
+struct tm *getLocalTime()
