@@ -19,6 +19,7 @@
 
 #include <unistd.h>
 #include <dirent.h>
+#include <time.h>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -51,13 +52,14 @@ typedef struct _sTableScript
 
 typedef struct _sScene
 {
+    toml_datum_t event;
     toml_datum_t background;
     toml_datum_t character;
     toml_datum_t dialogue;
     toml_datum_t effect;
 } scene_t;
 
-typedef struct GameSaves
+typedef struct _sGameSave
 {
     char SaveName[256];
     toml_table_t *playerInventory; // This is an array

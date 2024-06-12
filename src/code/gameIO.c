@@ -5,7 +5,7 @@
 // read the script to configure the start menu
 // otherwise, remain default
 // return a table of the first event
-toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript)
+toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving)
 {
     struct stat st = {0};
 
@@ -57,11 +57,12 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript)
             if (handleButton(&event, &buttonNewGame))
             {
                 // 處理 New Game 按鈕被點擊的行為
-                return startNewGame(renderer, mainScript);
+                return startNewGame(mainScript, saving);
             }
             if (handleButton(&event, &buttonLoadGame))
             {
                 // 處理 Load Game 按鈕被點擊的行為
+                // 顯示二級menu
             }
             if (handleButton(&event, &buttonContinue))
             {
@@ -74,6 +75,7 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript)
             if (handleButton(&event, &buttonExit))
             {
                 // 處理 Exit 按鈕被點擊的行為
+                return NULL;
             }
         }
         /*
@@ -96,20 +98,36 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript)
     }
 }
 
-
-toml_table_t *startNewGame(SDL_Renderer *renderer, script_t *mainScript){
-    if(scriptRead(ScriptPath, mainScript))
+toml_table_t *startNewGame(script_t *mainScript, GameSave_t *saving)
+{
+    if (scriptRead(ScriptPath, mainScript))
     {
         perror("Error reading script");
         return NULL;
     }
-    return toml_table_in(mainScript->event, "start");
+    toml_table_t *eventStart = toml_table_in(mainScript->event, "start");
+    if (eventStart == NULL)
+    {
+        perror("Error reading start event");
+        return NULL;
+    }
+    // 設定scene_t
+    scene_t sceneStart;
+    sceneStart.background = toml_string_in(eventStart, "background");
+    sceneStart.character = toml_string_in(eventStart, "character");
+    sceneStart.dialogue = toml_string_in(eventStart, "dialogue");
+    sceneStart.effect = toml_string_in(eventStart, "effect");
+    saving->nowScene = sceneStart;
 
+    // 設定event
+    snprintf(saving->event, sizeof(saving->event), "%s", "start");
+    
+
+    return toml_table_in(mainScript->event, "start");
 }
 
 int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
 {
-
 }
 
 int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
