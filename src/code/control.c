@@ -26,8 +26,9 @@ int8_t scriptRead(char *scriptPath, script_t *script)
         return EXIT_FAILURE;
     }
     // 解析劇本
-    toml_table_t *wholeScript   = toml_parse_file(fpScript, sRead_errmsg, 100);
-    if(!wholeScript){
+    toml_table_t *wholeScript = toml_parse_file(fpScript, sRead_errmsg, 100);
+    if (!wholeScript)
+    {
         printf("Script parsing failed: %s\n", sRead_errmsg);
         free(sRead_errmsg);
         return EXIT_FAILURE;
@@ -80,7 +81,7 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript)
             DisplayImg(renderer, mainScript.startBackgroundPath.u.s, NULL, &startRect);
         else
             DisplayImg(renderer, StartBackgroundPathDefault, NULL, &startRect);
-        
+
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
         Button buttonNewGame = {{5, 400, 50, 20}, {200, 200, 200, 255}, 0, 0};
         Button buttonLoadGame = {{5, 450, 50, 20}, {200, 200, 200, 255}, 0, 0};
@@ -230,26 +231,29 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button)
 
 int8_t handleButton(SDL_Event *event, Button *button)
 {
-    switch (event->type) {
-        case SDL_MOUSEMOTION:
-            button->isHovered = SDL_PointInRect(&(SDL_Point){event->motion.x, event->motion.y}, &button->rect);
-            break;
-        case SDL_MOUSEBUTTONDOWN:
-            if (event->button.button == SDL_BUTTON_LEFT && button->isHovered) {
-                button->isClicked = 1;
-            }
-            break;
-        case SDL_MOUSEBUTTONUP:
-            if (event->button.button == SDL_BUTTON_LEFT) {
-                if (button->isClicked && button->isHovered) {
-                    // Button action triggered here
-                    //SDL_Log("Button clicked!");
-                }
-                button->isClicked = 0;
-                return 1; // 按鈕被點擊
+    switch (event->type)
+    {
+    case SDL_MOUSEMOTION:
+        button->isHovered = SDL_PointInRect(&(SDL_Point){event->motion.x, event->motion.y}, &button->rect);
+        break;
+    case SDL_MOUSEBUTTONDOWN:
+        if (event->button.button == SDL_BUTTON_LEFT && button->isHovered)
+        {
+            button->isClicked = 1;
+        }
+        break;
+    case SDL_MOUSEBUTTONUP:
+        if (event->button.button == SDL_BUTTON_LEFT)
+        {
+            if (button->isClicked && button->isHovered)
+            {
+                // Button action triggered here
+                // SDL_Log("Button clicked!");
             }
             button->isClicked = 0;
+            return 1; // 按鈕被點擊
         }
+        button->isClicked = 0;
         break;
     }
     return 0; // 按鈕沒有被點擊
