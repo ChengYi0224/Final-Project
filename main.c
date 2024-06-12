@@ -10,9 +10,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-#define imgtest "assets/scenes/2K.jpg"
-#define imgtest2 "assets/scenes/aut.jpg"
-#define ScriptPath "ta.toml"
+
 
 int main(int argc, char const *argv[])
 {

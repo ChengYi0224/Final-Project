@@ -1,10 +1,11 @@
 #include "../include/toml.h"
 #include "../include/control.h"
 
+// The very entry of the program
 // read the script to configure the start menu
 // otherwise, remain default
 // return a table of the first event
-toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript)
+toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript)
 {
     struct stat st = {0};
 
@@ -28,8 +29,8 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript)
     {
         // 顯示開始畫面
         SDL_Rect startRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-        if (mainScript.startBackgroundPath.ok == 1)
-            DisplayImg(renderer, mainScript.startBackgroundPath.u.s, NULL, &startRect);
+        if (mainScript->startBackgroundPath.ok == 1)
+            DisplayImg(renderer, mainScript->startBackgroundPath.u.s, NULL, &startRect);
         else
             DisplayImg(renderer, StartBackgroundPathDefault, NULL, &startRect);
 
@@ -56,6 +57,7 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript)
             if (handleButton(&event, &buttonNewGame))
             {
                 // 處理 New Game 按鈕被點擊的行為
+                return startNewGame(renderer, mainScript);
             }
             if (handleButton(&event, &buttonLoadGame))
             {
@@ -94,6 +96,17 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript)
     }
 }
 
+
+toml_table_t *startNewGame(SDL_Renderer *renderer, script_t *mainScript){
+    if(scriptRead(ScriptPath, mainScript))
+    {
+        perror("Error reading script");
+        return NULL;
+    }
+    return toml_table_in(mainScript->event, "start");
+
+}
+
 int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
 {
 
@@ -102,7 +115,6 @@ int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
 int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
 {
     // 打開劇本檔案
-    char *sRead_errmsg = calloc(100, sizeof(char)); // 錯誤訊息
     FILE *fpSave = NULL;
     if ((fpSave = fopen(SavePath, "w")) == NULL)
     {
@@ -111,12 +123,27 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
     }
 
     // 開始進行存檔，使用toml格式
-    fprintf(fpSave,"sizePlayerInventory = %ld\n", GameSave->sizePlayerInventory.u.i);
-    fprintf(fpSave, "[playerInventory]\n");
-    for (int i = 0; i < GameSave->sizePlayerInventory.u.i; i++)
+
+    // 玩家背包
+    fprintf(fpSave, "playerInventory = [\n");
+    int32_t sizeInv = toml_array_nelem(GameSave->playerInventory);
+    for (int i = 0; i < sizeInv; i++)
     {
-        fprintf(fpSave, "item%d = %s\n", i, GameSave->playerInventory);
+        fprintf(fpSave, "\"%s\",\n", i, GameSave->playerInventory);
     }
+    fprintf(fpSave, "]\n");
+
+    // 當前event
+    fprintf(fpSave, "event = \"%s\"\n", GameSave->event);
+
+    // 當前場景紀錄
+    fprintf(fpSave, "nowScene = {\n");
+    fprintf(fpSave, "background = \"%s\"\n", GameSave->nowScene.background);
+    fprintf(fpSave, "character = \"%s\"\n", GameSave->nowScene.character);
+    fprintf(fpSave, "dialogue = \"%s\"\n", GameSave->nowScene.dialogue);
+    fprintf(fpSave, "effect = \"%s\"\n", GameSave->nowScene.effect);
+    fprintf(fpSave, "}\n");
+
     fclose(fpSave);
     return EXIT_SUCCESS;
 }

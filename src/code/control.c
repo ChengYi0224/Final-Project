@@ -14,7 +14,6 @@
 #include "../include/control.h"
 int64_t gGameVolume = 100;
 
-
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect)
 {
     // 讀取圖片

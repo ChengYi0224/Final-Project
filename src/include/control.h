@@ -59,13 +59,9 @@ typedef struct _sScene
 
 typedef struct GameSaves
 {
-    toml_datum_t sizePlayerInventory;
-    struct
-    {
-        toml_datum_t itemID;
-        toml_datum_t name;
-        toml_datum_t count;
-    } *playerInventory; // This is an array
+    char SaveName[256];
+    toml_table_t *playerInventory; // This is an array
+    char event[256];
     scene_t nowScene;
 } GameSave_t;
 
@@ -89,6 +85,9 @@ extern int64_t gGameVolume;
 #define WINDOW_HEIGHT 720
 
 #define StartBackgroundPathDefault "assets/scenes/defaultBackground.png"
+#define imgtest "assets/scenes/2K.jpg"
+#define imgtest2 "assets/scenes/aut.jpg"
+#define ScriptPath "ta.toml"
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect);
 
@@ -100,4 +99,7 @@ int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event
 
 int8_t renderButton(SDL_Renderer *renderer, Button *button);
 
+// return value -
+// 0: button is not clicked
+// 1: button is clicked
 int8_t handleButton(SDL_Event *event, Button *button);
