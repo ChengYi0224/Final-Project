@@ -90,10 +90,6 @@ extern int64_t gGameVolume;
 
 #define StartBackgroundPathDefault "assets/scenes/defaultBackground.png"
 
-toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript);
-
-int8_t scriptRead(char *scriptPath, script_t *script);
-
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect);
 
 int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect);
