@@ -57,9 +57,11 @@ typedef struct _sScene
     toml_datum_t effect;
 } scene_t;
 
-typedef struct GameSaves{
+typedef struct GameSaves
+{
     toml_datum_t sizePlayerInventory;
-    struct {
+    struct
+    {
         toml_datum_t itemID;
         toml_datum_t name;
         toml_datum_t count;
@@ -67,27 +69,28 @@ typedef struct GameSaves{
     scene_t nowScene;
 } GameSave_t;
 
-typedef struct {
+typedef struct
+{
     SDL_Rect rect;
     SDL_Color color;
     int8_t isHovered;
     int8_t isClicked;
 } Button;
 
-int64_t gGameVolume = 100;
+extern int64_t gGameVolume;
 
-#define STRING_SAVE_DATUM(datum) "%s=\"%s\"",#datum,datum 
+#define STRING_SAVE_DATUM(datum) "%s=\"%s\"", #datum, datum
 
-#define INT64_SAVE_DATUM(datum) "%s=%ld",#datum,datum
+#define INT64_SAVE_DATUM(datum) "%s=%ld", #datum, datum
 
-#define DOUBLE_SAVE_DATUM(datum) "%s=%lf",#datum,datum
+#define DOUBLE_SAVE_DATUM(datum) "%s=%lf", #datum, datum
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
 #define StartBackgroundPathDefault "assets/scenes/defaultBackground.png"
 
-toml_table_t* GameStartMenu(SDL_Renderer *renderer, script_t mainScript);
+toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript);
 
 int8_t scriptRead(char *scriptPath, script_t *script);
 
