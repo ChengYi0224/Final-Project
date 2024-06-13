@@ -153,7 +153,7 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
     int32_t sizeInv = toml_array_nelem(GameSave->playerInventory);
     for (int i = 0; i < sizeInv; i++)
     {
-        fprintf(fpSave, "\"%s\",\n", i, GameSave->playerInventory);
+        fprintf(fpSave, "\"%s\",\n", TOML_USE_STRING(toml_string_at(GameSave->playerInventory, i)));
     }
     fprintf(fpSave, "]\n");
 
@@ -162,10 +162,10 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
 
     // 當前場景紀錄
     fprintf(fpSave, "nowScene = {\n");
-    fprintf(fpSave, "background = \"%s\"\n", GameSave->nowScene.background);
-    fprintf(fpSave, "character = \"%s\"\n", GameSave->nowScene.character);
-    fprintf(fpSave, "dialogue = \"%s\"\n", GameSave->nowScene.dialogue);
-    fprintf(fpSave, "effect = \"%s\"\n", GameSave->nowScene.effect);
+    fprintf(fpSave, "background = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.background));
+    fprintf(fpSave, "character = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.character));
+    fprintf(fpSave, "dialogue = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.dialogue));
+    fprintf(fpSave, "effect = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.effect));
     fprintf(fpSave, "}\n");
 
     fclose(fpSave);

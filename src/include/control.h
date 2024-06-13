@@ -30,7 +30,6 @@
 #include <errno.h>
 
 #include "toml.h"
-#include "toml_extra.h"
 
 typedef struct _sTableScript
 {
@@ -62,7 +61,7 @@ typedef struct _sScene
 typedef struct _sGameSave
 {
     char SaveName[256];
-    toml_table_t *playerInventory; // This is an array
+    toml_array_t *playerInventory; // This is an array
     char event[256];
     scene_t nowScene;
 } GameSave_t;
@@ -75,13 +74,17 @@ typedef struct
     int8_t isClicked;
 } Button;
 
+
+#include "toml_extra.h"
+#include "gameIO.h"
+
 extern int64_t gGameVolume;
 
-#define STRING_SAVE_DATUM(datum) "%s=\"%s\"", #datum, datum
+#define TOML_USE_STRING(toml_datum) toml_datum.ok == 1 ? toml_datum.u.s : ""
 
-#define INT64_SAVE_DATUM(datum) "%s=%ld", #datum, datum
+#define TOML_USE_INT(toml_datum) toml_datum.ok == 1 ? toml_datum.u.i : 0
 
-#define DOUBLE_SAVE_DATUM(datum) "%s=%lf", #datum, datum
+#define TOML_USE_FLOAT(toml_datum) toml_datum.ok == 1 ? toml_datum.u.f : 0.0
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720

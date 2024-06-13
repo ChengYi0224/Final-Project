@@ -1,5 +1,6 @@
-#include "src/include/toml.h"
-#include "src/include/control.h"
+//#include "src/include/toml.h"
+//#include "src/include/control.h"
+#include "control.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>

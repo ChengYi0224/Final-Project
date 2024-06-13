@@ -1,7 +1,7 @@
 #include "control.h"
 #pragma once
 
-toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t mainScript, GameSave_t *saving);
+toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving);
 
 int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave);
 
