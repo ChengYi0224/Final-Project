@@ -72,7 +72,6 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSa
             if (handleButton(&event, &buttonContinue))
             {
                 // 處理 Continue 按鈕被點擊的行為
-
             }
             if (handleButton(&event, &buttonVolume))
             {
@@ -127,7 +126,6 @@ toml_table_t *startNewGame(script_t *mainScript, GameSave_t *saving)
 
     // 設定event
     snprintf(saving->event, sizeof(saving->event), "%s", "start");
-
 
     return toml_table_in(mainScript->event, "start");
 }
@@ -209,38 +207,40 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     return EXIT_SUCCESS;
 }
 
-int8_t displayEvent(SDL_Renderer *renderer, char *event , script_t *script)
+int8_t displayEvent(SDL_Renderer *renderer, char *event, script_t *script)
 {
-    if(renderer == NULL || event == NULL || script == NULL) return -1;
+    if (renderer == NULL || event == NULL || script == NULL)
+        return -1;
     // scene顯示方框
     SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
     // dialogue顯示方框
     SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
     // 文字 ?檢查文字大小、行數
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
-    //物品
+    // 物品
     SDL_Rect itemRect = {20, 20, 150, WINDOW_HEIGHT - 40};
-    //頭像
-    SDL_Rect faceRect = { WINDOW_WIDTH - 110, 20 , 90, WINDOW_HEIGHT - dialRect.h - 60 };
-    //立繪
-    SDL_Rect standRect = { 430 , 40, 500, 380};
-    
+    // 頭像
+    SDL_Rect faceRect = {WINDOW_WIDTH - 110, 20, 90, WINDOW_HEIGHT - dialRect.h - 60};
+    // 立繪
+    SDL_Rect standRect = {430, 40, 500, 380};
+
     // 顯示背景
     char sceneName[200] = {0}, sceneImg[200] = {0};
-    for(int32_t i = 0 ; i < script->event->ntab ; i++)
+    for (int32_t i = 0; i < script->event->ntab; i++)
     {
-        if(strcmp(script->event->tab[i]->key, event) == 0)
+        if (strcmp(script->event->tab[i]->key, event) == 0)
         {
             strcpy(sceneName, script->event->tab[i]->tab[0]->val);
             break;
         }
     }
-    for(int32_t i = 0 ; i < script->scene->ntab ; i++)
+    for (int32_t i = 0; i < script->scene->ntab; i++)
     {
-        if(strcmp(script->scene->tab[i]->key, sceneName) == 0)
+        if (strcmp(script->scene->tab[i]->key, sceneName) == 0)
         {
             strcpy(sceneImg, script->scene->tab[i]->tab[1]->val);
             break;
         }
     }
+    // 文字
 }
