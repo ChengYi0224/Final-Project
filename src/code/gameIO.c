@@ -237,6 +237,4 @@ int8_t displayEvent(SDL_Renderer *renderer, char *event, script_t *script)
     scene.character = toml_string_in(dialogue, "character");
     scene.dialogue = toml_string_in(dialogue, "text");
     toml_table_t *option = toml_table_in(dialogue, "options");
-
-    
 }
