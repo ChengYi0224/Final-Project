@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
     // 文字 ?檢查文字大小、行數
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     // 物品
-    SDL_Rect itemRect = {20, 20, 150, WINDOW_HEIGHT - 40};
+    //SDL_Rect itemRect = {20, 20, 150, WINDOW_HEIGHT - 40};
     // 頭像
     SDL_Rect faceRect = {WINDOW_WIDTH - 110, 20, 90, WINDOW_HEIGHT - dialRect.h - 60};
     // 立繪
@@ -75,6 +75,10 @@ int main(int argc, char const *argv[])
         // # 畫面繪製
 
         // 繪製圖像
+        // 物品
+        SDL_Rect itemIconRect = {20, 20, 150, WINDOW_HEIGHT - 40}; //icon
+        SDL_Rect itemNameRect = {20, 20, 150, WINDOW_HEIGHT - 40}; //name
+        SDL_Rect itemDesRect = {20, 20, 150, WINDOW_HEIGHT - 40}; //description
         // 背景
         scene_t cur;
         toml_datum_t itemIcon[2], itemName[2], itemDes[2];
@@ -97,6 +101,7 @@ int main(int argc, char const *argv[])
             {
                 itemIcon[i] = toml_string_in(toml_table_in(script->item, itemKey[i]), icon);
                 DisplayImg(renderer, itemIcon[i].u.s, NULL, &itemRect);
+                itemRect.y += itemRect.h;
             }
         }
 
