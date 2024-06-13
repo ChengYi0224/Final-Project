@@ -224,23 +224,16 @@ int8_t displayEvent(SDL_Renderer *renderer, char *event, script_t *script)
     // 立繪
     SDL_Rect standRect = {430, 40, 500, 380};
 
-    // 顯示背景
-    char sceneName[200] = {0}, sceneImg[200] = {0};
-    for (int32_t i = 0; i < script->event->ntab; i++)
+    toml_table_t *event_cur = toml_table_in(script->event, event);
+    if (event_cur == NULL)
     {
-        if (strcmp(script->event->tab[i]->key, event) == 0)
-        {
-            strcpy(sceneName, script->event->tab[i]->tab[0]->val);
-            break;
-        }
+        perror("Error reading start event");
+        return NULL;
     }
-    for (int32_t i = 0; i < script->scene->ntab; i++)
-    {
-        if (strcmp(script->scene->tab[i]->key, sceneName) == 0)
-        {
-            strcpy(sceneImg, script->scene->tab[i]->tab[1]->val);
-            break;
-        }
-    }
-    // 文字
+    // 設定scene_t
+    scene_t scene;
+    scene.background = toml_string_in(event_cur, "background");
+    scene.dialogue = toml_string_in(event_cur, "dialogue");
+    toml_table_t *dialogue = toml_table_in(script->dialogue, "dialogue");
+    scene.character = toml_string_in(event_cur, "character");
 }
