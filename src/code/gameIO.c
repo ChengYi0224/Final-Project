@@ -225,7 +225,7 @@ int8_t displayEvent(SDL_Renderer *renderer, char *event , script_t *script)
     //立繪
     SDL_Rect standRect = { 430 , 40, 500, 380};
     
-    // 背景
+    // 顯示背景
     char sceneName[200] = {0}, sceneImg[200] = {0};
     for(int32_t i = 0 ; i < script->event->ntab ; i++)
     {
@@ -240,6 +240,7 @@ int8_t displayEvent(SDL_Renderer *renderer, char *event , script_t *script)
         if(strcmp(script->scene->tab[i]->key, sceneName) == 0)
         {
             strcpy(sceneImg, script->scene->tab[i]->tab[1]->val);
+            break;
         }
     }
 }
