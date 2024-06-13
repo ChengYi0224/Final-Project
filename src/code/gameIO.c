@@ -226,12 +226,12 @@ int8_t displayEvent(SDL_Renderer *renderer, char *event , script_t *script)
     SDL_Rect standRect = { 430 , 40, 500, 380};
     
     // 背景
-    char sceneName[200] = {0};
+    char sceneName[200] = {0}, sceneImg[200] = {0};
     for(int32_t i = 0 ; i < script->event->ntab ; i++)
     {
-        if(strcmp(script->scene->tab[i]->key, event) == 0)
+        if(strcmp(script->event->tab[i]->key, event) == 0)
         {
-            strcpy(sceneName, script->scene->tab[i]->tab[0]->val);
+            strcpy(sceneName, script->event->tab[i]->tab[0]->val);
             break;
         }
     }
@@ -239,8 +239,7 @@ int8_t displayEvent(SDL_Renderer *renderer, char *event , script_t *script)
     {
         if(strcmp(script->scene->tab[i]->key, sceneName) == 0)
         {
-            DisplayImg(renderer, script->scene->tab[i]->tab[1]->val, NULL, &sceneRect);
+            strcpy(sceneImg, script->scene->tab[i]->tab[1]->val);
         }
     }
-    
 }
