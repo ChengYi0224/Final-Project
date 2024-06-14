@@ -230,17 +230,46 @@ int8_t eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving
 
 }
 
-int8_t dialogueHandler(SDL_Renderer *renderer, script_t *script){
-    // scene顯示方框
-    SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-    // dialogue顯示方框
+toml_table_t *dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *dialogue)
+{
+    SDL_Event event;
     SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
-    // 文字 ?檢查文字大小、行數
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
-    // 物品
-    SDL_Rect itemRect = {20, 20, 150, WINDOW_HEIGHT - 40};
-    // 頭像
-    SDL_Rect faceRect = {WINDOW_WIDTH - 110, 20, 90, WINDOW_HEIGHT - dialRect.h - 60};
-    // 立繪
-    SDL_Rect standRect = {430, 40, 500, 380};
+    int32_t ptsize = 40; // 測試用
+    TTF_Font *font = TTF_OpenFont("assets/fonts/kaiu.ttf", ptsize); // 測試用
+    SDL_Color color = {255, 255, 255};
+    Button nextButton, optionButton;
+    char delim[] = "<br>";
+    char *text = TOML_USE_STRING(toml_string_in(dialogue, "text"));
+    char *token = strtok(text, delim);
+    while (token != NULL)
+    {
+        DisplayUTF8(renderer, token, font, color, &textRect);
+        renderButton(renderer, &nextButton);
+        SDL_RenderPresent(renderer);
+        //按Next按鈕
+        while (SDL_PollEvent(&event))
+        {
+            if(handleButton(&event, &nextButton) == 1) break;
+        }
+        token = strtok(NULL, delim);
+    }
+    //選擇選項
+    int option_num = toml_array_length(toml_array_in(dialogue, "options"));
+    for (int i = 0; i < option_num; i++)
+    {
+        toml_table_t *option = toml_table_at(toml_array_in(dialogue, "options"), i);
+        char *option_text = TOML_USE_STRING(toml_string_in(option, "text"));
+        //顯示選項
+        DisplayUTF8(renderer, option_text, font, color, &textRect);
+        renderButton(renderer, &optionButton);
+        //按下選項
+        while (SDL_PollEvent(&event))
+        {
+            if(handleButton(&event, &button) == 1) break;
+        }
+            //儲存選擇
+            saving->choice = i;
+            return dialogue;
+    }
 }
