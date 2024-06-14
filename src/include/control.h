@@ -52,7 +52,7 @@ typedef struct _sTableScript
 typedef struct _sScene
 {
     toml_datum_t event;
-    toml_datum_t background;
+    toml_datum_t scene;
     toml_datum_t character;
     toml_datum_t dialogue;
     toml_datum_t effect;
@@ -63,6 +63,8 @@ typedef struct _sGameSave
     char SaveName[256];
     toml_array_t *playerInventory; // This is an array
     scene_t nowScene;
+    toml_table_t *tabCurEvent;
+    toml_table_t *tabCurDialogue;
 } GameSave_t;
 
 typedef struct
@@ -99,7 +101,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect);
 
-int8_t eventHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event);
+
 
 int8_t renderButton(SDL_Renderer *renderer, Button *button);
 
