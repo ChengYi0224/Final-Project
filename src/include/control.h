@@ -62,7 +62,6 @@ typedef struct _sGameSave
 {
     char SaveName[256];
     toml_array_t *playerInventory; // This is an array
-    char event[256];
     scene_t nowScene;
 } GameSave_t;
 
