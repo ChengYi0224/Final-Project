@@ -82,8 +82,8 @@ int main(int argc, char const *argv[])
         // 背景
         scene_t cur;
         toml_datum_t itemIcon[2], itemName[2], itemDes[2];
-        cur.background = toml_string_in(toml_table_in(script->scene, backgroundKey), "background");
-        cur.character = toml_string_in(toml_table_in(script->character, characterKey), "avatar");
+        cur.background = toml_string_in(toml_table_in(mainScript->scene, backgroundKey), "background");
+        cur.character = toml_string_in(toml_table_in(mainScript->character, characterKey), "avatar");
         DisplayImg(renderer, cur.background.u.s, NULL, &sceneRect); //
         // DisplayImg(); // 立繪
         // DisplayImg(); // 物品欄
