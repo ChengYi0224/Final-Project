@@ -114,20 +114,20 @@ text = """你選擇了獨自行動。環顧四周，你的目光落在了緊急�
         她這一喊，其他的乘客也開始轉頭望向你。面對突如其來的關注，你必須快速決定下一步如何行動：\
         <br>"""
 option = [
-    { text = "回答歐巴桑並拒絕她的好意，嘗試趁勢告訴大家這輛公車會在不久後爆炸。", next = "solo_fail_1" },
-    { text = "放棄逃逸計劃，尋找其他可能的逃生路徑。", next = "solo_fail_2" }
+    { text = "回答歐巴桑並拒絕她的好意，嘗試趁勢告訴大家這輛公車會在不久後爆炸。", event = "solo_fail_1" },
+    { text = "放棄逃逸計劃，尋找其他可能的逃生路徑。", event = "solo_fail_2" }
 ]
 [[dialogue.solo_fail_1]]
 character = "heyun"
 text = """公車上的其他乘客沒有相信你的警告，將你視為神經病。在接下來的一刻，公車依舊在橋上行駛並發生了爆炸。"""
-option = [{ text = "重新開始", event = "start" }]
+option = [{ text = "重新開始", next = "start" }]
 
 [[dialogue.solo_fail_2]]
 character = "heyun"
 text = """於是你試圖偷偷拿起車窗擊破器，破窗而逃，不料觸發警報。紅燈時，遭到其他乘客的阻止。\
     <br>紅燈轉綠，公車在十字路口為了閃避一輛突然衝出來的摩托車而緊急轉向撞上一輛油罐車再次發生爆炸。\
     <br>"""
-option = [{ text = "重新開始", event = "start" }]
+option = [{ text = "重新開始", next = "start" }]
 
 [[dialogue.cooperate_action]]
 character = "heyun"
@@ -138,8 +138,8 @@ text = """你選擇了與李詩情合作。探討循環的原因。李詩情解�
     你和李詩情竟然發現，車上原本就有炸彈，那麼現在你們不光要阻止兩車相撞，還要找出炸彈，解除危險!\
     <br>"""
 option = [
-    { text = "決定下車報警，告訴警方公車上裝有炸彈，希望他們能迅速介入並協助解除炸彈。", next = "cooperate_continue_1" },
-    { text = "告知司機這個緊急情況，可能使司機能夠立即采取措施停車並疏散乘客。", next = "cooperate_continue_2" }
+    { text = "決定下車報警，告訴警方公車上裝有炸彈，希望他們能迅速介入並協助解除炸彈。", event = "cooperate_continue_1" },
+    { text = "告知司機這個緊急情況，可能使司機能夠立即采取措施停車並疏散乘客。", event = "cooperate_continue_2" }
 ]
 
 [[dialogue.cooperate_continue_1]]
@@ -148,7 +148,7 @@ text = """你們在清水巷下車，邊走邊討論剛剛發現的情況。來�
     <br>這時警方也已經出動警力到清水公園附近，你們必須儘快找出原因。你拿出紙筆開始列出每次循環的時間線和爆炸地點，\
     你們發現每次循環醒來的時間越來越提前......\
     <br>"""
-option = [{ text = "繼續", event = "police_interrogation" }]
+option = [{ text = "繼續", next = "police_interrogation" }]
 
 [[dialogue.cooperate_continue_2]]
 character = "heyun, shiqing"
@@ -156,7 +156,7 @@ text = """李詩情從座位上站起來，向駕駛員喊道：「司機大哥�
     <br>本以為這樣就可以阻止定時炸彈爆炸，沒想到話音剛落，叕爆炸。你突然意識到，\
     這次是人為引爆。兜兜轉轉，兇手竟然就在車上。\
     <br>"""
-option = [{ text = "重新開始", event = "start" }]
+option = [{ text = "重新開始", next = "start" }]
 
 [[dialogue.seek_help]]
 character = "heyun, shiqing"
@@ -252,8 +252,8 @@ text = """
 你想要置身事外，因此和李詩情大吵了一架。她答應不會提及你，便去等警察過來接她。你在遠處的樹後目睹她離開，心裡卻不是滋味。這時的你面對抉擇：\
 """
 option = [
-    {text = "你趕到和合作伙伴約定的地點開會，從此擺脫循環。", next = "ending_1"},
-    {text = "順應良心，覺得還是不能棄李詩情於不顧。", next = "b_option"}
+    {text = "你趕到和合作伙伴約定的地點開會，從此擺脫循環。", event = "ending_1"},
+    {text = "順應良心，覺得還是不能棄李詩情於不顧。", event = "b_option"}
     ]
 
 [dialogue.ending_1]
@@ -262,7 +262,7 @@ text = """
 你的確如意地脫離了循環，並且向投資人完整地介紹了你設計的遊戲。會議結束後，你注意到手機裡的推送通知。\
 新聞標題是《45路公車發生爆炸 1警5司機乘客罹難》，原來警察出動了警員去進行道路攔截並排查可疑人員。\
 """
-option = [{text = "重新開始", event = "start"}]
+option = [{text = "重新開始", next = "start"}]
 
 
 [dialogue.b_option]
@@ -281,7 +281,7 @@ text = """
     經過多次循環，肖鶴雲和李詩情成功地阻止了公交車爆炸，並拯救了車上的所有人。\
     <br>幕後黑手是陶映紅和司機王興德，他們因女兒五年前在公交車上被猥褻並發生事故去世，決定通過製造公交車爆炸報復社會。\
     """
-option = [{text = "重新開始", event = "start"}]
+option = [{text = "重新開始", next = "start"}]
 
 [dialogue.ending_3]
 character = "heyun, shiqing"
@@ -289,3 +289,4 @@ text = """
     由於你們經歷了太多次的循環，身體已經不堪循環所帶來的副作用，你們的身體狀況越來越差。\
     <br>最終，你們搶救無效，一起離開了人世。這件事情也因為你們的離世變得不了了之......\
     """
+option = [{text = "重新開始", next = "start"}]
