@@ -10,21 +10,15 @@ inventory = ["phone"]
 number = 3
 
 [scene]
-bus_45 =
-{
-    name = "45號公車",
-    background = "assets/scene/bus_45.png"
-}
-police_station =
-{
-    name = "警察局",
-    background = "assets/scene/police_station.png"
-}
-park =
-{
-    name = "清水公園"
-    background = "assets/scene/park.png"
-}
+[scene.bus_45]
+name = "45號公車"
+background = "assets/scene/bus_45.png"
+[scene.police_station]
+name = "警察局",
+background = "assets/scene/police_station.png"
+[scene.park]
+name = "清水公園"
+background = "assets/scene/park.png"
 
 [character]
 heyun = {name = "肖鶴雲", avatar = "assets/character/肖鶴雲/avatar.png", tachie = "assets/character/肖鶴雲/tachie.png"}
@@ -33,37 +27,39 @@ police = {name = "警察", avatar = "assets/character/police/avatar.png", tachie
 culprit = {name = "兇手", avatar = "assets/character/兇手/avatar.png", tachie = "assets/character/兇手/tachie.png"}
 
 [item]
-phone =
-{
-    name = "手機",
-    description = "用於與外界溝通，尋求幫助或進行研究。",
-    icon = "assets/item/phone/icon.png"
-}
-bomb =
-{
-    name = "炸彈"，
-    description = "引起公車爆炸的主要原因。",
-    icon = "assets/item/bomb/icon.png"
-}
+[item.phone]
+name = "手機"
+description = "用於與外界溝通，尋求幫助或進行研究。"
+icon = "assets/item/phone/icon.png"
+[item.bomb]
+name = "炸彈"，
+description = "引起公車爆炸的主要原因。"
+icon = "assets/item/bomb/icon.png"
 [ending]
 number = 3
+
 [event]
+[event.start]
+scene = "bus_45"
+dialogue = "introduction"
+
 start = {scene = "bus_45", dialogue = "introduction"}
 solo_action = {scene = "bus_45", dialogue = "solo_action"}
 cooperate_action = {scene = "bus_45", dialogue = "cooperate_action"}
 seek_help = {scene = "bus_45", dialogue = "seek_help"}
 police_interrogation = {scene = "police_station", dialogue = "police_interrogation"}
 continue_3 = {scene = "bus_45", dialogue = "continue_3"}
-ending = {
-[ending.1]
+
+[[event.ending]]
 description = "導致更多人死亡 -
 警察接到報警電話攔截車輛，已經驚動兇手提前引爆炸彈。"
 
-[ending.2]
+[[event.ending]]
 description = "發現幕後黑手 -
 透過協作共同揭露造成循環的幕後黑手，得知兇手的作案動機。"
 
-[ending.3] #if player back to start 12 times, 觸發結局三
+#if player back to start 12 times, 觸發結局三
+[[event.ending]] 
 description = "你和李詩情病重離世 -
 由於身體不堪負荷多次循環造成的傷害，使得整件事情不了了之。"}
 

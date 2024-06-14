@@ -59,11 +59,21 @@ int main(int argc, char const *argv[])
     Button button = {{300, 250, 200, 100}, {0, 0, 255, 255}, 0, 0};
     char backgroundKey[100] = {0}, text[500] = {0}, characterKey[100] = {0}, *itemKey[2] = {NULL, NULL};
 
+
+    // 遊戲資料變數
+    script_t mainScript = {0};
+    GameSave_t saving = {0};
+    toml_table_t *currentEvent = NULL;
+    toml_table_t *currentDialogue = NULL;
+
     // 遊戲主迴圈
     while (1)
     {
         // # 清除畫面
         SDL_RenderClear(renderer);
+
+        // 透過遊戲選單選擇，並根據回傳值執行接下來的劇情
+        currentEvent = GameStartMenu(renderer, &mainScript, &saving);
 
         // # 下一個事件更新並處理
         // eventHandler();
