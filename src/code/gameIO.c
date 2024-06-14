@@ -61,7 +61,7 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSa
         {
             if (handleButton(&event, &buttonNewGame))
             {
-                // 處理 New Game 按鈕被點擊的行為
+                // 處理 New Game 按鈕被點擊*saving的行為
                 return startNewGame(mainScript, saving);
             }
             if (handleButton(&event, &buttonLoadGame))
@@ -207,7 +207,7 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     return EXIT_SUCCESS;
 }
 
-int8_t displayEvent(SDL_Renderer *renderer, char *event, script_t *script)
+toml_table_t *eventHandler(SDL_Renderer *renderer, char *event, script_t *script)
 {
     if (renderer == NULL || event == NULL || script == NULL)
         return -1;
@@ -229,7 +229,7 @@ int8_t displayEvent(SDL_Renderer *renderer, char *event, script_t *script)
     toml_table_t *option = toml_table_in(dialogue, "options");
 }
 
-int8_t dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving){
+toml_table_t *dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *dialogue){
     SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
     // dialogue顯示方框
     SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
