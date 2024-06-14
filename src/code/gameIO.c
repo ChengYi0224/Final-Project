@@ -223,16 +223,9 @@ int8_t eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving
 
 }
 
-<<<<<<< Updated upstream
 toml_table_t *dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *dialogue)
 {
     SDL_Event event;
-=======
-int8_t dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving){
-    // scene顯示方框
-    SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-    // dialogue顯示方框
->>>>>>> Stashed changes
     SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     int32_t ptsize = 40; // 測試用
