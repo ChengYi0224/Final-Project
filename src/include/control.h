@@ -86,8 +86,24 @@ typedef enum _eNextAction
 
 #include "toml_extra.h"
 #include "gameIO.h"
+#include "graphics.h"
+
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 extern int64_t gGameVolume;
+TTF_Font *gFontDefault;
+SDL_Color gColorWHITE = {255,255,255,255};
+SDL_Color gColorBLACK = {0,0,0,255};
+SDL_Color gColorGREY = {128,128,128,255}; 
+SDL_Color gColorLGREY = {192,192,192,255};
+SDL_Color gColorDGREY = {64,64,64,255};
+SDL_Color gColorRED = {255,0,0,255};
+SDL_Color gColorGREEN = {0,255,0,255};
+SDL_Color gColorBLUE = {0,0,255,255};
+
+SDL_Rect gRectDialogue = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
+SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 
 #define TOML_USE_STRING(toml_datum) toml_datum.ok == 1 ? toml_datum.u.s : ""
 
@@ -95,8 +111,6 @@ extern int64_t gGameVolume;
 
 #define TOML_USE_FLOAT(toml_datum) toml_datum.ok == 1 ? toml_datum.u.f : 0.0
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
 
 #define StartBackgroundPathDefault "assets/scenes/defaultBackground.png"
 #define imgtest "assets/scenes/2K.jpg"
@@ -108,8 +122,6 @@ int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_
 int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect);
 
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect);
-
-
 
 int8_t renderButton(SDL_Renderer *renderer, Button *button);
 

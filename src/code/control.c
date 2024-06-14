@@ -130,26 +130,7 @@ int8_t handleButton(SDL_Event *event, Button *button)
     return 0; // 按鈕沒有被點擊
 }
 
-int8_t optionHandler(SDL_Renderer *renderer, script_t script, toml_table_t *event, int32_t optionIdx)
-{
-    if (renderer == NULL)
-    {
-        return EXIT_FAILURE;
-    }
-    if (event == NULL)
-    {
-        return EXIT_FAILURE;
-    }
-    if (optionIdx < 0)
-    {
-        return EXIT_FAILURE;
-    }
-    toml_array_t *optionArray = toml_array_in(event, "options");
-    if (optionArray == NULL)
-    {
-        return EXIT_FAILURE;
-    }
-}
+
 
 struct tm* getLocalTime(){
     time_t rawtime;

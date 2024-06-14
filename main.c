@@ -29,6 +29,8 @@ int main(int argc, char const *argv[])
     // 建立渲染器
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
+    // 載入字體
+    gFontDefault = TTF_OpenFont("assets/fonts/kaiu.ttf", 40);
 
     // 圖形介面排版初始化 (建立各個物件需要用的方框)
     // scene顯示方框
@@ -48,13 +50,13 @@ int main(int argc, char const *argv[])
     SDL_Event event;
     int32_t game_is_running = 1;
     int32_t ptsize = 40; // 測試用
-    uint8_t *text = "Aa😂一二三四五六七八九十。😂一二三四五六七八九十。一二三四五六七八九十。一二三四五六七八九十。";
+    uint8_t *textTest = "Aa😂一二三四五六七八九十。😂一二三四五六七八九十。一二三四五六七八九十。一二三四五六七八九十。";
     // char text2[] = "abcdefu rah rah ah ah ah roma roma-ma gaga ooh-la-la ghijk lmnopq"; //測試用
     TTF_Font *font = TTF_OpenFont("assets/fonts/kaiu.ttf", ptsize); // 測試用
     SDL_Color color = {255, 255, 255};                              // 測試用
     Button button = {{300, 250, 200, 100}, {0, 0, 255, 255}, 0, 0};
     char backgroundKey[100] = {0}, text[500] = {0}, characterKey[100] = {0}, *itemKey[2] = {NULL, NULL};
-
+    
     // 遊戲資料變數
     script_t mainScript = {0};
     scriptRead(ScriptPath, &mainScript);
@@ -64,7 +66,7 @@ int main(int argc, char const *argv[])
     
 
     // 遊戲主迴圈
-    while (1)
+    while (game_is_running)
     {
         // # 清除畫面
         SDL_RenderClear(renderer);
@@ -76,6 +78,8 @@ int main(int argc, char const *argv[])
         // 退出條件：玩家從選單選擇退出
         while (1)
         {
+            updateInventory(renderer, saving);
+
             switch (NextAction)
             {
             case _eEVENT:
@@ -137,9 +141,9 @@ int main(int argc, char const *argv[])
                 }
             }
             */
-            DisplayImg(renderer, scene.character.u.s, NULL, &faceRect); // 頭像位置
+            //DisplayImg(renderer, scene.character.u.s, NULL, &faceRect); // 頭像位置
             DisplayImg(renderer, imgtest2, NULL, &standRect);           // 立繪位置
-            DisplayUTF8(renderer, text, font, color, &textRect);        // 對話
+            DisplayUTF8(renderer, textTest, font, color, &textRect);        // 對話
 
             // 繪製選項
             // for(size_t i = 0; i < (optionNum); i++){
@@ -169,11 +173,6 @@ int main(int argc, char const *argv[])
 
             // # 更新畫面
             SDL_RenderPresent(renderer);
-        }
-        // # 終止條件
-        if (!game_is_running)
-        {
-            break;
         }
     }
 
