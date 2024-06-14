@@ -71,7 +71,7 @@ int main(int argc, char const *argv[])
         GameStartMenu(renderer, &mainScript, &saving);
 
         // # 下一個事件更新並處理
-        // eventHandler();
+        eventHandler(renderer, &mainScript, &saving);
 
         // # 音樂播放
         // - 背景音樂:如果有切換則切換，若無則繼續播放

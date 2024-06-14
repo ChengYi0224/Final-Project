@@ -206,7 +206,7 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     return EXIT_SUCCESS;
 }
 
-int8_t eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *event)
+int8_t eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving)
 {
     if (renderer == NULL || event == NULL || script == NULL || event == NULL)
         return EXIT_FAILURE;
@@ -230,7 +230,7 @@ int8_t eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving
 
 }
 
-int8_t dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *dialogue){
+int8_t dialogueHandler(SDL_Renderer *renderer, script_t *script){
     // scene顯示方框
     SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
     // dialogue顯示方框
