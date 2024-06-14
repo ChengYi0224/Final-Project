@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
     // 文字 ?檢查文字大小、行數
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     // 物品
-    //SDL_Rect itemRect = {20, 20, 150, WINDOW_HEIGHT - 40};
+    // SDL_Rect itemRect = {20, 20, 150, WINDOW_HEIGHT - 40};
     // 頭像
     SDL_Rect faceRect = {WINDOW_WIDTH - 110, 20, 90, WINDOW_HEIGHT - dialRect.h - 60};
     // 立繪
@@ -55,11 +55,13 @@ int main(int argc, char const *argv[])
     Button button = {{300, 250, 200, 100}, {0, 0, 255, 255}, 0, 0};
     char backgroundKey[100] = {0}, text[500] = {0}, characterKey[100] = {0}, *itemKey[2] = {NULL, NULL};
 
-
     // 遊戲資料變數
     script_t mainScript = {0};
     scriptRead(ScriptPath, &mainScript);
     GameSave_t saving = {0};
+    NEXT_ACTION NextAction = _eEVENT;
+
+    
 
     // 遊戲主迴圈
     while (1)
@@ -70,80 +72,104 @@ int main(int argc, char const *argv[])
         // 透過遊戲選單選擇，並根據回傳值執行接下來的劇情
         GameStartMenu(renderer, &mainScript, &saving);
 
-        // # 下一個事件更新並處理
-        eventHandler(renderer, &mainScript, &saving);
-
-        // # 音樂播放
-        // - 背景音樂:如果有切換則切換，若無則繼續播放
-        // - 音效
-
-        // # 畫面繪製
-
-        // 繪製圖像
-        // 物品
-        SDL_Rect itemIconRect = {20, 20, 150, WINDOW_HEIGHT - 40}; //icon
-        SDL_Rect itemNameRect = {20, 20, 150, WINDOW_HEIGHT - 40}; //name
-        SDL_Rect itemDesRect = {20, 20, 150, WINDOW_HEIGHT - 40}; //description
-        // 背景
-        scene_t cur;
-        toml_datum_t itemIcon[2], itemName[2], itemDes[2];
-        cur.scene = toml_string_in(toml_table_in(mainScript.scene, backgroundKey), "background");
-        cur.character = toml_string_in(toml_table_in(mainScript.character, characterKey), "avatar");
-        DisplayImg(renderer, cur.scene.u.s, NULL, &sceneRect); //
-        // DisplayImg(); // 立繪
-        // DisplayImg(); // 物品欄
-        // DisplayImg(); // 角色頭像
-        // DisplayImg(); // 角色頭像邊框
-
-        // 繪製文字
-        // textRect.w = WINDOW_WIDTH / 100 * strlen("abcdefu");
-        // textRect.h = WINDOW_HEIGHT / 15;
-        DisplayImg(renderer, imgtest2, NULL, &dialRect);
-        // 物品位置
-        /*
-        for (int32_t i = 0; i < 2; i++)
+        // 遊戲劇情迴圈
+        // 退出條件：玩家從選單選擇退出
+        while (1)
         {
-            if (itemKey[i] != NULL)
+            switch (NextAction)
             {
-                itemIcon[i] = toml_string_in(toml_table_in(script.item, itemKey[i]), icon);
-                DisplayImg(renderer, itemIcon[i].u.s, NULL, &itemRect);
-                itemRect.y += itemRect.h;
-            }
-        }
-        */
-        DisplayImg(renderer, scene.character.u.s, NULL, &faceRect); // 頭像位置
-        DisplayImg(renderer, imgtest2, NULL, &standRect);           // 立繪位置
-        DisplayUTF8(renderer, text, font, color, &textRect);        // 對話
-
-        // 繪製選項
-        // for(size_t i = 0; i < (optionNum); i++){
-        //     DisplayButton(); // option
-        // }
-
-        // # 聆聽事件(偵測滑鼠/鍵盤輸入) 包含音效  //目前只支援關閉視窗
-        while (SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-            case SDL_QUIT:
-                game_is_running = 0;
+            case _eEVENT:
+                // # 下一個事件更新並處理
+                NextAction = eventHandler(renderer, &mainScript, &saving);
                 break;
-            case SDL_KEYDOWN:
-                if (event.key.keysym.sym == SDLK_ESCAPE)
+            case _eDIALOGUE:
+                // # 下一個對話更新並處理
+                NextAction = dialogueHandler(renderer, &mainScript, &saving);
+                break;
+            case _eENDING:
+                // # 遊戲結束
+                //game_is_running = 0;
+                break;
+            
+            case _eEMPTY:
+            default:
+                // # 錯誤發生
+                fprintf(stderr, "Error in Game Script Loop\n");
+                goto end;
+            }
+            
+
+            // # 音樂播放
+            // - 背景音樂:如果有切換則切換，若無則繼續播放
+            // - 音效
+
+            // # 畫面繪製
+
+            // 繪製圖像
+            // 物品
+            SDL_Rect itemIconRect = {20, 20, 150, WINDOW_HEIGHT - 40}; // icon
+            SDL_Rect itemNameRect = {20, 20, 150, WINDOW_HEIGHT - 40}; // name
+            SDL_Rect itemDesRect = {20, 20, 150, WINDOW_HEIGHT - 40};  // description
+            // 背景
+            scene_t cur;
+            toml_datum_t itemIcon[2], itemName[2], itemDes[2];
+            cur.scene = toml_string_in(toml_table_in(mainScript.scene, backgroundKey), "background");
+            cur.character = toml_string_in(toml_table_in(mainScript.character, characterKey), "avatar");
+            DisplayImg(renderer, cur.scene.u.s, NULL, &sceneRect); //
+            // DisplayImg(); // 立繪
+            // DisplayImg(); // 物品欄
+            // DisplayImg(); // 角色頭像
+            // DisplayImg(); // 角色頭像邊框
+
+            // 繪製文字
+            // textRect.w = WINDOW_WIDTH / 100 * strlen("abcdefu");
+            // textRect.h = WINDOW_HEIGHT / 15;
+            DisplayImg(renderer, imgtest2, NULL, &dialRect);
+            // 物品位置
+            /*
+            for (int32_t i = 0; i < 2; i++)
+            {
+                if (itemKey[i] != NULL)
                 {
-                    game_is_running = 0;
+                    itemIcon[i] = toml_string_in(toml_table_in(script.item, itemKey[i]), icon);
+                    DisplayImg(renderer, itemIcon[i].u.s, NULL, &itemRect);
+                    itemRect.y += itemRect.h;
                 }
-                break;
             }
-            handleButton(&event, &button);
+            */
+            DisplayImg(renderer, scene.character.u.s, NULL, &faceRect); // 頭像位置
+            DisplayImg(renderer, imgtest2, NULL, &standRect);           // 立繪位置
+            DisplayUTF8(renderer, text, font, color, &textRect);        // 對話
+
+            // 繪製選項
+            // for(size_t i = 0; i < (optionNum); i++){
+            //     DisplayButton(); // option
+            // }
+
+            // # 聆聽事件(偵測滑鼠/鍵盤輸入) 包含音效  //目前只支援關閉視窗
+            while (SDL_PollEvent(&event))
+            {
+                switch (event.type)
+                {
+                case SDL_QUIT:
+                    game_is_running = 0;
+                    break;
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == SDLK_ESCAPE)
+                    {
+                        game_is_running = 0;
+                    }
+                    break;
+                }
+                handleButton(&event, &button);
+            }
+            renderButton(renderer, &button);
+            // 點擊選項
+            // 物品預覽
+
+            // # 更新畫面
+            SDL_RenderPresent(renderer);
         }
-        renderButton(renderer, &button);
-        // 點擊選項
-        // 物品預覽
-
-        // # 更新畫面
-        SDL_RenderPresent(renderer);
-
         // # 終止條件
         if (!game_is_running)
         {
@@ -152,6 +178,9 @@ int main(int argc, char const *argv[])
     }
 
     // 程式結束，以相反順序釋放資源
+    end:
+    if(mainScript.rootTable)
+        toml_free(mainScript.rootTable);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(GameWindow);
     TTF_Quit(); // 關閉TTF

@@ -2,11 +2,7 @@
 #include "../include/control.h"
 
 // The very entry of the program
-// read the script to configure the start menu
-// otherwise, remain default
-// return a table of the first event
-// call eventHandler with the retval
-toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving)
+int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving)
 {
     // 檢查遊戲存檔資料夾狀態
     // 如果不存在，則創建資料夾
@@ -103,31 +99,36 @@ toml_table_t *GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSa
     }
 }
 
-toml_table_t *startNewGame(script_t *mainScript, GameSave_t *saving)
+// Set the first event "start"
+int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
 {
     if (scriptRead(ScriptPath, mainScript))
     {
         perror("Error reading script");
-        return NULL;
+        return EXIT_FAILURE;
     }
     toml_table_t *eventStart = toml_table_in(mainScript->event, "start");
     if (eventStart == NULL)
     {
         perror("Error reading start event");
-        return NULL;
+        return EXIT_FAILURE;
     }
     // 設定scene_t
     scene_t sceneStart;
-    sceneStart.background = toml_string_in(eventStart, "background");
+    sceneStart.scene = toml_string_in(eventStart, "scene");
     sceneStart.character = toml_string_in(eventStart, "character");
     sceneStart.dialogue = toml_string_in(eventStart, "dialogue");
     sceneStart.effect = toml_string_in(eventStart, "effect");
     saving->nowScene = sceneStart;
 
     // 設定event
-    snprintf(saving->event, sizeof(saving->event), "%s", "start");
-
-    return toml_table_in(mainScript->event, "start");
+    toml_set_string(&(saving->nowScene.event), "start");
+    if(saving->nowScene.event.ok == 1){
+        saving->tabCurEvent = toml_table_in(mainScript->event, TOML_USE_STRING(saving->nowScene.event));
+    }else{
+        perror("Error setting event");
+        return EXIT_FAILURE;
+    }
 }
 
 int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
@@ -199,8 +200,9 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     (*script).dialogue = toml_table_in(wholeScript, "dialogue");
     (*script).character = toml_table_in(wholeScript, "character");
 
+    script->rootTable = wholeScript;
+
     // 釋放資源
-    toml_free(wholeScript);
     fclose(fpScript);
     free(sRead_errmsg);
     return EXIT_SUCCESS;
@@ -208,31 +210,29 @@ int8_t scriptRead(char *scriptPath, script_t *script)
 
 int8_t eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving)
 {
-    if (renderer == NULL || event == NULL || script == NULL || event == NULL)
+    if (renderer == NULL || script == NULL || saving == NULL)
         return EXIT_FAILURE;
     
     // 設定scene_t
     scene_t scene = {0};
-    scene.scene = toml_string_in(event, "scene");
-    scene.dialogue = toml_string_in(event, "dialogue");
+    scene.scene = toml_string_in(saving->tabCurEvent, "scene");
+    scene.dialogue = toml_string_in(saving->tabCurEvent, "dialogue");
     saving->nowScene = scene;
-    toml_table_t *dialogue = toml_table_in(script->dialogue, TOML_USE_STRING(scene.dialogue));
-    toml_table_t *dialogueOld = NULL;
-
-    // 執行event底下的所有dialogue
-    while(dialogue != NULL){
-        dialogueOld = dialogue;
-        dialogue = dialogueHandler(renderer, script, saving, dialogue);
-    }
-
-
+    saving->tabCurDialogue = toml_table_in(script->dialogue, TOML_USE_STRING(scene.dialogue));
 
 
 }
 
+<<<<<<< Updated upstream
 toml_table_t *dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *dialogue)
 {
     SDL_Event event;
+=======
+int8_t dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving){
+    // scene顯示方框
+    SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+    // dialogue顯示方框
+>>>>>>> Stashed changes
     SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     int32_t ptsize = 40; // 測試用

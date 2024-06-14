@@ -33,6 +33,7 @@
 
 typedef struct _sTableScript
 {
+    toml_table_t *rootTable; // Please toml_free() when exit
 
     toml_datum_t title;
     toml_datum_t author;
@@ -75,6 +76,13 @@ typedef struct
     int8_t isClicked;
 } Button;
 
+typedef enum _eNextAction
+{
+    _eEMPTY,
+    _eDIALOGUE,
+    _eEVENT,
+    _eENDING
+} NEXT_ACTION;
 
 #include "toml_extra.h"
 #include "gameIO.h"
