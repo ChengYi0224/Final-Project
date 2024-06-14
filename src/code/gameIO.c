@@ -155,15 +155,14 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
     }
     fprintf(fpSave, "]\n");
 
-    // 當前event
-    fprintf(fpSave, "event = \"%s\"\n", GameSave->event);
 
     // 當前場景紀錄
     fprintf(fpSave, "nowScene = {\n");
-    fprintf(fpSave, "background = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.background));
+    fprintf(fpSave, "event = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.event));
+    fprintf(fpSave, "scene = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.scene));
     fprintf(fpSave, "character = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.character));
     fprintf(fpSave, "dialogue = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.dialogue));
-    fprintf(fpSave, "effect = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.effect));
+    //fprintf(fpSave, "effect = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.effect));
     fprintf(fpSave, "}\n");
 
     fclose(fpSave);
@@ -207,29 +206,32 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     return EXIT_SUCCESS;
 }
 
-toml_table_t *eventHandler(SDL_Renderer *renderer, char *event, script_t *script)
+int8_t eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *event)
 {
-    if (renderer == NULL || event == NULL || script == NULL)
-        return -1;
-    // scene顯示方框
+    if (renderer == NULL || event == NULL || script == NULL || event == NULL)
+        return EXIT_FAILURE;
     
-
-    toml_table_t *event_cur = toml_table_in(script->event, event);
-    if (event_cur == NULL)
-    {
-        perror("Error reading start event");
-        return NULL;
-    }
     // 設定scene_t
-    scene_t scene;
-    scene.background = toml_string_in(event_cur, "background");
-    toml_table_t *dialogue = toml_table_in(script->dialogue, "dialogue");
-    scene.character = toml_string_in(dialogue, "character");
-    scene.dialogue = toml_string_in(dialogue, "text");
-    toml_table_t *option = toml_table_in(dialogue, "options");
+    scene_t scene = {0};
+    scene.scene = toml_string_in(event, "scene");
+    scene.dialogue = toml_string_in(event, "dialogue");
+    saving->nowScene = scene;
+    toml_table_t *dialogue = toml_table_in(script->dialogue, TOML_USE_STRING(scene.dialogue));
+    toml_table_t *dialogueOld = NULL;
+
+    // 執行event底下的所有dialogue
+    while(dialogue != NULL){
+        dialogueOld = dialogue;
+        dialogue = dialogueHandler(renderer, script, saving, dialogue);
+    }
+
+
+
+
 }
 
-toml_table_t *dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *dialogue){
+int8_t dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, toml_table_t *dialogue){
+    // scene顯示方框
     SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
     // dialogue顯示方框
     SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};

@@ -13,10 +13,6 @@
 
 int main(int argc, char const *argv[])
 {
-    // 讀取劇本
-    script_t mainScript;
-    scriptRead(ScriptPath, &mainScript);
-
     // SDL系統初始化
     if (SDL_Init(SDL_INIT_EVERYTHING))
     {
@@ -62,9 +58,8 @@ int main(int argc, char const *argv[])
 
     // 遊戲資料變數
     script_t mainScript = {0};
+    scriptRead(ScriptPath, &mainScript);
     GameSave_t saving = {0};
-    toml_table_t *currentEvent = NULL;
-    toml_table_t *currentDialogue = NULL;
 
     // 遊戲主迴圈
     while (1)
@@ -73,7 +68,7 @@ int main(int argc, char const *argv[])
         SDL_RenderClear(renderer);
 
         // 透過遊戲選單選擇，並根據回傳值執行接下來的劇情
-        currentEvent = GameStartMenu(renderer, &mainScript, &saving);
+        GameStartMenu(renderer, &mainScript, &saving);
 
         // # 下一個事件更新並處理
         // eventHandler();
@@ -92,9 +87,9 @@ int main(int argc, char const *argv[])
         // 背景
         scene_t cur;
         toml_datum_t itemIcon[2], itemName[2], itemDes[2];
-        cur.background = toml_string_in(toml_table_in(mainScript->scene, backgroundKey), "background");
-        cur.character = toml_string_in(toml_table_in(mainScript->character, characterKey), "avatar");
-        DisplayImg(renderer, cur.background.u.s, NULL, &sceneRect); //
+        cur.scene = toml_string_in(toml_table_in(mainScript.scene, backgroundKey), "background");
+        cur.character = toml_string_in(toml_table_in(mainScript.character, characterKey), "avatar");
+        DisplayImg(renderer, cur.scene.u.s, NULL, &sceneRect); //
         // DisplayImg(); // 立繪
         // DisplayImg(); // 物品欄
         // DisplayImg(); // 角色頭像
@@ -105,16 +100,17 @@ int main(int argc, char const *argv[])
         // textRect.h = WINDOW_HEIGHT / 15;
         DisplayImg(renderer, imgtest2, NULL, &dialRect);
         // 物品位置
+        /*
         for (int32_t i = 0; i < 2; i++)
         {
             if (itemKey[i] != NULL)
             {
-                itemIcon[i] = toml_string_in(toml_table_in(script->item, itemKey[i]), icon);
+                itemIcon[i] = toml_string_in(toml_table_in(script.item, itemKey[i]), icon);
                 DisplayImg(renderer, itemIcon[i].u.s, NULL, &itemRect);
                 itemRect.y += itemRect.h;
             }
         }
-
+        */
         DisplayImg(renderer, scene.character.u.s, NULL, &faceRect); // 頭像位置
         DisplayImg(renderer, imgtest2, NULL, &standRect);           // 立繪位置
         DisplayUTF8(renderer, text, font, color, &textRect);        // 對話
