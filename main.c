@@ -34,17 +34,12 @@ int main(int argc, char const *argv[])
 
     // 圖形介面排版初始化 (建立各個物件需要用的方框)
     // scene顯示方框
-    SDL_Rect sceneRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
     // dialogue顯示方框
-    SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
     // 文字 ?檢查文字大小、行數
-    SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     // 物品
-    // SDL_Rect itemRect = {20, 20, 150, WINDOW_HEIGHT - 40};
     // 頭像
     SDL_Rect faceRect = {WINDOW_WIDTH - 110, 20, 90, WINDOW_HEIGHT - dialRect.h - 60};
     // 立繪
-    SDL_Rect standRect = {430, 40, 500, 380};
     // 當前scene的路徑
 
     SDL_Event event;
@@ -56,14 +51,12 @@ int main(int argc, char const *argv[])
     SDL_Color color = {255, 255, 255};                              // 測試用
     Button button = {{300, 250, 200, 100}, {0, 0, 255, 255}, 0, 0};
     char backgroundKey[100] = {0}, text[500] = {0}, characterKey[100] = {0}, *itemKey[2] = {NULL, NULL};
-    
+
     // 遊戲資料變數
     script_t mainScript = {0};
     scriptRead(ScriptPath, &mainScript);
     GameSave_t saving = {0};
     NEXT_ACTION NextAction = _eEVENT;
-
-    
 
     // 遊戲主迴圈
     while (game_is_running)
@@ -93,16 +86,15 @@ int main(int argc, char const *argv[])
                 break;
             case _eENDING:
                 // # 遊戲結束
-                //game_is_running = 0;
+                // game_is_running = 0;
                 break;
-            
+
             case _eEMPTY:
             default:
                 // # 錯誤發生
                 fprintf(stderr, "Error in Game Script Loop\n");
                 goto end;
             }
-            
 
             // # 音樂播放
             // - 背景音樂:如果有切換則切換，若無則繼續播放
@@ -116,20 +108,21 @@ int main(int argc, char const *argv[])
             SDL_Rect itemNameRect = {20, 20, 150, WINDOW_HEIGHT - 40}; // name
             SDL_Rect itemDesRect = {20, 20, 150, WINDOW_HEIGHT - 40};  // description
             // 背景
-            scene_t cur;
             toml_datum_t itemIcon[2], itemName[2], itemDes[2];
-            cur.scene = toml_string_in(toml_table_in(mainScript.scene, backgroundKey), "background");
-            cur.character = toml_string_in(toml_table_in(mainScript.character, characterKey), "avatar");
-            DisplayImg(renderer, cur.scene.u.s, NULL, &sceneRect); //
+            // cur.scene = toml_string_in(toml_table_in(mainScript.scene, backgroundKey), "background");
+            //cur.character = toml_string_in(toml_table_in(mainScript.character, characterKey), "avatar");
+            DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.scene, TOML_USE_STRING(saving.nowscene.scene)), "background")), NULL, &gRectBackground); //
             // DisplayImg(); // 立繪
+            DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowscene.character)), "tachie")), NULL, &gRectAvatar);
             // DisplayImg(); // 物品欄
             // DisplayImg(); // 角色頭像
+            DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowscene.character)), "avatar")), NULL, &gRectAvatar);
             // DisplayImg(); // 角色頭像邊框
 
             // 繪製文字
             // textRect.w = WINDOW_WIDTH / 100 * strlen("abcdefu");
             // textRect.h = WINDOW_HEIGHT / 15;
-            DisplayImg(renderer, imgtest2, NULL, &dialRect);
+            // DisplayImg(renderer, imgtest2, NULL, &dialRect);
             // 物品位置
             /*
             for (int32_t i = 0; i < 2; i++)
@@ -142,9 +135,9 @@ int main(int argc, char const *argv[])
                 }
             }
             */
-            //DisplayImg(renderer, scene.character.u.s, NULL, &faceRect); // 頭像位置
-            DisplayImg(renderer, imgtest2, NULL, &standRect);           // 立繪位置
-            DisplayUTF8(renderer, textTest, font, color, &textRect);        // 對話
+            // DisplayImg(renderer, scene.character.u.s, NULL, &faceRect); // 頭像位置
+
+            DisplayUTF8(renderer, textTest, font, color, &textRect); // 對話
 
             // 繪製選項
             // for(size_t i = 0; i < (optionNum); i++){
@@ -177,9 +170,9 @@ int main(int argc, char const *argv[])
         }
     }
 
-    // 程式結束，以相反順序釋放資源
-    end:
-    if(mainScript.rootTable)
+// 程式結束，以相反順序釋放資源
+end:
+    if (mainScript.rootTable)
         toml_free(mainScript.rootTable);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(GameWindow);
