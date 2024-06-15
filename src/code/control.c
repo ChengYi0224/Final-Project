@@ -35,7 +35,7 @@ SDL_Rect gRectInventory[4] = {
     {1140, 600, 80, 80},
     {1240, 600, 80, 80}};
 
-    toml_table_t *gRootTabGameSaveRead = NULL;
+toml_table_t *gRootTabGameSaveRead = NULL;
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect)
 {
@@ -68,7 +68,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
     if (dstRect->h > textSurface->h)
         dstRect->h = textSurface->h;
     SDL_RenderCopy(renderer, texture, NULL, dstRect);
-    //SDL_RenderPresent(renderer);
+    // SDL_RenderPresent(renderer);
 
     SDL_DestroyTexture(texture);
 
@@ -77,10 +77,10 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
-    //SDL_RenderFillRect(renderer, dstRect);
-    // 建立材質
-    // SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
-    // SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, text, color);
+    // SDL_RenderFillRect(renderer, dstRect);
+    //  建立材質
+    //  SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
+    //  SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, text, color);
     SDL_Surface *textSurface = TTF_RenderUTF8_Blended_Wrapped(font, text, color, dstRect->w);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_FreeSurface(textSurface);
@@ -95,7 +95,7 @@ int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Co
     if (dstRect->h > textSurface->h)
         dstRect->h = textSurface->h;
     SDL_RenderCopy(renderer, texture, NULL, dstRect);
-    //SDL_RenderPresent(renderer); // 由外面的呼叫者統一更新畫面以避免閃爍
+    // SDL_RenderPresent(renderer); // 由外面的呼叫者統一更新畫面以避免閃爍
     SDL_DestroyTexture(texture);
 
     return 1;
@@ -126,39 +126,24 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button)
 
 int8_t handleButton(SDL_Event *event, Button *button)
 {
-    switch (event->type)
+    int mouseX, mouseY;
+    if (event->type == SDL_MOUSEBUTTONDOWN)
     {
-    case SDL_MOUSEMOTION:
-        button->isHovered = SDL_PointInRect(&(SDL_Point){event->motion.x, event->motion.y}, &button->rect);
-        break;
-    case SDL_MOUSEBUTTONDOWN:
-        if (event->button.button == SDL_BUTTON_LEFT && button->isHovered)
+        SDL_GetMouseState(&mouseX, &mouseY);
+        if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
+            mouseY >= button->rect.y && mouseY <= button->rect.y + button->rect.h)
         {
-            button->isClicked = 1;
+            printf("Button clicked!\\n");
+            return 1;
         }
-        break;
-    case SDL_MOUSEBUTTONUP:
-        if (event->button.button == SDL_BUTTON_LEFT)
-        {
-            if (button->isClicked && button->isHovered)
-            {
-                // Button action triggered here
-                // SDL_Log("Button clicked!");
-            }
-            button->isClicked = 0;
-            return 1; // 按鈕被點擊
-        }
-        button->isClicked = 0;
-        break;
     }
     return 0; // 按鈕沒有被點擊
 }
 
-
-
-struct tm* getLocalTime(){
+struct tm *getLocalTime()
+{
     time_t rawtime;
-    struct tm * timeinfo;
+    struct tm *timeinfo;
     time(&rawtime);
     timeinfo = localtime(&rawtime);
     return timeinfo;
