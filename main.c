@@ -72,7 +72,8 @@ int main(int argc, char const *argv[])
         SDL_RenderClear(renderer);
 
         // 透過遊戲選單選擇，並根據回傳值執行接下來的劇情
-        GameStartMenu(renderer, &mainScript, &saving);
+        if(GameStartMenu(renderer, &mainScript, &saving) == 0)
+            goto end;
 
         // 遊戲劇情迴圈
         // 退出條件：玩家從選單選擇退出

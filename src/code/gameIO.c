@@ -1,5 +1,4 @@
-#include "../include/toml.h"
-#include "../include/control.h"
+#include "control.h"
 
 // The very entry of the program
 int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving)
@@ -19,7 +18,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
     if (SaveDir == NULL)
     {
         perror("Error opening save directory");
-        return NULL;
+        return EXIT_FAILURE;
     }
 
     // 檢查是否存在任何存檔
@@ -76,7 +75,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             if (handleButton(&event, &buttonExit))
             {
                 // 處理 Exit 按鈕被點擊的行為
-                return NULL;
+                return 0;
             }
         }
         /*
@@ -133,6 +132,36 @@ int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
 
 int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
 {
+    // 打開劇本檔案
+    char *sRead_errmsg = calloc(100, sizeof(char)); // 錯誤訊息
+    FILE *fpSave = NULL;
+    if ((fpSave = fopen(SavePath, "r")) == NULL)
+    {
+        perror("Error opening save");
+        return EXIT_FAILURE;
+    }
+    // 解析存檔
+    gRootTabGameSaveRead = toml_parse_file(fpSave, sRead_errmsg, 100);
+    if (!gRootTabGameSaveRead)
+    {
+        printf("Save parsing failed: %s\n", sRead_errmsg);
+        free(sRead_errmsg);
+        return EXIT_FAILURE;
+    }
+
+    // 讀取存檔資料
+    GameSave->playerInventory = toml_array_in(gRootTabGameSaveRead, "playerInventory");
+    GameSave->nowScene.event = toml_string_in(gRootTabGameSaveRead, "nowScene.event");
+    GameSave->nowScene.scene = toml_string_in(gRootTabGameSaveRead, "nowScene.scene");
+    GameSave->nowScene.character = toml_string_in(gRootTabGameSaveRead, "nowScene.character");
+    GameSave->nowScene.dialogue = toml_string_in(gRootTabGameSaveRead, "nowScene.dialogue");
+    //GameSave->nowScene.effect = toml_string_in(gRootTabGameSaveRead, "nowScene.effect");
+
+    // 釋放資源
+    fclose(fpSave);
+    free(sRead_errmsg);
+    atexit(GameSaveTomlTableFree);
+    return EXIT_SUCCESS;
 }
 
 int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
@@ -363,4 +392,8 @@ NEXT_ACTION optionHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *
         fprintf(stderr, "dialogue = %s, optInx = %d\n", toml_table_key(saving->tabCurDialogue), optionIdx);
         return _eEMPTY; // Script may be corrupt
     }
+}
+
+void GameSaveTomlTableFree(){
+    toml_free(gRootTabGameSaveRead);
 }

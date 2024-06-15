@@ -1,5 +1,6 @@
-#include "control.h"
 #pragma once
+#include "control.h"
+
 
 int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving);
 
@@ -18,3 +19,5 @@ NEXT_ACTION optionHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *
 //  return 0 when succeeded
 //  return 1 when failed
 int8_t scriptRead(char *scriptPath, script_t *script);
+
+void GameSaveTomlTableFree();

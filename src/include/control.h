@@ -91,6 +91,8 @@ typedef enum _eNextAction
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
+#ifndef BASIC_GLOBAL_VARIABLES
+#define BASIC_GLOBAL_VARIABLES
 extern int64_t gGameVolume;
 extern TTF_Font *gFontDefault;
 extern SDL_Color gColorWHITE;
@@ -104,6 +106,12 @@ extern SDL_Color gColorBLUE;
 
 extern SDL_Rect gRectDialogue;
 extern SDL_Rect gRectBackground;
+<<<<<<< Updated upstream
+=======
+
+extern toml_table_t *gRootTabGameSaveRead;
+#endif
+>>>>>>> Stashed changes
 
 #define TOML_USE_STRING(toml_datum) toml_datum.ok == 1 ? toml_datum.u.s : ""
 
