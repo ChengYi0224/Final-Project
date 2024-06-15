@@ -71,6 +71,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
+    //SDL_RenderFillRect(renderer, dstRect);
     // 建立材質
     // SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
     // SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, text, color);
