@@ -106,7 +106,7 @@ int8_t renderButton(SDL_Renderer *renderer, Button *button)
 
     if (button->isHovered)
     {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 50); // Highlight color
+        SDL_SetRenderDrawColor(renderer, 192, 192, 192, 255); // Highlight color
         SDL_RenderFillRect(renderer, &button->rect);
     }
 

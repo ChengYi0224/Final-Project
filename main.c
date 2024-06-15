@@ -50,6 +50,8 @@ int main(int argc, char const *argv[])
     // 遊戲資料變數
     script_t mainScript = {0};
     scriptRead(ScriptPath, &mainScript);
+    
+    
     GameSave_t saving = {0};
     NEXT_ACTION NextAction = _eEVENT;
 
@@ -60,9 +62,10 @@ int main(int argc, char const *argv[])
         SDL_RenderClear(renderer);
 
         // 透過遊戲選單選擇，並根據回傳值執行接下來的劇情
-        if(GameStartMenu(renderer, &mainScript, &saving) == 0)
+        if(GameStartMenu(renderer, &mainScript, &saving) == -1){
+            printf("terminate \n");
             goto end;
-
+        }
         // 遊戲劇情迴圈
         // 退出條件：玩家從選單選擇退出
         while (1)

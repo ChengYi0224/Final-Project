@@ -6,10 +6,6 @@
 
 void toml_set_string(toml_datum_t *datum, const char *str)
 {
-    if (datum->u.s)
-    {
-        free(datum->u.s); // 先釋放舊的字符串內存
-    }
     datum->u.s = strdup(str); // 賦值新字符串，strdup會分配內存
     datum->ok = 1;            // 標記為有效
 }

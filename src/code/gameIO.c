@@ -38,14 +38,12 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         Button buttonNewGame = {{5, 400, 250, 40}, gColorGREY, 0, 0};
         Button buttonLoadGame = {{5, 450, 250, 40}, gColorGREY, 0, 0};
         Button buttonContinue = {{5, 500, 250, 40}, gColorGREY, 0, 0};
-        Button buttonVolume = {{5, 550, 250, 40}, gColorGREY, 0, 0};
-        Button buttonExit = {{5, 600, 250, 40}, gColorGREY, 0, 0};
+        Button buttonExit = {{5, 550, 250, 40}, gColorGREY, 0, 0};
 
         // Button Render
         renderButton(renderer, &buttonNewGame);
         renderButton(renderer, &buttonLoadGame);
         renderButton(renderer, &buttonContinue);
-        renderButton(renderer, &buttonVolume);
         renderButton(renderer, &buttonExit);
         
 
@@ -53,8 +51,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         DisplayUTF8(renderer, "New Game", gFontDefault, gColorWHITE, &(SDL_Rect){10, 400, 250, 40});
         DisplayUTF8(renderer, "Load Game", gFontDefault, gColorWHITE, &(SDL_Rect){10, 450, 250, 40});
         DisplayUTF8(renderer, "Continue", gFontDefault, gColorWHITE, &(SDL_Rect){10, 500, 250, 40});
-        DisplayUTF8(renderer, "Volume", gFontDefault, gColorWHITE, &(SDL_Rect){10, 550, 250, 40});
-        DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){10, 600, 250, 40});
+        DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){10, 550, 250, 40});
 
         SDL_RenderPresent(renderer);
         // 等待使用者輸入
@@ -65,25 +62,25 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             if (handleButton(&event, &buttonNewGame))
             {
                 // 處理 New Game 按鈕被點擊*saving的行為
+                printf("New game clicked\n");
                 return startNewGame(mainScript, saving);
             }
             if (handleButton(&event, &buttonLoadGame))
             {
                 // 處理 Load Game 按鈕被點擊的行為
                 // 顯示二級menu
+                printf("Load game clicked\n");
             }
             if (handleButton(&event, &buttonContinue))
             {
                 // 處理 Continue 按鈕被點擊的行為
-            }
-            if (handleButton(&event, &buttonVolume))
-            {
-                // 處理 Volume 按鈕被點擊的行為
+                printf("Continue clicked\n");
             }
             if (handleButton(&event, &buttonExit))
             {
                 // 處理 Exit 按鈕被點擊的行為
-                return 0;
+                printf("Exit clicked\n");
+                return -1;
             }
         }
         /*

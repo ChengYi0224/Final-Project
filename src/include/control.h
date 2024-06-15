@@ -122,7 +122,7 @@ extern toml_table_t *gRootTabGameSaveRead;
 #define StartBackgroundPathDefault "assets/scenes/defaultBackground.png"
 #define imgtest "assets/scenes/2K.jpg"
 #define imgtest2 "assets/scenes/aut.jpg"
-#define ScriptPath "ta.toml"
+#define ScriptPath "script.toml"
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect);
 
