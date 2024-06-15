@@ -9,16 +9,16 @@ inventory = ["phone"]
 [scene]
 [scene.bus_45]
 name = "45號公車"
-background = "assets/scene/bus_45.png"
+background = "assets/scene/bus_45.jpg"
 [scene.police_station]
 name = "警察局"
-background = "assets/scene/police_station.png"
+background = "assets/scene/police_station.jpg"
 [scene.park]
 name = "清水公園"
-background = "assets/scene/park.png"
+background = "assets/scene/park.jpg"
 [scene.hospital]
 name = "醫院"
-background = "assets/scene/hospital.png"
+background = "assets/scene/hospital.jpg"
 
 [character]
 number = 3

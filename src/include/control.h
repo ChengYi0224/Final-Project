@@ -110,6 +110,8 @@ extern SDL_Rect gRectTachie;
 extern SDL_Rect gRectText;
 extern SDL_Rect gRectAvatar;
 
+extern SDL_Rect gRectInventory[4];
+
 extern toml_table_t *gRootTabGameSaveRead;
 #endif
 

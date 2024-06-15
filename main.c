@@ -70,6 +70,7 @@ int main(int argc, char const *argv[])
         // 退出條件：玩家從選單選擇退出
         while (1)
         {
+            SDL_RenderClear(renderer);
             updateInventory(renderer, saving);
 
             switch (NextAction)
@@ -83,7 +84,7 @@ int main(int argc, char const *argv[])
                 NextAction = dialogueHandler(renderer, &mainScript, &saving);
                 break;
             case _eENDING:
-                // # 遊戲結束
+                // # 遊戲結局顯示
                 // game_is_running = 0;
                 break;
 
@@ -106,10 +107,10 @@ int main(int argc, char const *argv[])
             // 背景
             DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.scene, TOML_USE_STRING(saving.nowScene.scene)), "background")), NULL, &gRectBackground); //
             // 立繪
-            DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "tachie")), NULL, &gRectAvatar);
+            //DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "tachie")), NULL, &gRectAvatar);
             // DisplayImg(); // 物品欄
             // 角色頭像
-            DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "avatar")), NULL, &gRectAvatar);
+            //DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "avatar")), NULL, &gRectAvatar);
             // DisplayImg(); // 角色頭像邊框
 
             // 繪製文字

@@ -34,6 +34,10 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         else
             DisplayImg(renderer, StartBackgroundPathDefault, NULL, &startRect);
 
+        // Titile
+        TTF_Font *FontTitle = TTF_OpenFont("assets/fonts/kaiu.ttf", 60);
+        DisplayUTF8(renderer, TOML_USE_STRING(mainScript->title), FontTitle, gColorWHITE, &(SDL_Rect){5, 60, 250, 150});
+
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
         Button buttonNewGame = {{5, 400, 250, 40}, gColorGREY, 0, 0};
         Button buttonLoadGame = {{5, 450, 250, 40}, gColorGREY, 0, 0};
@@ -225,6 +229,9 @@ int8_t scriptRead(char *scriptPath, script_t *script)
         return EXIT_FAILURE;
     }
     // 讀取標頭資料
+    (*script).title = toml_string_in(wholeScript, "name");
+    (*script).author = toml_string_in(wholeScript, "author");
+    (*script).version = toml_string_in(wholeScript, "version");
     (*script).description = toml_string_in(wholeScript, "description");
 
     // 分類物件

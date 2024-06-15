@@ -29,7 +29,13 @@ SDL_Rect gRectTachie = {70, 70, 270, 600};
 SDL_Rect gRectText = {390, 410, 800, 235};
 SDL_Rect gRectAvatar = {360 + 850 - 70, 370 + 300 - 70, 70, 70};
 
-toml_table_t *gRootTabGameSaveRead = NULL;
+SDL_Rect gRectInventory[4] = {
+    {940, 600, 80, 80},
+    {1040, 600, 80, 80},
+    {1140, 600, 80, 80},
+    {1240, 600, 80, 80}};
+
+    toml_table_t *gRootTabGameSaveRead = NULL;
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect)
 {
