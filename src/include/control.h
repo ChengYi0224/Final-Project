@@ -92,25 +92,24 @@ typedef enum _eNextAction
 #define WINDOW_HEIGHT 720
 
 extern int64_t gGameVolume;
-TTF_Font *gFontDefault;
-SDL_Color gColorWHITE = {255,255,255,255};
-SDL_Color gColorBLACK = {0,0,0,255};
-SDL_Color gColorGREY = {128,128,128,255}; 
-SDL_Color gColorLGREY = {192,192,192,255};
-SDL_Color gColorDGREY = {64,64,64,255};
-SDL_Color gColorRED = {255,0,0,255};
-SDL_Color gColorGREEN = {0,255,0,255};
-SDL_Color gColorBLUE = {0,0,255,255};
+extern TTF_Font *gFontDefault;
+extern SDL_Color gColorWHITE;
+extern SDL_Color gColorBLACK;
+extern SDL_Color gColorGREY;
+extern SDL_Color gColorLGREY;
+extern SDL_Color gColorDGREY;
+extern SDL_Color gColorRED;
+extern SDL_Color gColorGREEN;
+extern SDL_Color gColorBLUE;
 
-SDL_Rect gRectDialogue = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
-SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+extern SDL_Rect gRectDialogue;
+extern SDL_Rect gRectBackground;
 
 #define TOML_USE_STRING(toml_datum) toml_datum.ok == 1 ? toml_datum.u.s : ""
 
 #define TOML_USE_INT(toml_datum) toml_datum.ok == 1 ? toml_datum.u.i : 0
 
 #define TOML_USE_FLOAT(toml_datum) toml_datum.ok == 1 ? toml_datum.u.f : 0.0
-
 
 #define StartBackgroundPathDefault "assets/scenes/defaultBackground.png"
 #define imgtest "assets/scenes/2K.jpg"

@@ -13,6 +13,18 @@
 */
 #include "../include/control.h"
 int64_t gGameVolume = 100;
+TTF_Font *gFontDefault;
+SDL_Color gColorWHITE = {255,255,255,255};
+SDL_Color gColorBLACK = {0,0,0,255};
+SDL_Color gColorGREY = {128,128,128,255}; 
+SDL_Color gColorLGREY = {192,192,192,255};
+SDL_Color gColorDGREY = {64,64,64,255};
+SDL_Color gColorRED = {255,0,0,255};
+SDL_Color gColorGREEN = {0,255,0,255};
+SDL_Color gColorBLUE = {0,0,255,255};
+
+SDL_Rect gRectDialogue = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
+SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 
 int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_Rect *dstRect)
 {
