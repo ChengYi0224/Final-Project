@@ -99,43 +99,17 @@ int main(int argc, char const *argv[])
 
             // 繪製圖像
             // 物品
-            SDL_Rect itemIconRect = {20, 20, 150, WINDOW_HEIGHT - 40}; // icon
-            SDL_Rect itemNameRect = {20, 20, 150, WINDOW_HEIGHT - 40}; // name
-            SDL_Rect itemDesRect = {20, 20, 150, WINDOW_HEIGHT - 40};  // description
+            // description
             // 背景
             DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.scene, TOML_USE_STRING(saving.nowScene.scene)), "background")), NULL, &gRectBackground); //
-            // DisplayImg(); // 立繪
+            // 立繪
             DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "tachie")), NULL, &gRectAvatar);
             // DisplayImg(); // 物品欄
-            // DisplayImg(); // 角色頭像
+            // 角色頭像
             DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "avatar")), NULL, &gRectAvatar);
             // DisplayImg(); // 角色頭像邊框
 
             // 繪製文字
-            // textRect.w = WINDOW_WIDTH / 100 * strlen("abcdefu");
-            // textRect.h = WINDOW_HEIGHT / 15;
-            // DisplayImg(renderer, imgtest2, NULL, &dialRect);
-            // 物品位置
-            /*
-            for (int32_t i = 0; i < 2; i++)
-            {
-                if (itemKey[i] != NULL)
-                {
-                    itemIcon[i] = toml_string_in(toml_table_in(script.item, itemKey[i]), icon);
-                    DisplayImg(renderer, itemIcon[i].u.s, NULL, &itemRect);
-                    itemRect.y += itemRect.h;
-                }
-            }
-            */
-            // DisplayImg(renderer, scene.character.u.s, NULL, &faceRect); // 頭像位置
-
-            //DisplayUTF8(renderer, textTest, font, gColorBLACK, &textRect); // 對話
-
-            // 繪製選項
-            // for(size_t i = 0; i < (optionNum); i++){
-            //     DisplayButton(); // option
-            // }
-
             // # 聆聽事件(偵測滑鼠/鍵盤輸入) 包含音效  //目前只支援關閉視窗
             while (SDL_PollEvent(&event))
             {
