@@ -23,8 +23,11 @@ SDL_Color gColorRED = {255, 0, 0, 255};
 SDL_Color gColorGREEN = {0, 255, 0, 255};
 SDL_Color gColorBLUE = {0, 0, 255, 255};
 
-SDL_Rect gRectDialogue = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
+SDL_Rect gRectDialogue = {360, 370, 850, 300};
 SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+SDL_Rect gRectTachie = {70, 70, 270, 600};
+SDL_Rect gRectText = {390, 410, 800, 235};
+SDL_Rect gRectAvatar = {360 + 850 - 70, 370 + 300 - 70, 70, 70};
 
 toml_table_t *gRootTabGameSaveRead = NULL;
 

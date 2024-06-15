@@ -106,6 +106,9 @@ extern SDL_Color gColorBLUE;
 
 extern SDL_Rect gRectDialogue;
 extern SDL_Rect gRectBackground;
+extern SDL_Rect gRectTachie;
+extern SDL_Rect gRectText;
+extern SDL_Rect gRectAvatar;
 
 extern toml_table_t *gRootTabGameSaveRead;
 #endif
