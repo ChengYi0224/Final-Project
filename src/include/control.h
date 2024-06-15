@@ -106,12 +106,9 @@ extern SDL_Color gColorBLUE;
 
 extern SDL_Rect gRectDialogue;
 extern SDL_Rect gRectBackground;
-<<<<<<< Updated upstream
-=======
 
 extern toml_table_t *gRootTabGameSaveRead;
 #endif
->>>>>>> Stashed changes
 
 #define TOML_USE_STRING(toml_datum) toml_datum.ok == 1 ? toml_datum.u.s : ""
 
