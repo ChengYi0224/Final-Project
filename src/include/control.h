@@ -109,6 +109,7 @@ extern SDL_Rect gRectBackground;
 extern SDL_Rect gRectTachie;
 extern SDL_Rect gRectText;
 extern SDL_Rect gRectAvatar;
+extern SDL_Rect gRectNextButton;
 
 extern SDL_Rect gRectInventory[4];
 

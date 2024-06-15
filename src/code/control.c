@@ -28,6 +28,7 @@ SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 SDL_Rect gRectTachie = {70, 70, 270, 600};
 SDL_Rect gRectText = {390, 410, 800, 235};
 SDL_Rect gRectAvatar = {360 + 850 - 70, 370 + 300 - 70, 70, 70};
+SDL_Rect gRectNextButton = {360 + 850 - 80, 370 + 300 - 30, 80, 30};
 
 SDL_Rect gRectInventory[4] = {
     {940, 600, 80, 80},
@@ -77,7 +78,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
-    // SDL_RenderFillRect(renderer, dstRect);
+    SDL_RenderFillRect(renderer, dstRect);
     //  建立材質
     //  SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
     //  SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, text, color);

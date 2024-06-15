@@ -129,9 +129,7 @@ int main(int argc, char const *argv[])
                     }
                     break;
                 }
-                handleButton(&event, &button);
             }
-            renderButton(renderer, &button);
             // 點擊選項
             // 物品預覽
 

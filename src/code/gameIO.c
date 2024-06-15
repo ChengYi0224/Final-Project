@@ -277,28 +277,30 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     SDL_Rect nextRect = {textRect.x, textRect.y + textRect.h + 10, 100, 50};
-    Button nextButton = {.rect = nextRect, .color = {200, 200, 200, 255}};
+    Button nextButton = {.rect = gRectNextButton, .color = {200, 200, 200, 255}};
 
     const char *delim = "<br>";
     // text is newly allocated, so that it does not interfere the original text
     char *text = my_strdup(TOML_USE_STRING(toml_string_in(saving->tabCurDialogue, "text")));
     char *token = text;
     char *next = strstr(token, delim);
-
     while (next != NULL)
     {
         *next = '\0';
-        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &textRect);
+        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
+        
         renderButton(renderer, &nextButton);
         SDL_RenderPresent(renderer);
-
         // 等待Next按鈕被點擊
-        while (SDL_PollEvent(&event))
+        while (SDL_WaitEvent(&event))
         {
             if (handleButton(&event, &nextButton) == 1)
+            {
+                printf("clicked\n");
                 break;
+            }
         }
-
+        
         token = next + strlen(delim);
         next = strstr(token, delim);
     }
@@ -306,7 +308,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     // 顯示最後一段文字（如果有的話）
     if (*token != '\0')
     {
-        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &textRect);
+        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
         renderButton(renderer, &nextButton);
         SDL_RenderPresent(renderer);
 
