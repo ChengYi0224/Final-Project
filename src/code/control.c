@@ -59,7 +59,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
     if (dstRect->h > textSurface->h)
         dstRect->h = textSurface->h;
     SDL_RenderCopy(renderer, texture, NULL, dstRect);
-    SDL_RenderPresent(renderer);
+    //SDL_RenderPresent(renderer);
 
     SDL_DestroyTexture(texture);
 
@@ -85,7 +85,7 @@ int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Co
     if (dstRect->h > textSurface->h)
         dstRect->h = textSurface->h;
     SDL_RenderCopy(renderer, texture, NULL, dstRect);
-    SDL_RenderPresent(renderer);
+    //SDL_RenderPresent(renderer); // 由外面的呼叫者統一更新畫面以避免閃爍
     SDL_DestroyTexture(texture);
 
     return 1;

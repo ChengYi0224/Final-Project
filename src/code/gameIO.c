@@ -35,11 +35,11 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             DisplayImg(renderer, StartBackgroundPathDefault, NULL, &startRect);
 
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
-        Button buttonNewGame = {{5, 400, 50, 20}, {200, 200, 200, 255}, 0, 0};
-        Button buttonLoadGame = {{5, 450, 50, 20}, {200, 200, 200, 255}, 0, 0};
-        Button buttonContinue = {{5, 500, 50, 20}, {200, 200, 200, 255}, 0, 0};
-        Button buttonVolume = {{5, 550, 50, 20}, {200, 200, 200, 255}, 0, 0};
-        Button buttonExit = {{5, 600, 50, 20}, {200, 200, 200, 255}, 0, 0};
+        Button buttonNewGame = {{5, 400, 250, 40}, gColorGREY, 0, 0};
+        Button buttonLoadGame = {{5, 450, 250, 40}, gColorGREY, 0, 0};
+        Button buttonContinue = {{5, 500, 250, 40}, gColorGREY, 0, 0};
+        Button buttonVolume = {{5, 550, 250, 40}, gColorGREY, 0, 0};
+        Button buttonExit = {{5, 600, 250, 40}, gColorGREY, 0, 0};
 
         // Button Render
         renderButton(renderer, &buttonNewGame);
@@ -47,8 +47,16 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         renderButton(renderer, &buttonContinue);
         renderButton(renderer, &buttonVolume);
         renderButton(renderer, &buttonExit);
-        SDL_RenderPresent(renderer);
+        
 
+        // Button text
+        DisplayUTF8(renderer, "New Game", gFontDefault, gColorWHITE, &(SDL_Rect){10, 400, 250, 40});
+        DisplayUTF8(renderer, "Load Game", gFontDefault, gColorWHITE, &(SDL_Rect){10, 450, 250, 40});
+        DisplayUTF8(renderer, "Continue", gFontDefault, gColorWHITE, &(SDL_Rect){10, 500, 250, 40});
+        DisplayUTF8(renderer, "Volume", gFontDefault, gColorWHITE, &(SDL_Rect){10, 550, 250, 40});
+        DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){10, 600, 250, 40});
+
+        SDL_RenderPresent(renderer);
         // 等待使用者輸入
         SDL_Event event;
         // Button Event Handler
