@@ -51,8 +51,8 @@ int main(int argc, char const *argv[])
     setCentre(&gRectDialogue, &gRectText);
     gRectAvatar.x = gRectDialogue.x + 5;
     gRectAvatarFrame.x = gRectDialogue.x; 
-    gRectAvatar.y = gRectDialogue.y + gRectDialogue.h - gRectAvatar.h;
-    gRectAvatarFrame.y = gRectAvatar.y - 10;
+    gRectAvatar.y = gRectDialogue.y + gRectDialogue.h - gRectAvatar.h - 5;
+    gRectAvatarFrame.y = gRectDialogue.y + gRectDialogue.h - gRectAvatarFrame.h;
     gRectNext.x = gRectDialogue.x + gRectDialogue.w - gRectNext.w;
     gRectNext.y = gRectDialogue.y + gRectDialogue.h - gRectNext.h;
     // 遊戲資料變數
