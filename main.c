@@ -121,7 +121,7 @@ int main(int argc, char const *argv[])
             // 物品
             // description
             // 背景
-            DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.scene, TOML_USE_STRING(saving.nowScene.scene)), "background")), NULL, &gRectBackground); //
+            //DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.scene, TOML_USE_STRING(saving.nowScene.scene)), "background")), NULL, &gRectBackground); //
             // 立繪
             // DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "tachie")), NULL, &gRectAvatar);
             // DisplayImg(); // 物品欄

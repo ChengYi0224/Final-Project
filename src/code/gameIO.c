@@ -146,6 +146,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
 // Set the first event "start"
 int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
 {
+    scene_t sceneStart;
     if (scriptRead(ScriptPath, mainScript))
     {
         perror("Error reading script");
@@ -157,10 +158,26 @@ int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
         perror("Error reading start event");
         return EXIT_FAILURE;
     }
-    // 設定scene_t
-    scene_t sceneStart;
-    sceneStart.event.u.s = "start";
-    sceneStart.event.ok = 1;
+    toml_table_t *player = toml_table_in(mainScript->rootTable, "player");
+    if (player != NULL)
+    {
+        sceneStart.event = toml_string_in(player, "starter");
+        // Inventory
+        toml_array_t *playerInventory = toml_array_in(player, "inventory");
+        if (playerInventory != NULL)
+        {
+            saving->nPlayerItem = toml_array_nelem(playerInventory);
+            (saving->playerItem) = calloc(saving->nPlayerItem, sizeof(toml_table_t *));
+            for (int32_t i = 0; i < saving->nPlayerItem; i++)
+            {
+                toml_datum_t item = toml_string_at(playerInventory, i);
+                saving->playerItem[i] = toml_table_in(mainScript->item, TOML_USE_STRING(item));
+            }
+        }
+    }
+    // 設定scene
+    //sceneStart.event.u.s = "start";
+    //sceneStart.event.ok = 1;
     sceneStart.scene = toml_string_in(eventStart, "scene");
     sceneStart.character = toml_string_in(eventStart, "character");
     sceneStart.dialogue = toml_string_in(eventStart, "dialogue");
@@ -209,7 +226,7 @@ int8_t GameSaveRead(char *SaveName, script_t *mainScript, GameSave_t *saving)
     if (playerInventory != NULL)
     {
         saving->nPlayerItem = toml_array_nelem(playerInventory);
-        *(saving->playerItem) = calloc(saving->nPlayerItem, sizeof(toml_table_t *));
+        (saving->playerItem) = calloc(saving->nPlayerItem, sizeof(toml_table_t *));
         for(int32_t i = 0; i < saving->nPlayerItem; i++){
             toml_datum_t item = toml_string_at(playerInventory, i);
             saving->playerItem[i] = toml_table_in(mainScript->item, TOML_USE_STRING(item));
