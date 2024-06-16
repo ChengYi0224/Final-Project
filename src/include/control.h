@@ -62,8 +62,7 @@ typedef struct _sScene
 typedef struct _sGameSave
 {
     char SaveName[256];
-    int32_t nPlayerItem;
-    toml_table_t **playerItem; // This is a ptr to an array
+    toml_array_t *playerInventory; // This is an array
     scene_t nowScene;
     toml_table_t *tabCurEvent;
     toml_table_t *tabCurDialogue;

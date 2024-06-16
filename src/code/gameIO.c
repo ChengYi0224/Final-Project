@@ -55,7 +55,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
 
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
         SDL_Color colorMenuButton = gColorDGREY;
-        colorMenuButton.a = 215;
+        colorMenuButton.a = 210;
         Button buttonNewGame = {{15, 400, 300, 40}, colorMenuButton, 0, 0};
         Button buttonLoadGame = {{15, 450, 300, 40}, colorMenuButton, 0, 0};
         Button buttonContinue = {{15, 500, 300, 80}, colorMenuButton, 0, 0};
@@ -222,16 +222,7 @@ int8_t GameSaveRead(char *SaveName, script_t *mainScript, GameSave_t *saving)
     }
 
     // 讀取存檔資料
-    toml_array_t * playerInventory = toml_array_in(gRootTabGameSaveRead, "playerInventory");
-    if (playerInventory != NULL)
-    {
-        saving->nPlayerItem = toml_array_nelem(playerInventory);
-        (saving->playerItem) = calloc(saving->nPlayerItem, sizeof(toml_table_t *));
-        for(int32_t i = 0; i < saving->nPlayerItem; i++){
-            toml_datum_t item = toml_string_at(playerInventory, i);
-            saving->playerItem[i] = toml_table_in(mainScript->item, TOML_USE_STRING(item));
-        }
-    }
+    saving->playerInventory = toml_array_in(gRootTabGameSaveRead, "playerInventory");
     toml_table_t *SaveNowScene = toml_table_in(gRootTabGameSaveRead, "nowScene");
     toml_datum_t valEvent = toml_string_in(SaveNowScene, "event");
     toml_datum_t valScene = toml_string_in(SaveNowScene, "scene");
@@ -274,13 +265,13 @@ int8_t GameSaveWrite(char *SaveName, GameSave_t *GameSave)
     // 開始進行存檔，使用toml格式
 
     // 玩家背包
-    if (*GameSave->playerItem != NULL)
+    if (GameSave->playerInventory != NULL)
     {
         fprintf(fpSave, "playerInventory = [\n");
-        int32_t sizeInv = GameSave->nPlayerItem;
+        int32_t sizeInv = toml_array_nelem(GameSave->playerInventory);
         for (int i = 0; i < sizeInv; i++)
         {
-            fprintf(fpSave, "\"%s\",\n", toml_table_key(GameSave->playerItem[i]));
+            fprintf(fpSave, "\"%s\",\n", TOML_USE_STRING(toml_string_at(GameSave->playerInventory, i)));
         }
         fprintf(fpSave, "]\n");
     }
@@ -325,7 +316,7 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     (*script).description = toml_string_in(wholeScript, "description");
     (*script).license = toml_string_in(wholeScript, "license");
     (*script).startBackgroundPath = toml_string_in(wholeScript, "startBackgroundPath");
-    
+
     // 分類物件
     (*script).item = toml_table_in(wholeScript, "item");
     (*script).event = toml_table_in(wholeScript, "event");
