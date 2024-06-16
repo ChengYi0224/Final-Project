@@ -7,6 +7,9 @@ starter = "開始"
 inventory = ["phone"]
 
 [scene]
+[scene.default]
+name = "遊戲開始選單"
+background = "assets/scene/defaultBackground.png"
 [scene.bus_45]
 name = "45號公車"
 background = "assets/scene/bus_45.jpg"
@@ -46,10 +49,10 @@ dialogue = "introduction"
 scene = "bus_45"
 dialogue = "solo_action"
 [event.cooperate_action]
-scene = "bus_45" 
+scene = "bus_45"
 dialogue = "cooperate_action"
 [event.seek_help]
-scene = "bus_45" 
+scene = "bus_45"
 dialogue = "seek_help"
 [event.solo_fail_1]
 scene = "bus_45"
@@ -147,8 +150,12 @@ character = "heyun, shiqing"
 text = """你們在清水巷下車，邊走邊討論剛剛發現的情況。來到了清水公園，李詩情擔心你們並沒有看到炸彈要如何面對警方的詢問。\
     <br>這時警方也已經出動警力到清水公園附近，你們必須儘快找出原因。你拿出紙筆開始列出每次循環的時間線和爆炸地點，\
     你們發現每次循環醒來的時間越來越提前......\
+    <br>你和李詩情繼續復盤，希望獲得更多線索。但李詩情支支吾吾的表現讓產生了一絲不信任的感覺，\
+    總覺得她對你有所隱瞞。你一氣之下把那張紙丟進垃圾桶！\
+    <br>然而你那暫時離家出走的理性在冷靜一會兒後很快就回歸，按照遊戲的常規思路，玩家必須阻止爆炸，\
+    救下全車所有人，才能順利通關，解除循環。話還沒說完，警察來到你們面前，請你們去「喝茶」。\
     <br>"""
-option = [{ text = "繼續", next = "police_interrogation" }]
+option = [{ text = "繼續", event = "police_interrogation" }]
 
 [dialogue.cooperate_continue_2]
 character = "heyun, shiqing"
@@ -167,13 +174,6 @@ text = """你選擇尋求外部幫助。你考慮使用手機聯絡警察解釋�
     因此你記得公車內部系統中有個安全漏洞一直沒有引起重視，便趁機得到公車的維修情況、司機的個人背景資料等.\
     <br>"""
 option = [{ text = "繼續", next = "continue_3" }]
-
-[dialogue.continue_3]
-character = "heyun, shiqing"
-text = """你和李詩情並沒有什麼太深入的交流，就是正在各自想辦法去解決這個困境。她也在努力想辦法聯絡她的閨蜜幫她打電話報警，但似乎進度緩慢……\
-    <br>就這樣在沒有什麼實質性進展的情況下，車子即將駛上大橋。這時你們依稀想起，好像之前公車每次都是在這個地方爆炸。心裡感到不妙，李詩情突然大聲尖叫！\
-    <br>"""
-option = [{text = "連接到路線二選項二", next = "cooperate_continue_2"}]
 
 [dialogue.police_interrogation]
 character = "police, heyun"
@@ -265,7 +265,6 @@ text = """
 """
 option = [{text = "重新開始", event = "start"}]
 
-
 [dialogue.b_option]
 character = "heyun"
 text = """
@@ -285,6 +284,13 @@ text = """
     """
 item = "bomb"
 option = [{text = "重新開始", event = "start"}]
+
+[dialogue.continue_3]
+character = "heyun, shiqing"
+text = """你和李詩情並沒有什麼太深入的交流，就是正在各自想辦法去解決這個困境。她也在努力想辦法聯絡她的閨蜜幫她打電話報警，但似乎進度緩慢……\
+    <br>就這樣在沒有什麼實質性進展的情況下，車子即將駛上大橋。這時你們依稀想起，好像之前公車每次都是在這個地方爆炸。心裡感到不妙，李詩情突然大聲尖叫！\
+    <br>"""
+option = [{text = "連接到路線二選項二", next = "cooperate_continue_2"}]
 
 [dialogue.ending_3]
 character = "heyun, shiqing"
