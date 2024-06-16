@@ -127,7 +127,7 @@ character = "heyun"
 text = """於是你試圖偷偷拿起車窗擊破器，破窗而逃，不料觸發警報。紅燈時，遭到其他乘客的阻止。\
     <br>紅燈轉綠，公車在十字路口為了閃避一輛突然衝出來的摩托車而緊急轉向撞上一輛油罐車再次發生爆炸。\
     <br>"""
-option = [{ text = "重新開始", next = "start" }]
+option = [{ text = "重新開始", event = "start" }]
 
 [dialogue.cooperate_action]
 character = "heyun"
