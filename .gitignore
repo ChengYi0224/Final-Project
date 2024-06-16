@@ -4,4 +4,4 @@ engine
 es
 *.o
 /save
-.DS_STORE
+*.DS_STORE
