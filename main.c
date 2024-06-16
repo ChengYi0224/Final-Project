@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
     //SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
     // 載入字體
-    gFontDefault = TTF_OpenFont("assets/fonts/kaiu.ttf", 40);
+    gFontDefault = TTF_OpenFont("assets/fonts/kaiu.ttf", 30);
 
     // 圖形介面排版初始化 (建立各個物件需要用的方框)
     // scene顯示方框
