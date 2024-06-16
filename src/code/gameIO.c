@@ -280,11 +280,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     }
 
     SDL_Event event;
-    SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
-    SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
-    SDL_Rect nextRect = {textRect.x, textRect.y + textRect.h + 10, 100, 50};
-    Button nextButton = {.rect = gRectNextButton, .color = {200, 200, 200, 255}};
-    TTF_Font *fontButton = TTF_OpenFont("assets/fonts/kaiu.ttf", 30);
+    Button nextButton = {.rect = gRectNext, .color = {200, 200, 200, 255}};
 
     const char *delim = "<br>";
     // text is newly allocated, so that it does not interfere the original text
@@ -305,7 +301,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Next Button
         renderButton(renderer, &nextButton);
-        DisplayUTF8(renderer, "Next", fontButton, gColorBLACK, &gRectNextButton);
+        DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
         SDL_RenderPresent(renderer);
         // 等待Next按鈕被點擊
         while (SDL_WaitEvent(&event))
@@ -334,7 +330,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Button and its text
         renderButton(renderer, &nextButton);
-        DisplayUTF8(renderer, "Next", fontButton, gColorBLACK, &gRectNextButton);
+        DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
         SDL_RenderPresent(renderer);
 
         // 等待Next按鈕被點擊
@@ -359,7 +355,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
             char *option_text = TOML_USE_STRING(toml_string_in(option, "text"));
 
             // 設置選項按鈕
-            optionButtons[i].rect = (SDL_Rect){gRectText.x, gRectText.y + (i + 1) * 60, gRectText.w, 50};
+            optionButtons[i].rect = gRectOption[i];
             optionButtons[i].color = gColorOptionButton;
 
             // 顯示選項按鈕

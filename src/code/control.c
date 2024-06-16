@@ -32,7 +32,13 @@ SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 SDL_Rect gRectTachie = {70, 70, 270, 600};
 SDL_Rect gRectText = {390, 410, 800, 235};
 SDL_Rect gRectAvatar = {360 + 850 - 70, 370 + 300 - 70, 70, 70};
-SDL_Rect gRectNextButton = {360 + 850 - 80, 370 + 300 - 30, 80, 30};
+SDL_Rect gRectNext = {360 + 850 - 100, 370 + 300 - 30, 100, 30};
+SDL_Rect gRectOption[4] = {
+    {10, 360 + 0, 300, 80},
+    {10, 360 + 100, 300, 80},
+    {10, 360 + 200, 300, 80},
+    {10, 360 + 300, 300, 80}};
+
 
 SDL_Rect gRectInventory[4] = {
     {940, 600, 80, 80},
@@ -138,7 +144,7 @@ int8_t handleButton(SDL_Event *event, Button *button)
         if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
             mouseY >= button->rect.y && mouseY <= button->rect.y + button->rect.h)
         {
-            printf("Button clicked!\n");
+            fprintf(stderr, "Button clicked!\n");
             return 1;
         }
     }
