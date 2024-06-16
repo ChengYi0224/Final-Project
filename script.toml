@@ -4,7 +4,7 @@ version = "1.0.0"
 startBackgroundPath = "assets/scene/defaultBackground.png"
 
 [player]
-starter = "start"
+starter = "開始"
 inventory = ["phone"]
 
 [scene]
