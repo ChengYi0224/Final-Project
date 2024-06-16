@@ -87,6 +87,11 @@ int main(int argc, char const *argv[])
                 // # 遊戲結局顯示
                 // game_is_running = 0;
                 break;
+            case _eGAMEQUIT:
+                // # 遊戲結束
+                game_is_running = 0;
+                goto end;
+                break;
 
             case _eEMPTY:
             default:
@@ -140,6 +145,9 @@ int main(int argc, char const *argv[])
 
 // 程式結束，以相反順序釋放資源
 end:
+    char SavePath[270];
+    snprintf(SavePath, sizeof(SavePath), "save/%s", saving.SaveName);
+    GameSaveWrite(SavePath, &saving);
     if (mainScript.rootTable)
         toml_free(mainScript.rootTable);
     SDL_DestroyRenderer(renderer);

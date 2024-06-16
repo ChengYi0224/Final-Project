@@ -128,6 +128,8 @@ int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
     sceneStart.effect = toml_string_in(eventStart, "effect");
     saving->nowScene = sceneStart;
 
+    snprintf(saving->SaveName, sizeof(saving->SaveName), "%s", asctime(getLocalTime()));
+
     // 設定event
     toml_set_string(&(saving->nowScene.event), "start");
     if (saving->nowScene.event.ok == 1)
@@ -188,13 +190,16 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
     // 開始進行存檔，使用toml格式
 
     // 玩家背包
-    fprintf(fpSave, "playerInventory = [\n");
-    int32_t sizeInv = toml_array_nelem(GameSave->playerInventory);
-    for (int i = 0; i < sizeInv; i++)
+    if (GameSave->playerInventory != NULL)
     {
-        fprintf(fpSave, "\"%s\",\n", TOML_USE_STRING(toml_string_at(GameSave->playerInventory, i)));
+        fprintf(fpSave, "playerInventory = [\n");
+        int32_t sizeInv = toml_array_nelem(GameSave->playerInventory);
+        for (int i = 0; i < sizeInv; i++)
+        {
+            fprintf(fpSave, "\"%s\",\n", TOML_USE_STRING(toml_string_at(GameSave->playerInventory, i)));
+        }
+        fprintf(fpSave, "]\n");
     }
-    fprintf(fpSave, "]\n");
 
     // 當前場景紀錄
     fprintf(fpSave, "nowScene = {\n");
@@ -301,9 +306,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Next Button
         renderButton(renderer, &nextButton);
-        printf("x = %d, y = %d, w = %d, h = %d\n", gRectNext.x, gRectNext.y, gRectNext.w, gRectNext.h);
         DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
-        printf("x = %d, y = %d, w = %d, h = %d\n", gRectNext.x, gRectNext.y, gRectNext.w, gRectNext.h);
 
         SDL_RenderPresent(renderer);
         // 等待Next按鈕被點擊
@@ -317,6 +320,11 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
                     printf("clicked\n");
                     nextClicked = 1;
                     break;
+                }
+                // check if windows "x" is clicked (close)
+                if (event.window.event == SDL_WINDOWEVENT_CLOSE)
+                {
+                    return _eGAMEQUIT;
                 }
             }
         }
@@ -337,11 +345,9 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
         // Button and its text
-        printf("x = %d, y = %d, w = %d, h = %d\n", gRectNext.x, gRectNext.y, gRectNext.w, gRectNext.h);
         renderButton(renderer, &nextButton);
         DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
         // print rect value
-        printf("x = %d, y = %d, w = %d, h = %d\n", gRectNext.x, gRectNext.y, gRectNext.w, gRectNext.h);
 
         SDL_RenderPresent(renderer);
 
@@ -358,13 +364,18 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
                     nextClicked = 1;
                     break;
                 }
+                // check if windows "x" is clicked (close)
+                if (event.window.event == SDL_WINDOWEVENT_CLOSE)
+                {
+                    return _eGAMEQUIT;
+                }
             }
         }
     }
 
     // 選擇選項
     toml_array_t *optionArr = toml_array_in(saving->tabCurDialogue, "option");
-    if(optionArr != NULL)
+    if (optionArr != NULL)
     {
         int32_t option_num = toml_array_nelem(optionArr);
         Button optionButtons[option_num];
@@ -381,7 +392,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
             // 顯示選項按鈕
             renderButton(renderer, &optionButtons[i]);
-            DisplayUTF8(renderer, option_text, gFontDefault, optionButtons[i].color, &(optionButtons[i].rect));
+            DisplayUTF8(renderer, option_text, gFontDefault, gColorOptionText, &(optionButtons[i].rect));
         }
 
         SDL_RenderPresent(renderer);
@@ -400,10 +411,15 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
                         break;
                     }
                 }
+                // SDL_quit
+                if (event.type == SDL_QUIT)
+                {
+                    return _eGAMEQUIT;
+                }
             }
         }
-    free(text);
-    return optionHandler(renderer, script, saving, choice); // 根據選項返回下一個動作
+        free(text);
+        return optionHandler(renderer, script, saving, choice); // 根據選項返回下一個動作
     }
     else
     {

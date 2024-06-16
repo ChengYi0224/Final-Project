@@ -120,7 +120,7 @@ option = [
 [dialogue.solo_fail_1]
 character = "heyun"
 text = """公車上的其他乘客沒有相信你的警告，將你視為神經病。在接下來的一刻，公車依舊在橋上行駛並發生了爆炸。"""
-option = [{ text = "重新開始", next = "start" }]
+option = [{ text = "重新開始", event = "start" }]
 
 [dialogue.solo_fail_2]
 character = "heyun"
@@ -156,7 +156,7 @@ text = """李詩情從座位上站起來，向駕駛員喊道：「司機大哥�
     <br>本以為這樣就可以阻止定時炸彈爆炸，沒想到話音剛落，叕爆炸。你突然意識到，\
     這次是人為引爆。兜兜轉轉，兇手竟然就在車上。\
     <br>"""
-option = [{ text = "重新開始", next = "start" }]
+option = [{ text = "重新開始", event = "start" }]
 
 [dialogue.seek_help]
 character = "heyun, shiqing"
@@ -262,7 +262,7 @@ text = """
 你的確如意地脫離了循環，並且向投資人完整地介紹了你設計的遊戲。會議結束後，你注意到手機裡的推送通知。\
 新聞標題是《45路公車發生爆炸 1警5司機乘客罹難》，原來警察出動了警員去進行道路攔截並排查可疑人員。\
 """
-option = [{text = "重新開始", next = "start"}]
+option = [{text = "重新開始", event = "start"}]
 
 
 [dialogue.b_option]
@@ -281,7 +281,7 @@ text = """
     經過多次循環，肖鶴雲和李詩情成功地阻止了公交車爆炸，並拯救了車上的所有人。\
     <br>幕後黑手是陶映紅和司機王興德，他們因女兒五年前在公交車上被猥褻並發生事故去世，決定通過製造公交車爆炸報復社會。\
     """
-option = [{text = "重新開始", next = "start"}]
+option = [{text = "重新開始", event = "start"}]
 
 [dialogue.ending_3]
 character = "heyun, shiqing"
@@ -289,4 +289,4 @@ text = """
     由於你們經歷了太多次的循環，身體已經不堪循環所帶來的副作用，你們的身體狀況越來越差。\
     <br>最終，你們搶救無效，一起離開了人世。這件事情也因為你們的離世變得不了了之......\
     """
-option = [{text = "重新開始", next = "start"}]
+option = [{text = "重新開始", event = "start"}]
