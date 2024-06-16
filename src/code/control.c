@@ -36,7 +36,7 @@ SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 SDL_Rect gRectDialogue = {360, 370, 1080, 320};
 SDL_Rect gRectTachie = {535, 100, 210, 600};
 SDL_Rect gRectText = {390, 390, 1280, 720};
-SDL_Rect gRectAvatar = {290, 600, 120, 120};
+SDL_Rect gRectAvatar = {290, 600 - 30, 120, 120}; // move up 30 to centralise avatar
 SDL_Rect gRectAvatarFrame = {285, 595, 130, 130};
 SDL_Rect gRectNext = {360 + 850 - 100, 370 + 300 - 30, 100, 30};
 SDL_Rect gRectOption[4] = {
@@ -193,9 +193,12 @@ int8_t renderAvatar(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *sa
         fprintf(stderr, "Character \"%s\" not found in script\n", TOML_USE_STRING(saving->nowScene.character));
         return 0;
     }
-    // avatar frame
-    SET_DRAW_COLOR(renderer, gColorAvatarFrame);
+    // avatar white frame
+    SET_DRAW_COLOR(renderer, gColorWHITE);
     SDL_RenderFillRect(renderer, &gRectAvatarFrame);
+    // avatar frame 
+    SET_DRAW_COLOR(renderer, gColorAvatarFrame);
+    SDL_RenderDrawRect(renderer, &gRectAvatar);
     // avatar
     DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "avatar")), NULL, &gRectAvatar);
 }

@@ -421,7 +421,6 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         // Button and its text
         renderButton(renderer, &nextButton);
         DisplayUTF8(renderer, "  NEXT", gFontDefault, gColorNextText, &gRectNext);
-        // print rect value
 
         SDL_RenderPresent(renderer);
 
