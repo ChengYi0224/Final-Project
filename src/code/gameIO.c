@@ -304,12 +304,17 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
         SDL_RenderPresent(renderer);
         // 等待Next按鈕被點擊
-        while (SDL_WaitEvent(&event))
+        int32_t nextClicked = -1;
+        while (nextClicked == -1)
         {
-            if (handleButton(&event, &nextButton) == 1)
+            while (SDL_PollEvent(&event))
             {
-                printf("clicked\n");
-                break;
+                if (handleButton(&event, &nextButton) == 1)
+                {
+                    printf("clicked\n");
+                    nextClicked = 1;
+                    break;
+                }
             }
         }
 
@@ -334,10 +339,19 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         SDL_RenderPresent(renderer);
 
         // 等待Next按鈕被點擊
-        while (SDL_PollEvent(&event))
+        int32_t nextClicked = -1;
+        nextClicked = -1;
+        while (nextClicked == -1)
         {
-            if (handleButton(&event, &nextButton) == 1)
-                break;
+            while (SDL_PollEvent(&event))
+            {
+                if (handleButton(&event, &nextButton) == 1)
+                {
+                    printf("clicked\n");
+                    nextClicked = 1;
+                    break;
+                }
+            }
         }
     }
 
