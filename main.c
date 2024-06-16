@@ -66,7 +66,10 @@ int main(int argc, char const *argv[])
         // 透過遊戲選單選擇，並根據回傳值執行接下來的劇情
         int8_t retVal_StartMenu = GameStartMenu(renderer, &mainScript, &saving);
         if(retVal_StartMenu == -1 || retVal_StartMenu == EXIT_FAILURE){
-            printf("terminate \n");
+            printf("Exception: terminate \n");
+            goto end;
+        }else if(retVal_StartMenu == _eGAMEQUIT){
+            game_is_running = 0;
             goto end;
         }
         // 遊戲劇情迴圈
@@ -148,9 +151,7 @@ int main(int argc, char const *argv[])
 
 // 程式結束，以相反順序釋放資源
 end:
-    char SavePath[270];
-    snprintf(SavePath, sizeof(SavePath), "save/%s", saving.SaveName);
-    GameSaveWrite(SavePath, &saving);
+    GameSaveWrite(saving.SaveName, &saving);
     if (mainScript.rootTable)
         toml_free(mainScript.rootTable);
     SDL_DestroyRenderer(renderer);

@@ -25,8 +25,10 @@ SDL_Color gColorBLUE = {0, 0, 255, 255};
 
 SDL_Color gColorDialogue = {64, 64, 64, 230};      // Black
 SDL_Color gColorBackground = {64, 64, 64, 255};    // Dark Grey
-SDL_Color gColorOptionButton = {40, 20, 0, 230};   // Dark Brown
+SDL_Color gColorOptionButton = {60, 30, 0, 220};   // Dark Brown
 SDL_Color gColorOptionText = {255, 255, 255, 192}; // White
+SDL_Color gColorNextText = {200, 200, 200, 255}; // LIGHT GREY
+SDL_Color gColorNextButton = {96, 96, 96 ,230}; // GREY
 
 SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 SDL_Rect gRectDialogue = {360, 370, 1080, 320};

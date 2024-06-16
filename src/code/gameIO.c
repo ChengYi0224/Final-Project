@@ -54,10 +54,10 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         DisplayUTF8(renderer, TOML_USE_STRING(mainScript->author), FontAuthor, gColorLGREY, &(SDL_Rect){25, 130, 400, 50});
 
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
-        Button buttonNewGame = {{5, 400, 250, 40}, gColorDGREY, 0, 0};
-        Button buttonLoadGame = {{5, 450, 250, 40}, gColorDGREY, 0, 0};
-        Button buttonContinue = {{5, 500, 250, 40}, gColorDGREY, 0, 0};
-        Button buttonExit = {{5, 550, 250, 40}, gColorDGREY, 0, 0};
+        Button buttonNewGame = {{15, 400, 250, 40}, gColorDGREY, 0, 0};
+        Button buttonLoadGame = {{15, 450, 250, 40}, gColorDGREY, 0, 0};
+        Button buttonContinue = {{15, 500, 250, 40}, gColorDGREY, 0, 0};
+        Button buttonExit = {{15, 550, 250, 40}, gColorDGREY, 0, 0};
 
         // Button Render
         renderButton(renderer, &buttonNewGame);
@@ -66,19 +66,19 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         renderButton(renderer, &buttonExit);
 
         // Button text
-        DisplayUTF8(renderer, "New Game", gFontDefault, gColorWHITE, &(SDL_Rect){10, 400, 250, 40});
+        DisplayUTF8(renderer, "New Game", gFontDefault, gColorWHITE, &(SDL_Rect){30, 400, 250, 40});
         if (hasSave)
         {
-            DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorWHITE, &(SDL_Rect){10, 450, 250, 40});
-            DisplayUTF8(renderer, SaveDirEntry->d_name, gFontDefault, gColorWHITE, &(SDL_Rect){270, 450, 400, 40});
-            DisplayUTF8(renderer, "  >Select", gFontDefault, gColorWHITE, &(SDL_Rect){10, 500, 250, 40});
+            DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorWHITE, &(SDL_Rect){30, 450, 250, 40});
+            DisplayUTF8(renderer, SaveDirEntry->d_name, gFontDefault, gColorWHITE, &(SDL_Rect){290, 450, 400, 40});
+            DisplayUTF8(renderer, "  >Select", gFontDefault, gColorWHITE, &(SDL_Rect){30, 500, 250, 40});
         }
         else
         {
-            DisplayUTF8(renderer, "(No Save File)", gFontDefault, gColorDGREY, &(SDL_Rect){10, 450, 250, 40});
-            DisplayUTF8(renderer, "  >Select", gFontDefault, gColorDGREY, &(SDL_Rect){10, 500, 250, 40});
+            DisplayUTF8(renderer, "(No Save File)", gFontDefault, gColorDGREY, &(SDL_Rect){30, 450, 250, 40});
+            DisplayUTF8(renderer, "  >Select", gFontDefault, gColorDGREY, &(SDL_Rect){30, 500, 250, 40});
         }
-        DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){10, 550, 250, 40});
+        DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){30, 550, 250, 40});
 
         SDL_RenderPresent(renderer);
         // 等待使用者輸入
@@ -115,10 +115,8 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             {
                 // 處理 Continue 按鈕被點擊的行為
                 // printf("Continue clicked\n");
-                char SavePath[270];
-                snprintf(SavePath, sizeof(SavePath), "./save/%s", SaveDirEntry->d_name);
-                printf("opening save at %s", SavePath);
-                if (GameSaveRead(SavePath, mainScript, saving))
+                printf("opening save at ./Save/%s", SaveDirEntry->d_name);
+                if (GameSaveRead(SaveDirEntry->d_name, mainScript, saving))
                 {
                     fprintf(stderr, "Error reading save\n");
                     return EXIT_FAILURE;
@@ -181,9 +179,11 @@ int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
     }
 }
 
-int8_t GameSaveRead(char *SavePath, script_t *mainScript, GameSave_t *saving)
+int8_t GameSaveRead(char *SaveName, script_t *mainScript, GameSave_t *saving)
 {
     // 打開劇本檔案
+    char SavePath[256];
+    snprintf(SavePath, sizeof(SavePath), "./save/%s", SaveName);
     char *sRead_errmsg = calloc(100, sizeof(char)); // 錯誤訊息
     FILE *fpSave = NULL;
     if ((fpSave = fopen(SavePath, "r")) == NULL)
@@ -191,6 +191,7 @@ int8_t GameSaveRead(char *SavePath, script_t *mainScript, GameSave_t *saving)
         perror("Error opening save");
         return EXIT_FAILURE;
     }
+    strncpy(saving->SaveName, SaveName, sizeof(saving->SaveName));
     // 解析存檔
     gRootTabGameSaveRead = toml_parse_file(fpSave, sRead_errmsg, 100);
     if (!gRootTabGameSaveRead)
@@ -229,8 +230,10 @@ int8_t GameSaveRead(char *SavePath, script_t *mainScript, GameSave_t *saving)
     return EXIT_SUCCESS;
 }
 
-int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
+int8_t GameSaveWrite(char *SaveName, GameSave_t *GameSave)
 {
+    char SavePath[256];
+    snprintf(SavePath, sizeof(SavePath), "./save/%s", SaveName);
     // 打開劇本檔案
     FILE *fpSave = NULL;
     if ((fpSave = fopen(SavePath, "w")) == NULL)
@@ -339,7 +342,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     }
 
     SDL_Event event;
-    Button nextButton = {.rect = gRectNext, .color = {128, 128, 128, 255}, .isHovered = 0, .isClicked = 0};
+    Button nextButton = {.rect = gRectNext, .color = gColorNextButton, .isHovered = 0, .isClicked = 0};
 
     const char *delim = "<br>";
     // text is newly allocated, so that it does not interfere the original text
@@ -364,7 +367,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Next Button
         renderButton(renderer, &nextButton);
-        DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
+        DisplayUTF8(renderer, "  NEXT", gFontDefault, gColorNextText, &gRectNext);
 
         SDL_RenderPresent(renderer);
         // 等待Next按鈕被點擊
@@ -406,7 +409,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Button and its text
         renderButton(renderer, &nextButton);
-        DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
+        DisplayUTF8(renderer, "  NEXT", gFontDefault, gColorNextText, &gRectNext);
         // print rect value
 
         SDL_RenderPresent(renderer);
@@ -538,11 +541,13 @@ NEXT_ACTION optionHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *
     if (nextEvent.ok == 1)
     {
         saving->tabCurEvent = toml_table_in(script->event, TOML_USE_STRING(nextEvent));
+        saving->nowScene.event = nextEvent;
         return _eEVENT;
     }
     else if (nextDialogue.ok == 1)
     {
         saving->tabCurDialogue = toml_table_in(script->dialogue, TOML_USE_STRING(nextDialogue));
+        saving->nowScene.dialogue = nextDialogue;
         return _eDIALOGUE;
     }
     else

@@ -109,6 +109,8 @@ extern SDL_Color gColorDialogue;
 extern SDL_Color gColorBackground;
 extern SDL_Color gColorOptionButton;
 extern SDL_Color gColorOptionText;
+extern SDL_Color gColorNextText;
+extern SDL_Color gColorNextButton;
 
 extern SDL_Rect gRectDialogue;
 extern SDL_Rect gRectBackground;
