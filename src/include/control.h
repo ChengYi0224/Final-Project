@@ -81,7 +81,8 @@ typedef enum _eNextAction
     _eEMPTY,
     _eDIALOGUE,
     _eEVENT,
-    _eENDING
+    _eENDING,
+    _eGAMEQUIT
 } NEXT_ACTION;
 
 #include "toml_extra.h"
@@ -107,6 +108,7 @@ extern SDL_Color gColorBLUE;
 extern SDL_Color gColorDialogue;
 extern SDL_Color gColorBackground;
 extern SDL_Color gColorOptionButton;
+extern SDL_Color gColorOptionText;
 
 extern SDL_Rect gRectDialogue;
 extern SDL_Rect gRectBackground;
