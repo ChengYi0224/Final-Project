@@ -361,7 +361,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
         /// Renderer Tachie
         renderTachie(renderer, script, saving);
-        
+
         // Set Dialogue
         SET_DRAW_COLOR(renderer, gColorDialogue); // Background Color
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -369,8 +369,6 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
         // Render Avatar
-        SET_DRAW_COLOR(renderer, gColorAvatarFrame);
-        SDL_RenderFillRect(renderer, &gRectAvatarFrame);
         renderAvatar(renderer, script, saving);
 
         // Next Button
@@ -418,8 +416,6 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
         // Render Avatar
-        SET_DRAW_COLOR(renderer, gColorAvatarFrame);
-        SDL_RenderFillRect(renderer, &gRectAvatarFrame);
         renderAvatar(renderer, script, saving);
 
         // Button and its text

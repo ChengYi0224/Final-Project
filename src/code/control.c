@@ -193,6 +193,9 @@ int8_t renderAvatar(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *sa
         fprintf(stderr, "Character \"%s\" not found in script\n", TOML_USE_STRING(saving->nowScene.character));
         return 0;
     }
+    // avatar frame
+    SET_DRAW_COLOR(renderer, gColorAvatarFrame);
+    SDL_RenderFillRect(renderer, &gRectAvatarFrame);
     // avatar
     DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "avatar")), NULL, &gRectAvatar);
 }
