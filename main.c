@@ -27,7 +27,7 @@ int main(int argc, char const *argv[])
     // 建立視窗
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     // 建立渲染器
-    //SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
+    // SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
     // 載入字體
     gFontDefault = TTF_OpenFont("assets/fonts/kaiu.ttf", 30);
@@ -44,14 +44,14 @@ int main(int argc, char const *argv[])
     SDL_Event event;
     int32_t game_is_running = 1;
     setCentre(&gRectBackground, &gRectDialogue);
+    gRectText.w = gRectDialogue.w - 30;
     setCentre(&gRectDialogue, &gRectText);
     gRectNext.x = gRectDialogue.x + gRectDialogue.w - gRectNext.w;
     gRectNext.y = gRectDialogue.y + gRectDialogue.h - gRectNext.h;
     // 遊戲資料變數
     script_t mainScript = {0};
     scriptRead(ScriptPath, &mainScript);
-    
-    
+
     GameSave_t saving = {0};
     NEXT_ACTION NextAction = _eEVENT;
 
@@ -62,7 +62,8 @@ int main(int argc, char const *argv[])
         SDL_RenderClear(renderer);
 
         // 透過遊戲選單選擇，並根據回傳值執行接下來的劇情
-        if(GameStartMenu(renderer, &mainScript, &saving) == -1){
+        if (GameStartMenu(renderer, &mainScript, &saving) == -1)
+        {
             printf("terminate \n");
             goto end;
         }
@@ -112,10 +113,10 @@ int main(int argc, char const *argv[])
             // 背景
             DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.scene, TOML_USE_STRING(saving.nowScene.scene)), "background")), NULL, &gRectBackground); //
             // 立繪
-            //DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "tachie")), NULL, &gRectAvatar);
+            // DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "tachie")), NULL, &gRectAvatar);
             // DisplayImg(); // 物品欄
             // 角色頭像
-            //DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "avatar")), NULL, &gRectAvatar);
+            // DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(mainScript.character, TOML_USE_STRING(saving.nowScene.character)), "avatar")), NULL, &gRectAvatar);
             // DisplayImg(); // 角色頭像邊框
 
             // 繪製文字
