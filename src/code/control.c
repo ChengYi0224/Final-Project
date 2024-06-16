@@ -34,7 +34,7 @@ SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 SDL_Rect gRectDialogue = {360, 370, 1080, 320};
 SDL_Rect gRectTachie = {70, 70, 270, 600};
 SDL_Rect gRectText = {390, 390, 1280, 720};
-SDL_Rect gRectAvatar = {360 + 850 - 70, 370 + 300 - 70, 70, 70};
+SDL_Rect gRectAvatar = {0, 0, 140, 140};
 SDL_Rect gRectNext = {360 + 850 - 100, 370 + 300 - 30, 100, 30};
 SDL_Rect gRectOption[4] = {
     {100, 50 + 0, 1080, 70},
