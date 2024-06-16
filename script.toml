@@ -204,54 +204,264 @@ text = """
 option = [{ text = "繼續", event = "continue_3" }]
 
 [dialogue.police_interrogation]
-character = "police, heyun"
+character = "heyun"
 text = """
 你們前往警察局的路上被分開，一直都沒有機會再進行任何形式上的交流。你們被指示分別進入了不同的房間。\
-<br>以下是偵辦警察和你之間的對話：\
+<br>以下是偵辦警察和你之間的對話：
+"""
+option = [{text = "繼續", next = "police_interrogation_1"}]
+
+[dialogue.police_interrogation_1]
+character = "police"
+text = """
 <br>警：報警後，你們為什麼關機？\
-<br>你：因為我們需要時間。\
-<br>警：你需要時間做什麼？\
-<br>你：我們需要時間梳理線索，因為整件事情太複雜。\
-<br>警（拿出從垃圾桶撿回來的地形圖）：告訴我為什麼會畫這個地形圖，這上面的時間還有數字都代表著什麼？\
-<br>你（沉默）：……\
-<br>警：今天下午一點四十二分，就在你們兩個下車後的三分鐘左右，你們乘坐的第45路公車在十字路口跟一輛油罐車相撞，\
+"""
+option = [{text = "繼續", next = "police_interrogation_2"}]
+
+[dialogue.police_interrogation_2]
+character = "heyun"
+text = """
+你：因為我們需要時間。\
+"""
+option = [{text = "繼續", next = "police_interrogation_3"}]
+
+[dialogue.police_interrogation_3]
+character = "police"
+text = """
+警：你需要時間做什麼？\
+"""
+option = [{text = "繼續", next = "police_interrogation_4"}]
+
+[dialogue.police_interrogation_4]
+character = "heyun"
+text = """
+你：我們需要時間梳理線索，因為整件事情太複雜。\
+"""
+option = [{text = "繼續", next = "police_interrogation_5"}]
+
+[dialogue.police_interrogation_5]
+character = "police"
+text = """
+警（拿出從垃圾桶撿回來的地形圖）：告訴我為什麼會畫這個地形圖，這上面的時間還有數字都代表著什麼？\
+"""
+option = [{text = "繼續", next = "police_interrogation_6"}]
+
+[dialogue.police_interrogation_6]
+character = "heyun"
+text = """
+你（沉默）：……\
+"""
+option = [{text = "繼續", next = "police_interrogation_7"}]
+
+[dialogue.police_interrogation_7]
+character = "police"
+text = """
+警：今天下午一點四十二分，就在你們兩個下車後的三分鐘左右，你們乘坐的第45路公車在十字路口跟一輛油罐車相撞，\
 當事車輛均無人生還，而此次事故發生的時間、地點你都在上面標註出來了。為什麼？巧合嗎？\
-<br>你（無言以對）：……\
-<br>警：這次事故到底跟你有什麼關係？\
-<br>你（舉手）：阿 Sir，我發誓我跟這件事情沒有關係。也許接下來的話不像是一個清醒的人說的，請你們務必相信我，因為我說的就是真實的！\
-<br>警：信不信你是我們的事，你現在需要做的就是實話實說。\
-<br>你：那我說了。我們…… 進入了循環。\
-<br>警：什麼意思？\
-<br>你：我們會反反覆覆地過這一整天，之前我們也經歷過爆炸，但爆炸之後我們會復活，會重新回到這個公車上。\
+"""
+option = [{text = "繼續", next = "police_interrogation_8"}]
+
+[dialogue.police_interrogation_8]
+character = "heyun"
+text = """
+你（無言以對）：……\
+"""
+option = [{text = "繼續", next = "police_interrogation_9"}]
+
+[dialogue.police_interrogation_9]
+character = "police"
+text = """
+警：這次事故到底跟你有什麼關係？\
+"""
+option = [{text = "繼續", next = "police_interrogation_10"}]
+
+[dialogue.police_interrogation_10]
+character = "heyun"
+text = """
+你（舉手）：阿 Sir，我發誓我跟這件事情沒有關係。也許接下來的話不像是一個清醒的人說的，請你們務必相信我，因為我說的就是真實的！\
+"""
+option = [{text = "繼續", next = "police_interrogation_11"}]
+
+[dialogue.police_interrogation_11]
+character = "police"
+text = """
+警：信不信你是我們的事，你現在需要做的就是實話實說。\
+"""
+option = [{text = "繼續", next = "police_interrogation_12"}]
+
+[dialogue.police_interrogation_12]
+character = "heyun"
+text = """
+你：那我說了。我們…… 進入了循環。\
+"""
+option = [{text = "繼續", next = "police_interrogation_13"}]
+
+[dialogue.police_interrogation_13]
+character = "police"
+text = """
+警：什麼意思？\
+"""
+option = [{text = "繼續", next = "police_interrogation_14"}]
+
+[dialogue.police_interrogation_14]
+character = "heyun"
+text = """
+你：我們會反反覆覆地過這一整天，之前我們也經歷過爆炸，但爆炸之後我們會復活，會重新回到這個公車上。\
 我們之前覺得爆炸的原因是因為發生了車禍，就跟這次一樣。但後來發現即便是我們躲過了車禍，還是會發生爆炸，所以我們判定公車上有炸彈。\
-<br>警：肖鶴雲，外面死了那麼多人，我們沒有工夫在這跟你浪費時間。\
-<br>你（著急）：我沒有浪費時間，我們真的進入了循環。\
-<br>警：那是血淋淋的人命！幾十條人命。你再好好想想吧！\
-<br>"""
+"""
+option = [{text = "繼續", next = "police_interrogation_15"}]
+
+[dialogue.police_interrogation_15]
+character = "police"
+text = """
+警：肖鶴雲，外面死了那麼多人，我們沒有工夫在這跟你浪費時間。\
+"""
+option = [{text = "繼續", next = "police_interrogation_16"}]
+
+[dialogue.police_interrogation_16]
+character = "heyun"
+text = """
+你（著急）：我沒有浪費時間，我們真的進入了循環。\
+"""
+option = [{text = "繼續", next = "police_interrogation_17"}]
+
+[dialogue.police_interrogation_17]
+character = "police"
+text = """
+警：那是血淋淋的人命！幾十條人命。你再好好想想吧！\
+"""
 option = [{text = "繼續", next = "police_interrogation_continued"}]
 
 [dialogue.police_interrogation_continued]
-character = "police, heyun"
+character = "heyun"
 text = """
 之後不論你說了ｎ次，警察依舊不相信你說的話。後來，警察開始給你們抽血，以進行藥物測試。又過了不知多長時間，另一位和你坐同一輛車到警察局的阿 Sir 手裏拿著一杯咖啡進來。\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_1"}]
+
+[dialogue.police_interrogation_continued_1]
+character = "police"
+text = """
 <br>警：肖鶴雲，來喝杯咖啡提提神。\
-<br>你：能不能告訴我，這車上到底有沒有炸彈？\
-<br>警：遊戲程式設計師，平常工作挺忙的吧？到我們這裡好幾個小時了，悶不悶？\
-<br>你：我們也不用聊那麼多，您就告訴我這個炸彈到底在不在車上？\
-<br>警：如果真有炸彈，你們提前下車，你們倆就是最大的嫌疑人。\
-<br>你（無奈）：那李詩情怎麼說？她知道得比我多。那您問她去吧！她說什麼是什麼。\
-<br>警：年輕人，我們一直再給你機會。有些事情，你自己主動說出來和將來我們調查出來，那可是完全不同的性質。你懂我的意思嗎？\
-<br>你（真的是無語了）：……\
-<br>警：那個女孩就非常配合我們的調查工作。\
-<br>你（想起來你和詩情在天橋上的對話）：她怎麼說的我不知道，但我說的話句句屬實。我沒有什麼好隱瞞的！您問一百遍也是一樣，何必在我這裡浪費時間呢？\
-<br>警（端起茶杯喝一口）：那我們倆都要做好準備，這種事情，問一百遍的情況也是有的。（繼續喝茶）\
-<br>你：剛才我已經表達得很清楚了！那張圖就是我們梳理循環的結果，上面有我們醒來的時間，還有爆炸的時間跟地點，你們可以再去看一看。\
-<br>警：然後呢？\
-<br>你：不是，我，我都說過過那麼多邊了。沒必要再問了吧？你們不是都有監控嗎？回去看監控就好了。反正我該說的都已經說了，你們不信我也沒有辦法。\
-<br>警：你的意思是說，她指使你編出了這套話術？\
-<br>你：我沒有這個意思，這都是我自己梳理的。\
-<br>警：你的意思是，她想欺騙警方？然後你幫她找到了循環作為藉口，你們兩個用這套話術來欺騙警方，我可以這麼理解嗎？\
-<br>話沒說完，阿 Sir 離開了房間。緊接著進來的警察局副局長，你被列為45路公車爆炸案重大嫌疑人並被告知依法執行拘留。\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_2"}]
+
+[dialogue.police_interrogation_continued_2]
+character = "heyun"
+text = """
+你：能不能告訴我，這車上到底有沒有炸彈？\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_3"}]
+
+[dialogue.police_interrogation_continued_3]
+character = "police"
+text = """
+警：遊戲程式設計師，平常工作挺忙的吧？到我們這裡好幾個小時了，悶不悶？\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_4"}]
+
+[dialogue.police_interrogation_continued_4]
+character = "heyun"
+text = """
+你：我們也不用聊那麼多，您就告訴我這個炸彈到底在不在車上？\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_5"}]
+
+[dialogue.police_interrogation_continued_5]
+character = "police"
+text = """
+警：如果真有炸彈，你們提前下車，你們倆就是最大的嫌疑人。\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_6"}]
+
+[dialogue.police_interrogation_continued_6]
+character = "heyun"
+text = """
+你（無奈）：那李詩情怎麼說？她知道得比我多。那您問她去吧！她說什麼是什麼。\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_7"}]
+
+[dialogue.police_interrogation_continued_7]
+character = "police"
+text = """
+警：年輕人，我們一直再給你機會。有些事情，你自己主動說出來和將來我們調查出來，那可是完全不同的性質。你懂我的意思嗎？\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_8"}]
+
+[dialogue.police_interrogation_continued_8]
+character = "heyun"
+text = """
+你（真的是無語了）：……\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_9"}]
+
+[dialogue.police_interrogation_continued_9]
+character = "police"
+text = """
+警：那個女孩就非常配合我們的調查工作。\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_10"}]
+
+[dialogue.police_interrogation_continued_10]
+character = "heyun"
+text = """
+你（想起來你和詩情在天橋上的對話）：她怎麼說的我不知道，但我說的話句句屬實。我沒有什麼好隱瞞的！您問一百遍也是一樣，何必在我這裡浪費時間呢？\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_11"}]
+
+[dialogue.police_interrogation_continued_11]
+character = "police"
+text = """
+警（端起茶杯喝一口）：那我們倆都要做好準備，這種事情，問一百遍的情況也是有的。（繼續喝茶）\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_12"}]
+
+[dialogue.police_interrogation_continued_12]
+character = "heyun"
+text = """
+你：剛才我已經表達得很清楚了！那張圖就是我們梳理循環的結果，上面有我們醒來的時間，還有爆炸的時間跟地點，你們可以再去看一看。\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_13"}]
+
+[dialogue.police_interrogation_continued_13]
+character = "police"
+text = """
+警：然後呢？\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_14"}]
+
+[dialogue.police_interrogation_continued_14]
+character = "heyun"
+text = """
+你：不是，我，我都說過過那麼多邊了。沒必要再問了吧？你們不是都有監控嗎？回去看監控就好了。反正我該說的都已經說了，你們不信我也沒有辦法。\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_15"}]
+
+[dialogue.police_interrogation_continued_15]
+character = "police"
+text = """
+警：你的意思是說，她指使你編出了這套話術？\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_16"}]
+
+[dialogue.police_interrogation_continued_16]
+character = "heyun"
+text = """
+你：我沒有這個意思，這都是我自己梳理的。\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_17"}]
+
+[dialogue.police_interrogation_continued_17]
+character = "police"
+text = """
+警：你的意思是，她想欺騙警方？然後你幫她找到了循環作為藉口，你們兩個用這套話術來欺騙警方，我可以這麼理解嗎？\
+"""
+option = [{text = "繼續", next = "police_interrogation_continued_18"}]
+
+[dialogue.police_interrogation_continued_18]
+character = "narrator"
+text = """
+話沒說完，阿 Sir 離開了房間。緊接著進來的警察局副局長，你被列為45路公車爆炸案重大嫌疑人並被告知依法執行拘留。\
 副局長還解答了你一直想知道的問題，他們已經確認，車上有爆炸物。\
 <br>"""
 option = [{text = "繼續", event = "repeat_cycle"}]
