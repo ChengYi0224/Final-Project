@@ -46,6 +46,7 @@ int main(int argc, char const *argv[])
     SDL_Event event;
     int32_t game_is_running = 1;
     setCentre(&gRectBackground, &gRectDialogue);
+    setCentre(&gRectBackground, &gRectTachie);
     gRectText.w = gRectDialogue.w - 30;
     setCentre(&gRectDialogue, &gRectText);
     gRectNext.x = gRectDialogue.x + gRectDialogue.w - gRectNext.w;
