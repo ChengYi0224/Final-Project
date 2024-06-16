@@ -327,30 +327,22 @@ option = [{text = "繼續", next = "police_interrogation_17"}]
 
 [dialogue.police_interrogation_17]
 character = "police"
-text = """
-警：那是血淋淋的人命！幾十條人命。你再好好想想吧！\
-"""
+text = "警：那是血淋淋的人命！幾十條人命。你再好好想想吧！"
 option = [{text = "繼續", next = "police_interrogation_continued"}]
 
 [dialogue.police_interrogation_continued]
 character = "heyun"
-text = """
-之後不論你說了ｎ次，警察依舊不相信你說的話。後來，警察開始給你們抽血，以進行藥物測試。又過了不知多長時間，另一位和你坐同一輛車到警察局的阿 Sir 手裏拿著一杯咖啡進來。\
-"""
+text = "之後不論你說了ｎ次，警察依舊不相信你說的話。後來，警察開始給你們抽血，以進行藥物測試。又過了不知多長時間，另一位和你坐同一輛車到警察局的阿 Sir 手裏拿著一杯咖啡進來。"
 option = [{text = "繼續", next = "police_interrogation_continued_1"}]
 
 [dialogue.police_interrogation_continued_1]
 character = "police"
-text = """
-警：肖鶴雲，來喝杯咖啡提提神。\
-"""
+text = "警：肖鶴雲，來喝杯咖啡提提神。"
 option = [{text = "繼續", next = "police_interrogation_continued_2"}]
 
 [dialogue.police_interrogation_continued_2]
 character = "heyun"
-text = """
-你：能不能告訴我，這車上到底有沒有炸彈？\
-"""
+text = "你：能不能告訴我，這車上到底有沒有炸彈？"
 option = [{text = "繼續", next = "police_interrogation_continued_3"}]
 
 [dialogue.police_interrogation_continued_3]
