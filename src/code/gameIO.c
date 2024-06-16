@@ -301,6 +301,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Set Dialogue Background
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
         SDL_RenderFillRect(renderer, &gRectDialogue);
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
@@ -336,9 +337,9 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     // 顯示最後一段文字（如果有的話）
     if (*token != '\0')
     {
-        SET_DRAW_COLOR(renderer, gColorBackground);
+        //SET_DRAW_COLOR(renderer, gColorBackground);
         SDL_RenderClear(renderer);
-
+        DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
         // Set Dialogue Background
         SET_DRAW_COLOR(renderer, gColorDialogue);
         // Dialogue
@@ -466,7 +467,7 @@ NEXT_ACTION optionHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *
 
     // 讀取選項內容
     toml_datum_t text = toml_string_in(option, "text");
-    DisplayUTF8(renderer, TOML_USE_STRING(text), gFontDefault, gColorLGREY, &gRectDialogue);
+    DisplayUTF8(renderer, TOML_USE_STRING(text), gFontDefault, gColorLGREY, &gRectOption[0]);
     toml_datum_t nextEvent = toml_string_in(option, "event");
     toml_datum_t nextDialogue = toml_string_in(option, "next");
 

@@ -29,16 +29,16 @@ SDL_Color gColorOptionButton = {96, 96, 96, 128}; // Light Dark Grey
 SDL_Color gColorOptionText = {255,255,255,192}; // White
 
 SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-SDL_Rect gRectDialogue = {360, 370, 1000, 300};
+SDL_Rect gRectDialogue = {360, 370, 1080, 320};
 SDL_Rect gRectTachie = {70, 70, 270, 600};
-SDL_Rect gRectText = {390, 410, 950, 235};
+SDL_Rect gRectText = {390, 390, 950, 290};
 SDL_Rect gRectAvatar = {360 + 850 - 70, 370 + 300 - 70, 70, 70};
 SDL_Rect gRectNext = {360 + 850 - 100, 370 + 300 - 30, 100, 30};
 SDL_Rect gRectOption[4] = {
-    {100, 50 + 0, 1080, 35},
-    {100, 50 + 100, 1080, 35},
-    {100, 50 + 200, 1080, 35},
-    {100, 50 + 300, 1080, 35}};
+    {100, 50 + 0, 1080, 70},
+    {100, 50 + 100, 1080, 70},
+    {100, 50 + 200, 1080, 70},
+    {100, 50 + 300, 1080, 70}};
 
 SDL_Rect gRectInventory[4] = {
     {940, 600, 80, 80},
