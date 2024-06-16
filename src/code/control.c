@@ -54,8 +54,18 @@ int8_t DisplayImg(SDL_Renderer *renderer, char *imgPath, SDL_Rect *srcRect, SDL_
 {
     // 讀取圖片
     SDL_Surface *image = IMG_Load(imgPath);
+    if (image == NULL)
+    {
+        printf("Unable to load image %s! SDL_image Error: %s\n", imgPath, IMG_GetError());
+        return 0;
+    }
     // 建立材質
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
+    if (texture == NULL)
+    {
+        printf("Texture could not be created! SDL_Error: %s\n", SDL_GetError());
+        return 0;
+    }
     // 顯示
     SDL_RenderCopy(renderer, texture, srcRect, dstRect);
     // 釋放資源
@@ -160,6 +170,18 @@ struct tm *getLocalTime()
     time(&rawtime);
     timeinfo = localtime(&rawtime);
     return timeinfo;
+}
+
+int8_t renderCharacter(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving){
+    toml_table_t *tabCharacter = toml_table_in(mainScript->character, TOML_USE_STRING(saving->nowScene.character));
+    if(tabCharacter == NULL){
+        fprintf(stderr, "Character \"%s\" not found in script\n", TOML_USE_STRING(saving->nowScene.character));
+        return 0;
+    }
+    // avatar
+    DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "avatar")), NULL, &gRectAvatar);
+    // tachie
+    DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "tachie")), NULL, &gRectTachie);
 }
 
 int8_t setCentre(SDL_Rect *window, SDL_Rect *rect)

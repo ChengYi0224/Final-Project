@@ -155,4 +155,6 @@ int8_t handleButton(SDL_Event *event, Button *button);
 // use asctime(timeinfo) to turn into string.
 struct tm *getLocalTime();
 
+int8_t renderCharacter(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving);
+
 int8_t setCentre(SDL_Rect *window, SDL_Rect *rect);
