@@ -54,10 +54,12 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         DisplayUTF8(renderer, TOML_USE_STRING(mainScript->author), FontAuthor, gColorBLACK, &(SDL_Rect){25, 130, 400, 50});
 
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
-        Button buttonNewGame = {{15, 400, 300, 40}, gColorDGREY, 0, 0};
-        Button buttonLoadGame = {{15, 450, 300, 40}, gColorDGREY, 0, 0};
-        Button buttonContinue = {{15, 500, 300, 80}, gColorDGREY, 0, 0};
-        Button buttonExit = {{15, 600, 300, 40}, gColorDGREY, 0, 0};
+        SDL_Color colorMenuButton = gColorDGREY;
+        colorMenuButton.a = 210;
+        Button buttonNewGame = {{15, 400, 300, 40}, colorMenuButton, 0, 0};
+        Button buttonLoadGame = {{15, 450, 300, 40}, colorMenuButton, 0, 0};
+        Button buttonContinue = {{15, 500, 300, 80}, colorMenuButton, 0, 0};
+        Button buttonExit = {{15, 600, 300, 40}, colorMenuButton, 0, 0};
 
         // Button Render
         renderButton(renderer, &buttonNewGame);

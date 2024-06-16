@@ -562,7 +562,7 @@ text = """李詩情也在努力想辦法聯絡她的閨蜜幫她打電話報警�
 <br>就這樣在沒有什麼實質性進展的情況下，車子即將駛上大橋。這時你們依稀想起，好像之前公車每次都是在這個地方爆炸。\
 心裡感到不妙，李詩情突然大聲尖叫！\
 <br>"""
-option = [{text = "連接到路線二選項二", event = "cooperate_continue_2"}]
+option = [{text = "．．．", event = "cooperate_continue_2"}]
 
 [dialogue.ending_3]
 character = "heyun"
