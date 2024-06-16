@@ -105,7 +105,7 @@ text = """你是肖鶴雲，一名遊戲程式設計師，發現自己和一名�
 option = [
     { text = "獨自行動", event = "solo_action" },
     { text = "與李詩情合作", event = "cooperate_action" },
-    { text = "尋找外部幫助", event = "seek_help_heyun1" }
+    { text = "尋找外部幫助", event = "seek_help" }
 ]
 
 [dialogue.solo_action]
@@ -331,7 +331,7 @@ text = "警：那是血淋淋的人命！幾十條人命。你再好好想想吧
 option = [{text = "繼續", next = "police_interrogation_continued"}]
 
 [dialogue.police_interrogation_continued]
-character = "heyun"
+character = "narrator"
 text = "之後不論你說了ｎ次，警察依舊不相信你說的話。後來，警察開始給你們抽血，以進行藥物測試。又過了不知多長時間，另一位和你坐同一輛車到警察局的阿Sir手裏拿著一杯咖啡進來。"
 option = [{text = "繼續", next = "police_interrogation_continued_1"}]
 
