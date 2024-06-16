@@ -87,7 +87,6 @@ typedef enum _eNextAction
 
 #include "toml_extra.h"
 #include "gameIO.h"
-#include "graphics.h"
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
