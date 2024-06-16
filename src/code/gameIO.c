@@ -364,7 +364,6 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
     // 選擇選項
     toml_array_t *optionArr = toml_array_in(saving->tabCurDialogue, "option");
-    //TTF_Font gFontOption = TTF_OpenFont("assets/fonts/kaiu.ttf", 40);
     if(optionArr != NULL)
     {
         int32_t option_num = toml_array_nelem(optionArr);
