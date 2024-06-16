@@ -27,7 +27,7 @@ int main(int argc, char const *argv[])
     // 建立視窗
     SDL_Window *GameWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     // 建立渲染器
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
+    //SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
     // 載入字體
     gFontDefault = TTF_OpenFont("assets/fonts/kaiu.ttf", 40);

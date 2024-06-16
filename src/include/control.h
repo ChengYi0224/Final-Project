@@ -104,6 +104,10 @@ extern SDL_Color gColorRED;
 extern SDL_Color gColorGREEN;
 extern SDL_Color gColorBLUE;
 
+extern SDL_Color gColorDialogue;
+extern SDL_Color gColorBackground;
+extern SDL_Color gColorOptionButton;
+
 extern SDL_Rect gRectDialogue;
 extern SDL_Rect gRectBackground;
 extern SDL_Rect gRectTachie;
@@ -121,6 +125,8 @@ extern toml_table_t *gRootTabGameSaveRead;
 #define TOML_USE_INT(toml_datum) toml_datum.ok == 1 ? toml_datum.u.i : 0
 
 #define TOML_USE_FLOAT(toml_datum) toml_datum.ok == 1 ? toml_datum.u.f : 0.0
+
+#define SET_DRAW_COLOR(renderer, SDL_color) SDL_SetRenderDrawColor(renderer, SDL_color.r, SDL_color.g, SDL_color.b, SDL_color.a)
 
 #define StartBackgroundPathDefault "assets/scenes/defaultBackground.png"
 #define imgtest "assets/scenes/2K.jpg"

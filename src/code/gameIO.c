@@ -49,7 +49,6 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         renderButton(renderer, &buttonLoadGame);
         renderButton(renderer, &buttonContinue);
         renderButton(renderer, &buttonExit);
-        
 
         // Button text
         DisplayUTF8(renderer, "New Game", gFontDefault, gColorWHITE, &(SDL_Rect){10, 400, 250, 40});
@@ -131,9 +130,12 @@ int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
 
     // 設定event
     toml_set_string(&(saving->nowScene.event), "start");
-    if(saving->nowScene.event.ok == 1){
+    if (saving->nowScene.event.ok == 1)
+    {
         saving->tabCurEvent = toml_table_in(mainScript->event, TOML_USE_STRING(saving->nowScene.event));
-    }else{
+    }
+    else
+    {
         perror("Error setting event");
         return EXIT_FAILURE;
     }
@@ -164,7 +166,7 @@ int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
     GameSave->nowScene.scene = toml_string_in(gRootTabGameSaveRead, "nowScene.scene");
     GameSave->nowScene.character = toml_string_in(gRootTabGameSaveRead, "nowScene.character");
     GameSave->nowScene.dialogue = toml_string_in(gRootTabGameSaveRead, "nowScene.dialogue");
-    //GameSave->nowScene.effect = toml_string_in(gRootTabGameSaveRead, "nowScene.effect");
+    // GameSave->nowScene.effect = toml_string_in(gRootTabGameSaveRead, "nowScene.effect");
 
     // 釋放資源
     fclose(fpSave);
@@ -194,14 +196,13 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
     }
     fprintf(fpSave, "]\n");
 
-
     // 當前場景紀錄
     fprintf(fpSave, "nowScene = {\n");
     fprintf(fpSave, "event = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.event));
     fprintf(fpSave, "scene = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.scene));
     fprintf(fpSave, "character = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.character));
     fprintf(fpSave, "dialogue = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.dialogue));
-    //fprintf(fpSave, "effect = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.effect));
+    // fprintf(fpSave, "effect = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.effect));
     fprintf(fpSave, "}\n");
 
     fclose(fpSave);
@@ -253,7 +254,7 @@ NEXT_ACTION eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *s
 {
     if (renderer == NULL || script == NULL || saving == NULL)
         return EXIT_FAILURE;
-    
+
     // 設定scene_t
     scene_t scene = {0};
     scene.scene = toml_string_in(saving->tabCurEvent, "scene");
@@ -267,12 +268,17 @@ NEXT_ACTION eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *s
         return _eEMPTY;
     }
     return _eDIALOGUE;
-
-
 }
 
 NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving)
 {
+    // saving setting
+    toml_datum_t character = toml_string_in(saving->tabCurDialogue, "character");
+    if (character.ok == 1)
+    {
+        saving->nowScene.character = character;
+    }
+
     SDL_Event event;
     SDL_Rect dialRect = {190, 10 + WINDOW_HEIGHT * 3 / 5, WINDOW_WIDTH - 210, WINDOW_HEIGHT / 3 + 20};
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
@@ -286,10 +292,19 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     char *next = strstr(token, delim);
     while (next != NULL)
     {
+        SDL_SetRenderDrawColor(renderer, 64, 64, 64, 255);
+        SDL_RenderClear(renderer);
         *next = '\0';
-        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
-        
+        // 顯示dialogue
+
+        // Set Dialogue Background
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderFillRect(renderer, &gRectDialogue);
+        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectDialogue);
+
+        // Next Button
         renderButton(renderer, &nextButton);
+        DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &nextRect);
         SDL_RenderPresent(renderer);
         // 等待Next按鈕被點擊
         while (SDL_WaitEvent(&event))
@@ -300,7 +315,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
                 break;
             }
         }
-        
+
         token = next + strlen(delim);
         next = strstr(token, delim);
     }
@@ -308,8 +323,17 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     // 顯示最後一段文字（如果有的話）
     if (*token != '\0')
     {
-        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
+        SET_DRAW_COLOR(renderer, gColorBackground);
+        SDL_RenderClear(renderer);
+
+        // Set Dialogue Background
+        SET_DRAW_COLOR(renderer, gColorDialogue);
+        // Dialogue
+        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectDialogue);
+
+        // Button and its text
         renderButton(renderer, &nextButton);
+        DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &nextRect);
         SDL_RenderPresent(renderer);
 
         // 等待Next按鈕被點擊
@@ -321,48 +345,71 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     }
 
     // 選擇選項
-    int32_t option_num = toml_array_nelem(toml_array_in(saving->tabCurDialogue, "options"));
-    Button optionButtons[option_num];
-
-    for (int32_t i = 0; i < option_num; i++)
+    toml_array_t *optionArr = toml_array_in(saving->tabCurDialogue, "option");
+    if(optionArr != NULL)
     {
-        // 讀入當前option的table
-        toml_table_t *option = toml_table_at(toml_array_in(saving->tabCurDialogue, "options"), i);
-        char *option_text = TOML_USE_STRING(toml_string_in(option, "text"));
+        int32_t option_num = toml_array_nelem(optionArr);
+        Button optionButtons[option_num];
 
-        // 設置選項按鈕
-        optionButtons[i].rect = (SDL_Rect){textRect.x, textRect.y + (i + 1) * 60, 300, 50};
-        optionButtons[i].color = (SDL_Color){200, 200, 200, 255};
-
-        // 顯示選項按鈕
-        renderButton(renderer, &optionButtons[i]);
-        DisplayUTF8(renderer, option_text, gFontDefault, optionButtons[i].color, &(optionButtons[i].rect));
-    }
-
-    SDL_RenderPresent(renderer);
-
-    // 等待選項被點擊
-    int32_t choice = -1;
-    while (choice == -1)
-    {
-        while (SDL_PollEvent(&event))
+        for (int32_t i = 0; i < option_num; i++)
         {
-            for (int32_t i = 0; i < option_num; i++)
+            // 讀入當前option的table
+            toml_table_t *option = toml_table_at(optionArr, i);
+            char *option_text = TOML_USE_STRING(toml_string_in(option, "text"));
+
+            // 設置選項按鈕
+            optionButtons[i].rect = (SDL_Rect){textRect.x, textRect.y + (i + 1) * 60, 300, 50};
+            optionButtons[i].color = gColorOptionButton;
+
+            // 顯示選項按鈕
+            renderButton(renderer, &optionButtons[i]);
+            DisplayUTF8(renderer, option_text, gFontDefault, optionButtons[i].color, &(optionButtons[i].rect));
+        }
+
+        SDL_RenderPresent(renderer);
+
+        // 等待選項被點擊
+        int32_t choice = -1;
+        while (choice == -1)
+        {
+            while (SDL_PollEvent(&event))
             {
-                if (handleButton(&event, &optionButtons[i]) == 1)
+                for (int32_t i = 0; i < option_num; i++)
                 {
-                    choice = i;
-                    break;
+                    if (handleButton(&event, &optionButtons[i]) == 1)
+                    {
+                        choice = i;
+                        break;
+                    }
                 }
             }
         }
-    }
-
     free(text);
-    // 根據選項choice執行相應的邏輯
-    // TODO: 實現根據選項的邏輯處理
-
     return optionHandler(renderer, script, saving, choice); // 根據選項返回下一個動作
+    }
+    else
+    {
+        toml_datum_t nextEvent = toml_string_in(saving->tabCurDialogue, "event");
+        toml_datum_t nextDialogue = toml_string_in(saving->tabCurDialogue, "next");
+
+        // 判斷接下來要進入event還是next
+        if (nextEvent.ok == 1)
+        {
+            saving->tabCurEvent = toml_table_in(script->event, TOML_USE_STRING(nextEvent));
+            return _eEVENT;
+        }
+        else if (nextDialogue.ok == 1)
+        {
+            saving->tabCurDialogue = toml_table_in(script->dialogue, TOML_USE_STRING(nextDialogue));
+            return _eDIALOGUE;
+        }
+        else
+        {
+            fprintf(stderr, "%s:%s line %d: No further action informed.\n", __FILE__, __func__, __LINE__);
+            fprintf(stderr, "dialogue = %s\n", toml_table_key(saving->tabCurDialogue));
+            return _eEMPTY; // Script may be corrupt
+        }
+    }
 }
 
 NEXT_ACTION optionHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *saving, int32_t optionIdx)
@@ -408,6 +455,7 @@ NEXT_ACTION optionHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *
     }
 }
 
-void GameSaveTomlTableFree(){
+void GameSaveTomlTableFree()
+{
     toml_free(gRootTabGameSaveRead);
 }

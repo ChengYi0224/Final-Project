@@ -23,6 +23,10 @@ SDL_Color gColorRED = {255, 0, 0, 255};
 SDL_Color gColorGREEN = {0, 255, 0, 255};
 SDL_Color gColorBLUE = {0, 0, 255, 255};
 
+SDL_Color gColorDialogue = {0, 0, 0, 255}; // Black
+SDL_Color gColorBackground = {64, 64, 64, 255}; // Dark Grey
+SDL_Color gColorOptionButton = {96, 96, 96, 255}; // Light Dark Grey
+
 SDL_Rect gRectDialogue = {360, 370, 850, 300};
 SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 SDL_Rect gRectTachie = {70, 70, 270, 600};
@@ -78,7 +82,7 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
-    SDL_RenderFillRect(renderer, dstRect);
+    //SDL_RenderFillRect(renderer, dstRect);
     //  建立材質
     //  SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
     //  SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, text, color);
