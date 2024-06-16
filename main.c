@@ -82,7 +82,6 @@ int main(int argc, char const *argv[])
         while (1)
         {
             SDL_RenderClear(renderer);
-            updateInventory(renderer, saving);
 
             switch (NextAction)
             {
