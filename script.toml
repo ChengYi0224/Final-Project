@@ -214,7 +214,7 @@ option = [{text = "繼續", next = "police_interrogation_1"}]
 [dialogue.police_interrogation_1]
 character = "police"
 text = """
-<br>警：報警後，你們為什麼關機？\
+警：報警後，你們為什麼關機？\
 """
 option = [{text = "繼續", next = "police_interrogation_2"}]
 
@@ -342,7 +342,7 @@ option = [{text = "繼續", next = "police_interrogation_continued_1"}]
 [dialogue.police_interrogation_continued_1]
 character = "police"
 text = """
-<br>警：肖鶴雲，來喝杯咖啡提提神。\
+警：肖鶴雲，來喝杯咖啡提提神。\
 """
 option = [{text = "繼續", next = "police_interrogation_continued_2"}]
 
