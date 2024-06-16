@@ -22,12 +22,23 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
     }
 
     // 檢查是否存在任何存檔
-    SaveDirEntry = readdir(SaveDir);
-    closedir(SaveDir);
+    do
+    {
+        SaveDirEntry = readdir(SaveDir);
+        if (SaveDirEntry == NULL)
+            break;
+    } while (SaveDirEntry->d_name[0] == '.');
+    int8_t hasSave = 0;
+    if (SaveDirEntry != NULL)
+    {
+        hasSave = 1;
+    }
 
     while (1)
     {
         // 顯示開始畫面
+        SET_DRAW_COLOR(renderer, gColorBLACK);
+        SDL_RenderClear(renderer);
         SDL_Rect startRect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
         if (mainScript->startBackgroundPath.ok == 1)
             DisplayImg(renderer, mainScript->startBackgroundPath.u.s, NULL, &startRect);
@@ -37,6 +48,10 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         // Titile
         TTF_Font *FontTitle = TTF_OpenFont("assets/fonts/kaiu.ttf", 60);
         DisplayUTF8(renderer, TOML_USE_STRING(mainScript->title), FontTitle, gColorWHITE, &(SDL_Rect){5, 60, 250, 150});
+
+        // Authors
+        TTF_Font *FontAuthor = TTF_OpenFont("assets/fonts/kaiu.ttf", 20);
+        DisplayUTF8(renderer, TOML_USE_STRING(mainScript->author), FontAuthor, gColorLGREY, &(SDL_Rect){25, 130, 400, 50});
 
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
         Button buttonNewGame = {{5, 400, 250, 40}, gColorGREY, 0, 0};
@@ -52,8 +67,17 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
 
         // Button text
         DisplayUTF8(renderer, "New Game", gFontDefault, gColorWHITE, &(SDL_Rect){10, 400, 250, 40});
-        DisplayUTF8(renderer, "Load Game", gFontDefault, gColorWHITE, &(SDL_Rect){10, 450, 250, 40});
-        DisplayUTF8(renderer, "Continue", gFontDefault, gColorWHITE, &(SDL_Rect){10, 500, 250, 40});
+        if (hasSave)
+        {
+            DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorWHITE, &(SDL_Rect){10, 450, 250, 40});
+            DisplayUTF8(renderer, SaveDirEntry->d_name, gFontDefault, gColorWHITE, &(SDL_Rect){270, 450, 400, 40});
+            DisplayUTF8(renderer, "  >Continue", gFontDefault, gColorWHITE, &(SDL_Rect){10, 500, 250, 40});
+        }
+        else
+        {
+            DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorDGREY, &(SDL_Rect){10, 450, 250, 40});
+            DisplayUTF8(renderer, "  >Continue", gFontDefault, gColorDGREY, &(SDL_Rect){10, 500, 250, 40});
+        }
         DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){10, 550, 250, 40});
 
         SDL_RenderPresent(renderer);
@@ -66,23 +90,46 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             {
                 // 處理 New Game 按鈕被點擊*saving的行為
                 printf("New game clicked\n");
+                closedir(SaveDir);
                 return startNewGame(mainScript, saving);
             }
-            if (handleButton(&event, &buttonLoadGame))
+            if (hasSave)
             {
-                // 處理 Load Game 按鈕被點擊的行為
-                // 顯示二級menu
-                printf("Load game clicked\n");
+                if (handleButton(&event, &buttonLoadGame))
+                {
+                    // 處理 Choose Save 按鈕被點擊的行為
+                    printf("Choose Save clicked\n");
+                    SaveDirEntry = readdir(SaveDir);
+                    if( SaveDirEntry == NULL){
+                        rewinddir(SaveDir);
+                        do
+                        {
+                            SaveDirEntry = readdir(SaveDir);
+                        } while (SaveDirEntry->d_name[0] == '.');
+                    }
+                    break;
+                }
             }
             if (handleButton(&event, &buttonContinue))
             {
                 // 處理 Continue 按鈕被點擊的行為
                 printf("Continue clicked\n");
+                char SavePath[270];
+                snprintf(SavePath, sizeof(SavePath), "./save/%s", SaveDirEntry->d_name);
+                printf("opening save at %s", SavePath);
+                if (GameSaveRead(SavePath, mainScript, saving))
+                {
+                    fprintf(stderr,"Error reading save\n");
+                    return EXIT_FAILURE;
+                }
+                closedir(SaveDir);
+                return EXIT_SUCCESS;
             }
             if (handleButton(&event, &buttonExit))
             {
                 // 處理 Exit 按鈕被點擊的行為
                 printf("Exit clicked\n");
+                closedir(SaveDir);
                 return -1;
             }
         }
@@ -122,6 +169,8 @@ int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
     }
     // 設定scene_t
     scene_t sceneStart;
+    sceneStart.event.u.s = "start";
+    sceneStart.event.ok = 1;
     sceneStart.scene = toml_string_in(eventStart, "scene");
     sceneStart.character = toml_string_in(eventStart, "character");
     sceneStart.dialogue = toml_string_in(eventStart, "dialogue");
@@ -143,7 +192,7 @@ int8_t startNewGame(script_t *mainScript, GameSave_t *saving)
     }
 }
 
-int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
+int8_t GameSaveRead(char *SavePath, script_t *mainScript, GameSave_t *saving)
 {
     // 打開劇本檔案
     char *sRead_errmsg = calloc(100, sizeof(char)); // 錯誤訊息
@@ -163,17 +212,31 @@ int8_t GameSaveRead(char *SavePath, GameSave_t *GameSave)
     }
 
     // 讀取存檔資料
-    GameSave->playerInventory = toml_array_in(gRootTabGameSaveRead, "playerInventory");
-    GameSave->nowScene.event = toml_string_in(gRootTabGameSaveRead, "nowScene.event");
-    GameSave->nowScene.scene = toml_string_in(gRootTabGameSaveRead, "nowScene.scene");
-    GameSave->nowScene.character = toml_string_in(gRootTabGameSaveRead, "nowScene.character");
-    GameSave->nowScene.dialogue = toml_string_in(gRootTabGameSaveRead, "nowScene.dialogue");
-    // GameSave->nowScene.effect = toml_string_in(gRootTabGameSaveRead, "nowScene.effect");
+    saving->playerInventory = toml_array_in(gRootTabGameSaveRead, "playerInventory");
+    toml_table_t *SaveNowScene = toml_table_in(gRootTabGameSaveRead, "nowScene");
+    toml_datum_t valEvent = toml_string_in(SaveNowScene, "event");
+    toml_datum_t valScene = toml_string_in(SaveNowScene, "scene");
+    toml_datum_t valCharacter = toml_string_in(SaveNowScene, "character");
+    toml_datum_t valDialogue = toml_string_in(SaveNowScene, "dialogue");
+    //toml_datum_t valEffect = toml_string_in(gRootTabGameSaveRead, "nowScene.effect");
+
+    // 把GameSave連結到mainScript的rootTable
+    saving->tabCurEvent = toml_table_in(mainScript->event, TOML_USE_STRING(valEvent));
+    saving->tabCurDialogue = toml_table_in(mainScript->dialogue, TOML_USE_STRING(valDialogue));
+    toml_set_string(&saving->nowScene.event, TOML_USE_STRING(valEvent));
+    toml_set_string(&saving->nowScene.scene, TOML_USE_STRING(valScene));
+    toml_set_string(&saving->nowScene.character, TOML_USE_STRING(valCharacter));
+    toml_set_string(&saving->nowScene.dialogue, TOML_USE_STRING(valDialogue));
+    // toml_set_string(&GameSave->nowScene.effect, TOML_USE_STRING(valEffect));
+
+    // 設定saving->tabCur
+    saving->tabCurEvent = toml_table_in(mainScript->event, TOML_USE_STRING(valEvent));
+    saving->tabCurDialogue = toml_table_in(mainScript->dialogue, TOML_USE_STRING(valDialogue));
 
     // 釋放資源
     fclose(fpSave);
     free(sRead_errmsg);
-    atexit(GameSaveTomlTableFree);
+    GameSaveTomlTableFree();
     return EXIT_SUCCESS;
 }
 
@@ -202,13 +265,13 @@ int8_t GameSaveWrite(char *SavePath, GameSave_t *GameSave)
     }
 
     // 當前場景紀錄
-    fprintf(fpSave, "nowScene = {\n");
+    fprintf(fpSave, "[nowScene]\n");
     fprintf(fpSave, "event = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.event));
     fprintf(fpSave, "scene = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.scene));
     fprintf(fpSave, "character = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.character));
     fprintf(fpSave, "dialogue = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.dialogue));
     // fprintf(fpSave, "effect = \"%s\"\n", TOML_USE_STRING(GameSave->nowScene.effect));
-    fprintf(fpSave, "}\n");
+    fprintf(fpSave, "\n");
 
     fclose(fpSave);
     return EXIT_SUCCESS;
@@ -260,12 +323,12 @@ NEXT_ACTION eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *s
     if (renderer == NULL || script == NULL || saving == NULL)
         return EXIT_FAILURE;
 
-    // 設定scene_t
-    scene_t scene = {0};
-    scene.scene = toml_string_in(saving->tabCurEvent, "scene");
-    scene.dialogue = toml_string_in(saving->tabCurEvent, "dialogue");
-    saving->nowScene = scene;
-    saving->tabCurDialogue = toml_table_in(script->dialogue, TOML_USE_STRING(scene.dialogue));
+    // 設定
+    //saving->nowScene.event.u.s = toml_table_key(saving->tabCurEvent);
+    //saving->nowScene.event.ok = 1;
+    saving->nowScene.scene = toml_string_in(saving->tabCurEvent, "scene");
+    saving->nowScene.dialogue = toml_string_in(saving->tabCurEvent, "dialogue");
+    saving->tabCurDialogue = toml_table_in(script->dialogue, TOML_USE_STRING(saving->nowScene.dialogue));
     // Check if success
     if (saving->tabCurDialogue == NULL)
     {

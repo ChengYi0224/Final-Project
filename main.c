@@ -62,8 +62,8 @@ int main(int argc, char const *argv[])
         SDL_RenderClear(renderer);
 
         // 透過遊戲選單選擇，並根據回傳值執行接下來的劇情
-        if (GameStartMenu(renderer, &mainScript, &saving) == -1)
-        {
+        int8_t retVal_StartMenu = GameStartMenu(renderer, &mainScript, &saving);
+        if(retVal_StartMenu == -1 || retVal_StartMenu == EXIT_FAILURE){
             printf("terminate \n");
             goto end;
         }
