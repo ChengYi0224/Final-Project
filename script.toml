@@ -541,7 +541,7 @@ text = """
 <br>當警方找到你時，這兩樣助眠的東西早已在你體內發揮作用......\
 <br>"""
 item = "phone"
-option = [{text = "繼續", next = "b_option_continue"}]
+option = [{text = "繼續", event = "ending_2"}]
 
 [dialogue.ending_2]
 character = "heyun"
