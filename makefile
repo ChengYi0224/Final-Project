@@ -40,16 +40,9 @@ debug: $(EXEC)
 install-SDL:
 	sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
 
-# 測試可執行文件
-test: test.o $(OBJS)
-	$(CC) -o $(EXEC_TEST) test.o $(OBJS) $(SDL_LIB) $(CFLAGS)
-
-test.o: test.c
-	$(CC) -c $< -o $@ $(CFLAGS)
-
 # 清理構建目錄
 clean:
-	rm -f $(EXEC) $(EXEC_TEST) main.o test.o globalVariables.o $(OBJ_DIR)/*.o
+	rm -f $(EXEC) $(EXEC_TEST) main.o test.o $(OBJ_DIR)/*.o
 
 # 如果物件文件目錄不存在，則創建該目錄
 $(OBJ_DIR):
