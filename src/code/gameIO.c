@@ -327,7 +327,7 @@ NEXT_ACTION eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *s
     // Check if success
     if (saving->tabCurDialogue == NULL)
     {
-        perror("Error setting dialogue");
+        fprintf(stderr,"Error setting dialogue\n");
         return _eEMPTY;
     }
     return _eDIALOGUE;

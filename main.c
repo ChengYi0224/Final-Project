@@ -108,6 +108,7 @@ int main(int argc, char const *argv[])
             default:
                 // # 錯誤發生
                 fprintf(stderr, "Error in Game Script Loop\n");
+                fprintf(stderr, "Dialogue at %s \n", toml_table_key(saving.tabCurDialogue));
                 goto end;
             }
 
