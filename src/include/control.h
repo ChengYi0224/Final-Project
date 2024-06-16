@@ -150,3 +150,5 @@ int8_t handleButton(SDL_Event *event, Button *button);
 // example : struct tm *timeinfo;
 // use asctime(timeinfo) to turn into string.
 struct tm *getLocalTime();
+
+int8_t setCentre(SDL_Rect *window, SDL_Rect *rect);

@@ -43,10 +43,10 @@ int main(int argc, char const *argv[])
 
     SDL_Event event;
     int32_t game_is_running = 1;
-    int32_t ptsize = 40; // 測試用
-    TTF_Font *font = TTF_OpenFont("assets/fonts/kaiu.ttf", ptsize); // 測試用                            // 測試用
-    Button button = {{300, 250, 200, 100}, {0, 0, 255, 255}, 0, 0};
- 
+    setCentre(&gRectBackground, &gRectDialogue);
+    setCentre(&gRectDialogue, &gRectText);
+    gRectNext.x = gRectDialogue.x + gRectDialogue.w - gRectNext.w;
+    gRectNext.y = gRectDialogue.y + gRectDialogue.h - gRectNext.h;
     // 遊戲資料變數
     script_t mainScript = {0};
     scriptRead(ScriptPath, &mainScript);

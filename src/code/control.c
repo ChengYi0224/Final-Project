@@ -23,14 +23,14 @@ SDL_Color gColorRED = {255, 0, 0, 255};
 SDL_Color gColorGREEN = {0, 255, 0, 255};
 SDL_Color gColorBLUE = {0, 0, 255, 255};
 
-SDL_Color gColorDialogue = {0, 0, 0, 255}; // Black
-SDL_Color gColorBackground = {64, 64, 64, 255}; // Dark Grey
+SDL_Color gColorDialogue = {0, 0, 0, 255};        // Black
+SDL_Color gColorBackground = {64, 64, 64, 255};   // Dark Grey
 SDL_Color gColorOptionButton = {96, 96, 96, 255}; // Light Dark Grey
 
-SDL_Rect gRectDialogue = {360, 370, 850, 300};
 SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+SDL_Rect gRectDialogue = {360, 370, 1000, 300};
 SDL_Rect gRectTachie = {70, 70, 270, 600};
-SDL_Rect gRectText = {390, 410, 800, 235};
+SDL_Rect gRectText = {390, 410, 950, 235};
 SDL_Rect gRectAvatar = {360 + 850 - 70, 370 + 300 - 70, 70, 70};
 SDL_Rect gRectNext = {360 + 850 - 100, 370 + 300 - 30, 100, 30};
 SDL_Rect gRectOption[4] = {
@@ -38,7 +38,6 @@ SDL_Rect gRectOption[4] = {
     {10, 370 + 100, 340, 90},
     {10, 370 + 200, 340, 90},
     {10, 370 + 300, 340, 90}};
-
 
 SDL_Rect gRectInventory[4] = {
     {940, 600, 80, 80},
@@ -87,10 +86,10 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
 
 int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Color color, SDL_Rect *dstRect)
 {
-    //SDL_RenderFillRect(renderer, dstRect);
-    //  建立材質
-    //  SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
-    //  SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, text, color);
+    // SDL_RenderFillRect(renderer, dstRect);
+    //   建立材質
+    //   SDL_Surface *textSurface = TTF_RenderUTF8_Solid_Wrapped(font, text, color, dstRect->w);
+    //   SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, text, color);
     SDL_Surface *textSurface = TTF_RenderUTF8_Blended_Wrapped(font, text, color, dstRect->w);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_FreeSurface(textSurface);
@@ -157,4 +156,9 @@ struct tm *getLocalTime()
     time(&rawtime);
     timeinfo = localtime(&rawtime);
     return timeinfo;
+}
+
+int8_t setCentre(SDL_Rect *window, SDL_Rect *rect)
+{
+    rect->x = window->x + (window->w - rect->w) / 2;
 }
