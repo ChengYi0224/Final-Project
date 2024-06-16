@@ -54,10 +54,10 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         DisplayUTF8(renderer, TOML_USE_STRING(mainScript->author), FontAuthor, gColorLGREY, &(SDL_Rect){25, 130, 400, 50});
 
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
-        Button buttonNewGame = {{5, 400, 250, 40}, gColorGREY, 0, 0};
-        Button buttonLoadGame = {{5, 450, 250, 40}, gColorGREY, 0, 0};
-        Button buttonContinue = {{5, 500, 250, 40}, gColorGREY, 0, 0};
-        Button buttonExit = {{5, 550, 250, 40}, gColorGREY, 0, 0};
+        Button buttonNewGame = {{5, 400, 250, 40}, gColorDGREY, 0, 0};
+        Button buttonLoadGame = {{5, 450, 250, 40}, gColorDGREY, 0, 0};
+        Button buttonContinue = {{5, 500, 250, 40}, gColorDGREY, 0, 0};
+        Button buttonExit = {{5, 550, 250, 40}, gColorDGREY, 0, 0};
 
         // Button Render
         renderButton(renderer, &buttonNewGame);
@@ -89,7 +89,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             if (handleButton(&event, &buttonNewGame))
             {
                 // 處理 New Game 按鈕被點擊*saving的行為
-                //printf("New game clicked\n");
+                // printf("New game clicked\n");
                 closedir(SaveDir);
                 return startNewGame(mainScript, saving);
             }
@@ -98,9 +98,10 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
                 if (handleButton(&event, &buttonLoadGame))
                 {
                     // 處理 Choose Save 按鈕被點擊的行為
-                    //printf("Choose Save clicked\n");
+                    // printf("Choose Save clicked\n");
                     SaveDirEntry = readdir(SaveDir);
-                    if( SaveDirEntry == NULL){
+                    if (SaveDirEntry == NULL)
+                    {
                         rewinddir(SaveDir);
                         do
                         {
@@ -113,13 +114,13 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             if (handleButton(&event, &buttonContinue))
             {
                 // 處理 Continue 按鈕被點擊的行為
-                //printf("Continue clicked\n");
+                // printf("Continue clicked\n");
                 char SavePath[270];
                 snprintf(SavePath, sizeof(SavePath), "./save/%s", SaveDirEntry->d_name);
                 printf("opening save at %s", SavePath);
                 if (GameSaveRead(SavePath, mainScript, saving))
                 {
-                    fprintf(stderr,"Error reading save\n");
+                    fprintf(stderr, "Error reading save\n");
                     return EXIT_FAILURE;
                 }
                 closedir(SaveDir);
@@ -128,7 +129,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             if (handleButton(&event, &buttonExit))
             {
                 // 處理 Exit 按鈕被點擊的行為
-                //printf("Exit clicked\n");
+                // printf("Exit clicked\n");
                 closedir(SaveDir);
                 return -1;
             }
@@ -138,23 +139,6 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
                 return _eGAMEQUIT;
             }
         }
-        /*
-        while (SDL_WaitEvent(&event))
-        {
-            if (event.type == SDL_QUIT)
-            {
-                return NULL;
-            }
-            if (event.type == SDL_KEYDOWN)
-            {
-                if (event.key.keysym.sym == SDLK_RETURN)
-                {
-                    break;
-                }
-            }
-        }
-        break;
-        */
     }
 }
 
@@ -223,7 +207,7 @@ int8_t GameSaveRead(char *SavePath, script_t *mainScript, GameSave_t *saving)
     toml_datum_t valScene = toml_string_in(SaveNowScene, "scene");
     toml_datum_t valCharacter = toml_string_in(SaveNowScene, "character");
     toml_datum_t valDialogue = toml_string_in(SaveNowScene, "dialogue");
-    //toml_datum_t valEffect = toml_string_in(gRootTabGameSaveRead, "nowScene.effect");
+    // toml_datum_t valEffect = toml_string_in(gRootTabGameSaveRead, "nowScene.effect");
 
     // 把GameSave連結到mainScript的rootTable
     saving->tabCurEvent = toml_table_in(mainScript->event, TOML_USE_STRING(valEvent));
@@ -331,8 +315,8 @@ NEXT_ACTION eventHandler(SDL_Renderer *renderer, script_t *script, GameSave_t *s
         return EXIT_FAILURE;
 
     // 設定
-    //saving->nowScene.event.u.s = toml_table_key(saving->tabCurEvent);
-    //saving->nowScene.event.ok = 1;
+    // saving->nowScene.event.u.s = toml_table_key(saving->tabCurEvent);
+    // saving->nowScene.event.ok = 1;
     saving->nowScene.scene = toml_string_in(saving->tabCurEvent, "scene");
     saving->nowScene.dialogue = toml_string_in(saving->tabCurEvent, "dialogue");
     saving->tabCurDialogue = toml_table_in(script->dialogue, TOML_USE_STRING(saving->nowScene.dialogue));
@@ -355,7 +339,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     }
 
     SDL_Event event;
-    Button nextButton = {.rect = gRectNext, .color = {200, 200, 200, 255}};
+    Button nextButton = {.rect = gRectNext, .color = {128, 128, 128, 255}, .isHovered = 0, .isClicked = 0};
 
     const char *delim = "<br>";
     // text is newly allocated, so that it does not interfere the original text
@@ -369,11 +353,13 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         *next = '\0';
         // 顯示dialogue
 
-        // Set Dialogue Background
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        // Set Scene
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
+        
+        // Set Dialogue 
+        SET_DRAW_COLOR(renderer, gColorDialogue); // Background Color
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        SDL_RenderFillRect(renderer, &gRectDialogue);
+        SDL_RenderFillRect(renderer, &gRectDialogue); // Background
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
         // Next Button
@@ -389,7 +375,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
             {
                 if (handleButton(&event, &nextButton) == 1)
                 {
-                    printf("clicked\n");
+                    // printf("clicked\n");
                     nextClicked = 1;
                     break;
                 }
@@ -408,7 +394,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     // 顯示最後一段文字（如果有的話）
     if (*token != '\0')
     {
-        //SET_DRAW_COLOR(renderer, gColorBackground);
+        // SET_DRAW_COLOR(renderer, gColorBackground);
         SDL_RenderClear(renderer);
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
         // Set Dialogue Background
@@ -434,7 +420,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
             {
                 if (handleButton(&event, &nextButton) == 1)
                 {
-                    printf("clicked\n");
+                    // printf("clicked\n");
                     nextClicked = 1;
                     break;
                 }
@@ -453,6 +439,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     {
         int32_t option_num = toml_array_nelem(optionArr);
         Button optionButtons[option_num];
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
         for (int32_t i = 0; i < option_num; i++)
         {
@@ -463,8 +450,11 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
             // 設置選項按鈕
             optionButtons[i].rect = gRectOption[i];
             optionButtons[i].color = gColorOptionButton;
+            optionButtons[i].isHovered = 0;
+            optionButtons[i].isClicked = 0;
 
             // 顯示選項按鈕
+            // printf("opt %d button isHovered = %u\n", i, optionButtons[i].isHovered);
             renderButton(renderer, &optionButtons[i]);
             DisplayUTF8(renderer, option_text, gFontDefault, gColorOptionText, &(optionButtons[i].rect));
         }

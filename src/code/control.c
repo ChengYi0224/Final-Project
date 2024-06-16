@@ -23,10 +23,10 @@ SDL_Color gColorRED = {255, 0, 0, 255};
 SDL_Color gColorGREEN = {0, 255, 0, 255};
 SDL_Color gColorBLUE = {0, 0, 255, 255};
 
-SDL_Color gColorDialogue = {0, 0, 0, 128}; // Black
-SDL_Color gColorBackground = {64, 64, 64, 255}; // Dark Grey
-SDL_Color gColorOptionButton = {96, 96, 96, 128}; // Light Dark Grey
-SDL_Color gColorOptionText = {255,255,255,192}; // White
+SDL_Color gColorDialogue = {64, 64, 64, 230};      // Black
+SDL_Color gColorBackground = {64, 64, 64, 255};    // Dark Grey
+SDL_Color gColorOptionButton = {40, 20, 0, 230};   // Dark Brown
+SDL_Color gColorOptionText = {255, 255, 255, 192}; // White
 
 SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 SDL_Rect gRectDialogue = {360, 370, 1080, 320};
@@ -118,12 +118,13 @@ int8_t DisplayItem(SDL_Renderer *renderer, toml_table_t *item, SDL_Rect *srcRect
 
 int8_t renderButton(SDL_Renderer *renderer, Button *button)
 {
-    SDL_SetRenderDrawColor(renderer, button->color.r, button->color.g, button->color.b, 255);
+    SET_DRAW_COLOR(renderer, button->color);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_RenderFillRect(renderer, &button->rect);
 
     if (button->isHovered)
     {
-        SDL_SetRenderDrawColor(renderer, 192, 192, 192, 255); // Highlight color
+        SDL_SetRenderDrawColor(renderer, 192, 192, 192, 200); // Highlight color
         SDL_RenderFillRect(renderer, &button->rect);
     }
 
@@ -143,7 +144,7 @@ int8_t handleButton(SDL_Event *event, Button *button)
         if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
             mouseY >= button->rect.y && mouseY <= button->rect.y + button->rect.h)
         {
-            fprintf(stderr, "Button clicked!\n");
+            // fprintf(stderr, "Button clicked!\n");
             return 1;
         }
     }
