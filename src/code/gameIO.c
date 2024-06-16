@@ -301,7 +301,10 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Next Button
         renderButton(renderer, &nextButton);
+        printf("x = %d, y = %d, w = %d, h = %d\n", gRectNext.x, gRectNext.y, gRectNext.w, gRectNext.h);
         DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
+        printf("x = %d, y = %d, w = %d, h = %d\n", gRectNext.x, gRectNext.y, gRectNext.w, gRectNext.h);
+
         SDL_RenderPresent(renderer);
         // 等待Next按鈕被點擊
         int32_t nextClicked = -1;
@@ -334,8 +337,12 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
         // Button and its text
+        printf("x = %d, y = %d, w = %d, h = %d\n", gRectNext.x, gRectNext.y, gRectNext.w, gRectNext.h);
         renderButton(renderer, &nextButton);
         DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &gRectNext);
+        // print rect value
+        printf("x = %d, y = %d, w = %d, h = %d\n", gRectNext.x, gRectNext.y, gRectNext.w, gRectNext.h);
+
         SDL_RenderPresent(renderer);
 
         // 等待Next按鈕被點擊
