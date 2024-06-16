@@ -69,7 +69,7 @@ scene = "bus_45"
 dialogue = "cooperate_continue_2"
 [event.continue_3]
 scene = "bus_45"
-dialogue = "continue_3"
+dialogue = "continue_3_heyun"
 [event.police_interrogation]
 scene = "police_station"
 dialogue = "police_interrogation"
@@ -78,10 +78,10 @@ scene = "police_station"
 dialogue = "police_interrogation_continued"
 [event.repeat_cycle]
 scene = "bus_45"
-dialogue = "repeat_cycle"
+dialogue = "repeat_cycle_heyun1"
 [event.continue_investigation]
 scene = "bus_45"
-dialogue = "continue_investigation"
+dialogue = "continue_investigation_heyun1"
 [event.ending_1]
 scene = "bus_45"
 dialogue = "ending_1"
@@ -201,7 +201,7 @@ text = """
 雖然現在你是一名遊戲程式設計師，但你的大學專業是研究資訊安全相關的課題。\
 因此你記得公車內部系統中有個安全漏洞一直沒有引起重視，便趁機得到公車的維修情況、司機的個人背景資料等。\
 <br>"""
-option = [{ text = "繼續", next = "continue_3" }]
+option = [{ text = "繼續", event = "continue_3" }]
 
 [dialogue.police_interrogation]
 character = "police, heyun"
@@ -254,37 +254,74 @@ text = """
 <br>話沒說完，阿 Sir 離開了房間。緊接著進來的警察局副局長，你被列為45路公車爆炸案重大嫌疑人並被告知依法執行拘留。\
 副局長還解答了你一直想知道的問題，他們已經確認，車上有爆炸物。\
 <br>"""
-option = [{text = "繼續", next = "repeat_cycle"}]
+option = [{text = "繼續", event = "repeat_cycle"}]
 
-[dialogue.repeat_cycle]
-character = "heyun, shiqing"
+[dialogue.repeat_cycle_heyun1]
+character = "heyun"
 text = """
 經歷過這些後再次從公車上醒來，彷彿一切都是一場夢。但你們見到彼此時，卻又很清楚這一切不可能是一場夢。\
-<br>你向李詩情道歉，她之前對警察對顧慮確實並非空穴來風。是自己太天真，把事情想簡單了。\
-<br>李詩情不約而同地也在檢討自己，你甚至坦承自己之前對她的不信任。就這樣，彼此的芥蒂一筆勾銷。\
+<br>你向李詩情道歉，她之前對警察對顧慮確實並非空穴來風。是自己太天真，把事情想簡單了。
+<br>"""
+option = [{text = "繼續", next = "repeat_cycle_shiqing"}]
+[dialogue.repeat_cycle_shiqing]
+character = "shiqing"
+text = "李詩情不約而同地也在檢討自己，"
+option = [{text = "繼續", next = "repeat_cycle_heyun2"}]
+[dialogue.repeat_cycle_heyun2]
+character = "heyun"
+text = """
+你甚至坦承自己之前對她的不信任。就這樣，彼此的芥蒂一筆勾銷。\
 <br>繼續回歸正題，你們發現，醒來前的最後記憶都是自己在問訊室精疲力盡地睡著了。\
 <br>因此可以推測，只要睡著就會回到循環。接著，你和李詩情同步睡著前最後得知的信息：「警方已經確認車上有炸彈」。\
-"""
-option = [{text = "繼續", next = "continue_investigation"}]
+<br>"""
+option = [{text = "繼續", event = "continue_investigation"}]
 
-[dialogue.continue_investigation]
-character = "heyun, shiqing"
+[dialogue.continue_investigation_heyun1]
+character = "heyun"
+text = "從現在開始，你們說話都要小心。以防被兇手發現，盡量爭取多點時間找出炸彈。你假設兇手是從外面把炸彈帶上車，便只能藏匿在包包裡。"
+option = [{text = "繼續", next = "continue_investigation_shiqing1"}]
+[dialogue.continue_investigation_shiqing1]
+character = "shiqing"
+text = "所以可以排除沒有攜帶包包的乘客，李詩情也把包裡全是藥的歐巴桑排除。並且，她注意到了右前方有位乘客腳下有個紅色袋子。"
+option = [{text = "繼續", next = "continue_investigation_heyun2"}]
+[dialogue.continue_investigation_heyun2]
+character = "heyun"
 text = """
-從現在開始，你們說話都要小心。以防被兇手發現，盡量爭取多點時間找出炸彈。你假設兇手是從外面把炸彈帶上車，便只能藏匿在包包裡。\
-<br>所以可以排除沒有攜帶包包的乘客，李詩情也把包裡全是藥的歐巴桑排除。並且，她注意到了右前方有位乘客腳下有個紅色袋子。\
-<br>你看了一眼，又往後看，發現之前見過坐在最後一排的口罩男不在那裡。他全身穿著都是黑色，李詩情也對這個人有印象。\
-<br>你舉起手腕看了看手錶，發現時間提前了。他還沒上車，也就是說你們應該可以正常到站下車了。李詩情從斜跨包裡拿出它的耳機，想要找找那個鈴聲。\
-<br>她推論如果這個鈴聲和爆炸有關係的話，兇手聽到這個聲音一定會有反應。\
-<br>不出所料，你們果然順利在沿江東路站下車，而口罩男同時在這站上車。他大熱天地把自己包裹得嚴絲合縫，引起了你的矚目。\
-<br>李詩情與此同時拿起手機馬上打電話報警，可惜警察依舊沒能阻止爆炸。其實如果她不報警，這件事情也許就不會跟你們扯上關係了。\
-<br>你想要置身事外，因此和李詩情大吵了一架。她答應不會提及你，便去等警察過來接她。你在遠處的樹後目睹她離開，心裡卻不是滋味。這時的你面對抉擇：\
-"""
+你看了一眼，又往後看，發現之前見過坐在最後一排的口罩男不在那裡。他全身穿著都是黑色，李詩情也對這個人有印象。\
+<br>你舉起手腕看了看手錶，發現時間提前了。他還沒上車，也就是說你們應該可以正常到站下車了。
+<br>"""
+option = [{text = "繼續", next = "continue_investigation_shiqing2"}]
+[dialogue.continue_investigation_shiqing2]
+character = "shiqing"
+text = """
+李詩情從斜跨包裡拿出她的耳機，想要找找那個鈴聲。\
+<br>她推論如果這個鈴聲和爆炸有關係的話，兇手聽到這個聲音一定會有反應。
+<br>"""
+option = [{text = "繼續", next = "continue_investigation_heyun3"}]
+[dialogue.continue_investigation_heyun3]
+character = "heyun"
+text = "不出所料，你們果然順利在沿江東路站下車，而口罩男同時在這站上車。他大熱天地把自己包裹得嚴絲合縫，引起了你的矚目。"
+option = [{text = "繼續", next = "continue_investigation_shiqing3"}]
+[dialogue.continue_investigation_shiqing3]
+character = "shiqing"
+text = "李詩情與此同時拿起手機馬上打電話報警，可惜警察依舊沒能阻止爆炸。其實如果她不報警，這件事情也許就不會跟你們扯上關係了。"
 item = "phone"
+option = [{text = "重新開始", next = "continue_investigation_heyun4"}]
+[dialogue.continue_investigation_heyun4]
+character = "heyun"
+text = "你想要置身事外，因此和李詩情大吵了一架。"
+option = [{text = "重新開始", next = "continue_investigation_shiqing4"}]
+[dialogue.continue_investigation_shiqing4]
+character = "shiqing"
+text = "她答應不會提及你，便去等警察過來接她。"
+option = [{text = "繼續", next = "continue_investigation_heyun5"}]
+[dialogue.continue_investigation_heyun5]
+character = "heyun"
+text = "你在遠處的樹後目睹她離開，心裡卻不是滋味。這時的你面對抉擇："
 option = [
     {text = "你趕到和合作伙伴約定的地點開會，從此擺脫循環。", event = "ending_1"},
     {text = "順應良心，覺得還是不能棄李詩情於不顧。", event = "b_option"}
     ]
-
 [dialogue.ending_1]
 character = "heyun"
 text = """
@@ -305,7 +342,7 @@ item = "phone"
 option = [{text = "繼續", next = "b_option_continue"}]
 
 [dialogue.ending_2]
-character = "heyun, shiqing"
+character = "heyun"
 text = """
 經過多次循環，你和李詩情終於發現炸彈藏匿在包著紅色袋子的高壓鍋裡，成功地阻止了公交車爆炸，並拯救了車上的所有人。\
 <br>幕後黑手是陶映紅和司機王興德，他們因女兒五年前在公交車上被猥褻並發生事故去世，決定通過製造公交車爆炸報復社會。\
@@ -313,16 +350,20 @@ text = """
 item = "bomb"
 option = [{text = "重新開始", event = "start"}]
 
-[dialogue.continue_3]
-character = "heyun, shiqing"
-text = """
-你和李詩情並沒有什麼太深入的交流，就是正在各自想辦法去解決這個困境。她也在努力想辦法聯絡她的閨蜜幫她打電話報警，但似乎進度緩慢……\
-<br>就這樣在沒有什麼實質性進展的情況下，車子即將駛上大橋。這時你們依稀想起，好像之前公車每次都是在這個地方爆炸。心裡感到不妙，李詩情突然大聲尖叫！\
+[dialogue.continue_3_heyun]
+character = "heyun"
+text = "你和李詩情並沒有什麼太深入的交流，就是正在各自想辦法去解決這個困境。"
+option = [{text = "繼續", next = "continue_3_shiqing"}]
+[dialogue.continue_3_shiqing]
+character = "shiqing"
+text = """李詩情也在努力想辦法聯絡她的閨蜜幫她打電話報警，但似乎進度緩慢......\
+<br>就這樣在沒有什麼實質性進展的情況下，車子即將駛上大橋。這時你們依稀想起，好像之前公車每次都是在這個地方爆炸。\
+心裡感到不妙，李詩情突然大聲尖叫！\
 <br>"""
 option = [{text = "連接到路線二選項二", next = "cooperate_continue_2"}]
 
 [dialogue.ending_3]
-character = "heyun, shiqing"
+character = "heyun"
 text = """
     由於你們經歷了太多次的循環，身體已經不堪循環所帶來的副作用，你們的身體狀況越來越差。\
     <br>最終，你們搶救無效，一起離開了人世。這件事情也因為你們的離世變得不了了之......\
