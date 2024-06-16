@@ -1,6 +1,7 @@
 name = "閉環"
 author = "洪庭安、林美盈、張呈義"
 version = "1.0.0"
+startBackgroundPath = "assets/scene/defaultBackground.png"
 
 [player]
 starter = "開始"
@@ -205,7 +206,7 @@ option = [{text = "繼續", next = "police_interrogation_continued"}]
 [dialogue.police_interrogation_continued]
 character = "police, heyun"
 text = """
-之後不論你說了 n 次，警察依舊不相信你說的話。後來，警察開始給你們抽血，以進行藥物測試。又過了不知多長時間，另一位和你坐同一輛車到警察局的阿 Sir 手裏拿著一杯咖啡進來。\
+之後不論你說了ｎ次，警察依舊不相信你說的話。後來，警察開始給你們抽血，以進行藥物測試。又過了不知多長時間，另一位和你坐同一輛車到警察局的阿 Sir 手裏拿著一杯咖啡進來。\
 <br>警：肖鶴雲，來喝杯咖啡提提神。\
 <br>你：能不能告訴我，這車上到底有沒有炸彈？\
 <br>警：遊戲程式設計師，平常工作挺忙的吧？到我們這裡好幾個小時了，悶不悶？\

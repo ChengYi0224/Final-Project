@@ -151,6 +151,7 @@ int main(int argc, char const *argv[])
 
 // 程式結束，以相反順序釋放資源
 end:
+    
     GameSaveWrite(saving.SaveName, &saving);
     if (mainScript.rootTable)
         toml_free(mainScript.rootTable);

@@ -47,17 +47,17 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
 
         // Titile
         TTF_Font *FontTitle = TTF_OpenFont("assets/fonts/kaiu.ttf", 60);
-        DisplayUTF8(renderer, TOML_USE_STRING(mainScript->title), FontTitle, gColorWHITE, &(SDL_Rect){5, 60, 250, 150});
+        DisplayUTF8(renderer, TOML_USE_STRING(mainScript->title), FontTitle, gColorBLACK, &(SDL_Rect){5, 60, 250, 150});
 
         // Authors
         TTF_Font *FontAuthor = TTF_OpenFont("assets/fonts/kaiu.ttf", 20);
-        DisplayUTF8(renderer, TOML_USE_STRING(mainScript->author), FontAuthor, gColorLGREY, &(SDL_Rect){25, 130, 400, 50});
+        DisplayUTF8(renderer, TOML_USE_STRING(mainScript->author), FontAuthor, gColorBLACK, &(SDL_Rect){25, 130, 400, 50});
 
         // Button = Rect{x, y, w, h}, color{r, g, b, a}, isHovered, isClicked
-        Button buttonNewGame = {{15, 400, 250, 40}, gColorDGREY, 0, 0};
-        Button buttonLoadGame = {{15, 450, 250, 40}, gColorDGREY, 0, 0};
-        Button buttonContinue = {{15, 500, 250, 40}, gColorDGREY, 0, 0};
-        Button buttonExit = {{15, 550, 250, 40}, gColorDGREY, 0, 0};
+        Button buttonNewGame = {{15, 400, 300, 40}, gColorDGREY, 0, 0};
+        Button buttonLoadGame = {{15, 450, 300, 40}, gColorDGREY, 0, 0};
+        Button buttonContinue = {{15, 500, 300, 80}, gColorDGREY, 0, 0};
+        Button buttonExit = {{15, 600, 300, 40}, gColorDGREY, 0, 0};
 
         // Button Render
         renderButton(renderer, &buttonNewGame);
@@ -65,20 +65,21 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         renderButton(renderer, &buttonContinue);
         renderButton(renderer, &buttonExit);
 
+        char SaveSelText[260];
         // Button text
-        DisplayUTF8(renderer, "New Game", gFontDefault, gColorWHITE, &(SDL_Rect){30, 400, 250, 40});
+        DisplayUTF8(renderer, "New Game", gFontDefault, gColorWHITE, &(SDL_Rect){30, 403, 300, 40});
         if (hasSave)
         {
-            DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorWHITE, &(SDL_Rect){30, 450, 250, 40});
-            DisplayUTF8(renderer, SaveDirEntry->d_name, gFontDefault, gColorWHITE, &(SDL_Rect){290, 450, 400, 40});
-            DisplayUTF8(renderer, "  >Select", gFontDefault, gColorWHITE, &(SDL_Rect){30, 500, 250, 40});
+            DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorWHITE, &(SDL_Rect){30, 453, 300, 40});
+            sprintf(SaveSelText, "  > %s", SaveDirEntry->d_name);
+            DisplayUTF8(renderer, SaveSelText, gFontDefault, gColorWHITE, &(SDL_Rect){30, 505, 300, 80});
         }
         else
         {
-            DisplayUTF8(renderer, "(No Save File)", gFontDefault, gColorDGREY, &(SDL_Rect){30, 450, 250, 40});
-            DisplayUTF8(renderer, "  >Select", gFontDefault, gColorDGREY, &(SDL_Rect){30, 500, 250, 40});
+            DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorGREY, &(SDL_Rect){30, 453, 300, 40});
+            DisplayUTF8(renderer, "  > (No file)", gFontDefault, gColorGREY, &(SDL_Rect){30, 522, 300, 40});
         }
-        DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){30, 550, 250, 40});
+        DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){30, 603, 300, 40});
 
         SDL_RenderPresent(renderer);
         // 等待使用者輸入
