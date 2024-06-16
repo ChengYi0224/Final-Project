@@ -359,8 +359,9 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Set Scene
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
+        // tachie
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->character, TOML_USE_STRING(saving->nowScene.character)), "tachie")), NULL, &gRectTachie);
-        // Set Dialogue 
+        // Set Dialogue
         SET_DRAW_COLOR(renderer, gColorDialogue); // Background Color
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderFillRect(renderer, &gRectDialogue); // Background
@@ -401,6 +402,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         // SET_DRAW_COLOR(renderer, gColorBackground);
         SDL_RenderClear(renderer);
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
+        // tachie
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->character, TOML_USE_STRING(saving->nowScene.character)), "tachie")), NULL, &gRectTachie);
         // Set Dialogue Background
         SET_DRAW_COLOR(renderer, gColorDialogue);
