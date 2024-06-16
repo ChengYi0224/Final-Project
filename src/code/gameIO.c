@@ -301,7 +301,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         // Set Dialogue Background
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderFillRect(renderer, &gRectDialogue);
-        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectDialogue);
+        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
         // Next Button
         renderButton(renderer, &nextButton);
@@ -330,7 +330,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         // Set Dialogue Background
         SET_DRAW_COLOR(renderer, gColorDialogue);
         // Dialogue
-        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectDialogue);
+        DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
         // Button and its text
         renderButton(renderer, &nextButton);
@@ -359,7 +359,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
             char *option_text = TOML_USE_STRING(toml_string_in(option, "text"));
 
             // 設置選項按鈕
-            optionButtons[i].rect = (SDL_Rect){textRect.x, textRect.y + (i + 1) * 60, 300, 50};
+            optionButtons[i].rect = (SDL_Rect){gRectText.x, gRectText.y + (i + 1) * 60, gRectText.w, 50};
             optionButtons[i].color = gColorOptionButton;
 
             // 顯示選項按鈕
