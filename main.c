@@ -29,6 +29,8 @@ int main(int argc, char const *argv[])
     // 建立渲染器
     // SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
     SDL_Renderer *renderer = SDL_CreateRenderer(GameWindow, -1, SDL_RENDERER_ACCELERATED);
+    // 啟用透明(alpha值)材質
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     // 載入字體
     gFontDefault = TTF_OpenFont("assets/fonts/kaiu.ttf", 30);
 

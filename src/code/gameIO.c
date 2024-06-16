@@ -71,12 +71,12 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
         {
             DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorWHITE, &(SDL_Rect){10, 450, 250, 40});
             DisplayUTF8(renderer, SaveDirEntry->d_name, gFontDefault, gColorWHITE, &(SDL_Rect){270, 450, 400, 40});
-            DisplayUTF8(renderer, "  >Continue", gFontDefault, gColorWHITE, &(SDL_Rect){10, 500, 250, 40});
+            DisplayUTF8(renderer, "  >Select", gFontDefault, gColorWHITE, &(SDL_Rect){10, 500, 250, 40});
         }
         else
         {
-            DisplayUTF8(renderer, "Choose Save", gFontDefault, gColorDGREY, &(SDL_Rect){10, 450, 250, 40});
-            DisplayUTF8(renderer, "  >Continue", gFontDefault, gColorDGREY, &(SDL_Rect){10, 500, 250, 40});
+            DisplayUTF8(renderer, "(No Save File)", gFontDefault, gColorDGREY, &(SDL_Rect){10, 450, 250, 40});
+            DisplayUTF8(renderer, "  >Select", gFontDefault, gColorDGREY, &(SDL_Rect){10, 500, 250, 40});
         }
         DisplayUTF8(renderer, "Exit", gFontDefault, gColorWHITE, &(SDL_Rect){10, 550, 250, 40});
 
@@ -89,7 +89,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             if (handleButton(&event, &buttonNewGame))
             {
                 // 處理 New Game 按鈕被點擊*saving的行為
-                printf("New game clicked\n");
+                //printf("New game clicked\n");
                 closedir(SaveDir);
                 return startNewGame(mainScript, saving);
             }
@@ -98,7 +98,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
                 if (handleButton(&event, &buttonLoadGame))
                 {
                     // 處理 Choose Save 按鈕被點擊的行為
-                    printf("Choose Save clicked\n");
+                    //printf("Choose Save clicked\n");
                     SaveDirEntry = readdir(SaveDir);
                     if( SaveDirEntry == NULL){
                         rewinddir(SaveDir);
@@ -113,7 +113,7 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             if (handleButton(&event, &buttonContinue))
             {
                 // 處理 Continue 按鈕被點擊的行為
-                printf("Continue clicked\n");
+                //printf("Continue clicked\n");
                 char SavePath[270];
                 snprintf(SavePath, sizeof(SavePath), "./save/%s", SaveDirEntry->d_name);
                 printf("opening save at %s", SavePath);
@@ -128,9 +128,14 @@ int8_t GameStartMenu(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *s
             if (handleButton(&event, &buttonExit))
             {
                 // 處理 Exit 按鈕被點擊的行為
-                printf("Exit clicked\n");
+                //printf("Exit clicked\n");
                 closedir(SaveDir);
                 return -1;
+            }
+            // check if windows "x" is clicked (close)
+            if (event.window.event == SDL_WINDOWEVENT_CLOSE)
+            {
+                return _eGAMEQUIT;
             }
         }
         /*
@@ -302,6 +307,8 @@ int8_t scriptRead(char *scriptPath, script_t *script)
     (*script).author = toml_string_in(wholeScript, "author");
     (*script).version = toml_string_in(wholeScript, "version");
     (*script).description = toml_string_in(wholeScript, "description");
+    (*script).license = toml_string_in(wholeScript, "license");
+    (*script).startBackgroundPath = toml_string_in(wholeScript, "startBackgroundPath");
 
     // 分類物件
     (*script).item = toml_table_in(wholeScript, "item");
@@ -365,6 +372,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         // Set Dialogue Background
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderFillRect(renderer, &gRectDialogue);
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
@@ -405,6 +413,8 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
         // Set Dialogue Background
         SET_DRAW_COLOR(renderer, gColorDialogue);
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_RenderFillRect(renderer, &gRectDialogue);
         // Dialogue
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
 
@@ -475,8 +485,8 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
                         break;
                     }
                 }
-                // SDL_quit
-                if (event.type == SDL_QUIT)
+                // check if windows "x" is clicked (close)
+                if (event.window.event == SDL_WINDOWEVENT_CLOSE)
                 {
                     return _eGAMEQUIT;
                 }

@@ -23,7 +23,7 @@ SDL_Color gColorRED = {255, 0, 0, 255};
 SDL_Color gColorGREEN = {0, 255, 0, 255};
 SDL_Color gColorBLUE = {0, 0, 255, 255};
 
-SDL_Color gColorDialogue = {0, 0, 0, 192}; // Black
+SDL_Color gColorDialogue = {0, 0, 0, 128}; // Black
 SDL_Color gColorBackground = {64, 64, 64, 255}; // Dark Grey
 SDL_Color gColorOptionButton = {96, 96, 96, 128}; // Light Dark Grey
 SDL_Color gColorOptionText = {255,255,255,192}; // White
