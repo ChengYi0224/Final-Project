@@ -74,7 +74,6 @@ int8_t DisplayText(SDL_Renderer *renderer, char *text, TTF_Font *font, SDL_Color
         printf("Texture could not be created! SDL_Error: %s\n", SDL_GetError());
         return 0;
     }
-
     dstRect->w = textSurface->w;
     if (dstRect->h > textSurface->h)
         dstRect->h = textSurface->h;
@@ -101,11 +100,11 @@ int8_t DisplayUTF8(SDL_Renderer *renderer, uint8_t *text, TTF_Font *font, SDL_Co
         printf("Texture could not be created! SDL_Error: %s\n", SDL_GetError());
         return 0;
     }
-
-    dstRect->w = textSurface->w;
-    if (dstRect->h > textSurface->h)
-        dstRect->h = textSurface->h;
-    SDL_RenderCopy(renderer, texture, NULL, dstRect);
+    SDL_Rect temp = *dstRect;
+    temp.w = textSurface->w;
+    if (temp.h > textSurface->h)
+        temp.h = textSurface->h;
+    SDL_RenderCopy(renderer, texture, NULL, &temp);
     // SDL_RenderPresent(renderer); // 由外面的呼叫者統一更新畫面以避免閃爍
     SDL_DestroyTexture(texture);
 
