@@ -284,6 +284,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
     SDL_Rect textRect = {dialRect.x + 15, dialRect.y + 3, dialRect.w - 30, dialRect.h - 6};
     SDL_Rect nextRect = {textRect.x, textRect.y + textRect.h + 10, 100, 50};
     Button nextButton = {.rect = gRectNextButton, .color = {200, 200, 200, 255}};
+    TTF_Font *fontButton = TTF_OpenFont("assets/fonts/kaiu.ttf", 30);
 
     const char *delim = "<br>";
     // text is newly allocated, so that it does not interfere the original text
@@ -304,7 +305,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Next Button
         renderButton(renderer, &nextButton);
-        DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &nextRect);
+        DisplayUTF8(renderer, "Next", fontButton, gColorBLACK, &gRectNextButton);
         SDL_RenderPresent(renderer);
         // 等待Next按鈕被點擊
         while (SDL_WaitEvent(&event))
@@ -333,7 +334,7 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Button and its text
         renderButton(renderer, &nextButton);
-        DisplayUTF8(renderer, "Next", gFontDefault, gColorBLACK, &nextRect);
+        DisplayUTF8(renderer, "Next", fontButton, gColorBLACK, &gRectNextButton);
         SDL_RenderPresent(renderer);
 
         // 等待Next按鈕被點擊

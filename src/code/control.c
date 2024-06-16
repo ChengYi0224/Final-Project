@@ -138,7 +138,7 @@ int8_t handleButton(SDL_Event *event, Button *button)
         if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
             mouseY >= button->rect.y && mouseY <= button->rect.y + button->rect.h)
         {
-            printf("Button clicked!\\n");
+            printf("Button clicked!\n");
             return 1;
         }
     }
