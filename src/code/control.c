@@ -176,10 +176,14 @@ struct tm *getLocalTime()
 }
 
 int8_t renderCharacter(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving){
+    // Skip narrator
+    if(strcmp(TOML_USE_STRING(saving->nowScene.character), "narrator") == 0){
+        return EXIT_SUCCESS;
+    }
     toml_table_t *tabCharacter = toml_table_in(mainScript->character, TOML_USE_STRING(saving->nowScene.character));
     if(tabCharacter == NULL){
         fprintf(stderr, "Character \"%s\" not found in script\n", TOML_USE_STRING(saving->nowScene.character));
-        return 0;
+        return EXIT_FAILURE;
     }
     // avatar
     DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "avatar")), NULL, &gRectAvatar);
@@ -188,10 +192,15 @@ int8_t renderCharacter(SDL_Renderer *renderer, script_t *mainScript, GameSave_t 
 }
 
 int8_t renderAvatar(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving){
+    // Skip narrator
+    if (strcmp(TOML_USE_STRING(saving->nowScene.character), "narrator") == 0)
+    {
+        return EXIT_SUCCESS;
+    }
     toml_table_t *tabCharacter = toml_table_in(mainScript->character, TOML_USE_STRING(saving->nowScene.character));
     if(tabCharacter == NULL){
         fprintf(stderr, "Character \"%s\" not found in script\n", TOML_USE_STRING(saving->nowScene.character));
-        return 0;
+        return EXIT_FAILURE;
     }
     // avatar white frame
     SET_DRAW_COLOR(renderer, gColorWHITE);
@@ -204,6 +213,11 @@ int8_t renderAvatar(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *sa
 }
 
 int8_t renderTachie(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving){
+    // Skip narrator
+    if (strcmp(TOML_USE_STRING(saving->nowScene.character), "narrator") == 0)
+    {
+        return EXIT_SUCCESS;
+    }
     toml_table_t *tabCharacter = toml_table_in(mainScript->character, TOML_USE_STRING(saving->nowScene.character));
     if(tabCharacter == NULL){
         fprintf(stderr, "Character \"%s\" not found in script\n", TOML_USE_STRING(saving->nowScene.character));

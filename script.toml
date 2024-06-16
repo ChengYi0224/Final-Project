@@ -278,7 +278,7 @@ option = [{text = "繼續", next = "police_interrogation_10"}]
 [dialogue.police_interrogation_10]
 character = "heyun"
 text = """
-你（舉手）：阿 Sir，我發誓我跟這件事情沒有關係。也許接下來的話不像是一個清醒的人說的，請你們務必相信我，因為我說的就是真實的！\
+你（舉手）：阿Sir，我發誓我跟這件事情沒有關係。也許接下來的話不像是一個清醒的人說的，請你們務必相信我，因為我說的就是真實的！\
 """
 option = [{text = "繼續", next = "police_interrogation_11"}]
 
@@ -332,7 +332,7 @@ option = [{text = "繼續", next = "police_interrogation_continued"}]
 
 [dialogue.police_interrogation_continued]
 character = "heyun"
-text = "之後不論你說了ｎ次，警察依舊不相信你說的話。後來，警察開始給你們抽血，以進行藥物測試。又過了不知多長時間，另一位和你坐同一輛車到警察局的阿 Sir 手裏拿著一杯咖啡進來。"
+text = "之後不論你說了ｎ次，警察依舊不相信你說的話。後來，警察開始給你們抽血，以進行藥物測試。又過了不知多長時間，另一位和你坐同一輛車到警察局的阿Sir手裏拿著一杯咖啡進來。"
 option = [{text = "繼續", next = "police_interrogation_continued_1"}]
 
 [dialogue.police_interrogation_continued_1]
@@ -453,7 +453,7 @@ option = [{text = "繼續", next = "police_interrogation_continued_18"}]
 [dialogue.police_interrogation_continued_18]
 character = "narrator"
 text = """
-話沒說完，阿 Sir 離開了房間。緊接著進來的警察局副局長，你被列為45路公車爆炸案重大嫌疑人並被告知依法執行拘留。\
+話沒說完，阿Sir離開了房間。緊接著進來的警察局副局長，你被列為45路公車爆炸案重大嫌疑人並被告知依法執行拘留。\
 副局長還解答了你一直想知道的問題，他們已經確認，車上有爆炸物。\
 <br>"""
 option = [{text = "繼續", event = "repeat_cycle"}]
