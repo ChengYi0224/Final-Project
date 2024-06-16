@@ -117,19 +117,19 @@ option = [
     { text = "回答歐巴桑並拒絕她的好意，嘗試趁勢告訴大家這輛公車會在不久後爆炸。", event = "solo_fail_1" },
     { text = "放棄逃逸計劃，尋找其他可能的逃生路徑。", event = "solo_fail_2" }
 ]
-[[dialogue.solo_fail_1]]
+[dialogue.solo_fail_1]
 character = "heyun"
 text = """公車上的其他乘客沒有相信你的警告，將你視為神經病。在接下來的一刻，公車依舊在橋上行駛並發生了爆炸。"""
 option = [{ text = "重新開始", next = "start" }]
 
-[[dialogue.solo_fail_2]]
+[dialogue.solo_fail_2]
 character = "heyun"
 text = """於是你試圖偷偷拿起車窗擊破器，破窗而逃，不料觸發警報。紅燈時，遭到其他乘客的阻止。\
     <br>紅燈轉綠，公車在十字路口為了閃避一輛突然衝出來的摩托車而緊急轉向撞上一輛油罐車再次發生爆炸。\
     <br>"""
 option = [{ text = "重新開始", next = "start" }]
 
-[[dialogue.cooperate_action]]
+[dialogue.cooperate_action]
 character = "heyun"
 text = """你選擇了與李詩情合作。探討循環的原因。李詩情解釋了她拉你下車的經過和她多次嘗試逃脫循環的經歷。\
     <br>通過對話，你們兩人確認了每次爆炸前都有相同的交通事故發生。李詩情提議，如果能夠避免這場車禍，或許能夠阻止爆炸。\
@@ -142,7 +142,7 @@ option = [
     { text = "告知司機這個緊急情況，可能使司機能夠立即采取措施停車並疏散乘客。", event = "cooperate_continue_2" }
 ]
 
-[[dialogue.cooperate_continue_1]]
+[dialogue.cooperate_continue_1]
 character = "heyun, shiqing"
 text = """你們在清水巷下車，邊走邊討論剛剛發現的情況。來到了清水公園，李詩情擔心你們並沒有看到炸彈要如何面對警方的詢問。\
     <br>這時警方也已經出動警力到清水公園附近，你們必須儘快找出原因。你拿出紙筆開始列出每次循環的時間線和爆炸地點，\
@@ -150,7 +150,7 @@ text = """你們在清水巷下車，邊走邊討論剛剛發現的情況。來�
     <br>"""
 option = [{ text = "繼續", next = "police_interrogation" }]
 
-[[dialogue.cooperate_continue_2]]
+[dialogue.cooperate_continue_2]
 character = "heyun, shiqing"
 text = """李詩情從座位上站起來，向駕駛員喊道：「司機大哥快停車，車上有炸彈！」\
     <br>本以為這樣就可以阻止定時炸彈爆炸，沒想到話音剛落，叕爆炸。你突然意識到，\
@@ -158,7 +158,7 @@ text = """李詩情從座位上站起來，向駕駛員喊道：「司機大哥�
     <br>"""
 option = [{ text = "重新開始", next = "start" }]
 
-[[dialogue.seek_help]]
+[dialogue.seek_help]
 character = "heyun, shiqing"
 text = """你選擇尋求外部幫助。你考慮使用手機聯絡警察解釋情況，\
     或者研究公車的歷史記錄來尋找是否有類似事件和可能的解決方案。\
@@ -168,7 +168,7 @@ text = """你選擇尋求外部幫助。你考慮使用手機聯絡警察解釋�
     <br>"""
 option = [{ text = "繼續", next = "continue_3" }]
 
-[[dialogue.continue_3]]
+[dialogue.continue_3]
 character = "heyun, shiqing"
 text = """你和李詩情並沒有什麼太深入的交流，就是正在各自想辦法去解決這個困境。她也在努力想辦法聯絡她的閨蜜幫她打電話報警，但似乎進度緩慢……\
     <br>就這樣在沒有什麼實質性進展的情況下，車子即將駛上大橋。這時你們依稀想起，好像之前公車每次都是在這個地方爆炸。心裡感到不妙，李詩情突然大聲尖叫！\
