@@ -29,12 +29,15 @@ SDL_Color gColorOptionButton = {60, 30, 0, 220};   // Dark Brown
 SDL_Color gColorOptionText = {255, 255, 255, 192}; // White
 SDL_Color gColorNextText = {200, 200, 200, 255}; // LIGHT GREY
 SDL_Color gColorNextButton = {96, 96, 96 ,230}; // GREY
+SDL_Color gColorAvatarFrame = {160, 143, 101, 240}; // Olive yellow
 
+// Rect = {x, y, w, h}
 SDL_Rect gRectBackground = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 SDL_Rect gRectDialogue = {360, 370, 1080, 320};
-SDL_Rect gRectTachie = {70, 70, 270, 600};
+SDL_Rect gRectTachie = {535, 100, 210, 600};
 SDL_Rect gRectText = {390, 390, 1280, 720};
-SDL_Rect gRectAvatar = {0, 0, 140, 140};
+SDL_Rect gRectAvatar = {290, 600, 140, 140};
+SDL_Rect gRectAvatarFrame = {285, 595, 150, 150};
 SDL_Rect gRectNext = {360 + 850 - 100, 370 + 300 - 30, 100, 30};
 SDL_Rect gRectOption[4] = {
     {100, 50 + 0, 1080, 70},
@@ -180,6 +183,26 @@ int8_t renderCharacter(SDL_Renderer *renderer, script_t *mainScript, GameSave_t 
     }
     // avatar
     DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "avatar")), NULL, &gRectAvatar);
+    // tachie
+    DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "tachie")), NULL, &gRectTachie);
+}
+
+int8_t renderAvatar(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving){
+    toml_table_t *tabCharacter = toml_table_in(mainScript->character, TOML_USE_STRING(saving->nowScene.character));
+    if(tabCharacter == NULL){
+        fprintf(stderr, "Character \"%s\" not found in script\n", TOML_USE_STRING(saving->nowScene.character));
+        return 0;
+    }
+    // avatar
+    DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "avatar")), NULL, &gRectAvatar);
+}
+
+int8_t renderTachie(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving){
+    toml_table_t *tabCharacter = toml_table_in(mainScript->character, TOML_USE_STRING(saving->nowScene.character));
+    if(tabCharacter == NULL){
+        fprintf(stderr, "Character \"%s\" not found in script\n", TOML_USE_STRING(saving->nowScene.character));
+        return 0;
+    }
     // tachie
     DisplayImg(renderer, TOML_USE_STRING(toml_string_in(tabCharacter, "tachie")), NULL, &gRectTachie);
 }

@@ -111,12 +111,14 @@ extern SDL_Color gColorOptionButton;
 extern SDL_Color gColorOptionText;
 extern SDL_Color gColorNextText;
 extern SDL_Color gColorNextButton;
+extern SDL_Color gColorAvatarFrame;
 
 extern SDL_Rect gRectDialogue;
 extern SDL_Rect gRectBackground;
 extern SDL_Rect gRectTachie;
 extern SDL_Rect gRectText;
 extern SDL_Rect gRectAvatar;
+extern SDL_Rect gRectAvatarFrame;
 extern SDL_Rect gRectNext;
 extern SDL_Rect gRectOption[4];
 
@@ -156,5 +158,9 @@ int8_t handleButton(SDL_Event *event, Button *button);
 struct tm *getLocalTime();
 
 int8_t renderCharacter(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving);
+
+int8_t renderAvatar(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving);
+
+int8_t renderTachie(SDL_Renderer *renderer, script_t *mainScript, GameSave_t *saving);
 
 int8_t setCentre(SDL_Rect *window, SDL_Rect *rect);

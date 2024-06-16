@@ -359,13 +359,19 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
 
         // Set Scene
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
-        // Render Character's Avatar and Tachie
-        renderCharacter(renderer, script, saving);
+        /// Renderer Tachie
+        renderTachie(renderer, script, saving);
+        
         // Set Dialogue
         SET_DRAW_COLOR(renderer, gColorDialogue); // Background Color
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderFillRect(renderer, &gRectDialogue); // Background
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
+
+        // Render Avatar
+        SET_DRAW_COLOR(renderer, gColorAvatarFrame);
+        SDL_RenderFillRect(renderer, &gRectAvatarFrame);
+        renderAvatar(renderer, script, saving);
 
         // Next Button
         renderButton(renderer, &nextButton);
@@ -402,14 +408,19 @@ NEXT_ACTION dialogueHandler(SDL_Renderer *renderer, script_t *script, GameSave_t
         // SET_DRAW_COLOR(renderer, gColorBackground);
         SDL_RenderClear(renderer);
         DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->scene, TOML_USE_STRING(saving->nowScene.scene)), "background")), NULL, &gRectBackground);
-        // tachie
-        DisplayImg(renderer, TOML_USE_STRING(toml_string_in(toml_table_in(script->character, TOML_USE_STRING(saving->nowScene.character)), "tachie")), NULL, &gRectTachie);
+        // Renderer Tachie 
+        renderTachie(renderer, script, saving);
         // Set Dialogue Background
         SET_DRAW_COLOR(renderer, gColorDialogue);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderFillRect(renderer, &gRectDialogue);
         // Dialogue
         DisplayUTF8(renderer, token, gFontDefault, gColorWHITE, &gRectText);
+
+        // Render Avatar
+        SET_DRAW_COLOR(renderer, gColorAvatarFrame);
+        SDL_RenderFillRect(renderer, &gRectAvatarFrame);
+        renderAvatar(renderer, script, saving);
 
         // Button and its text
         renderButton(renderer, &nextButton);

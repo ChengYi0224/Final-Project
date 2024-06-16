@@ -26,9 +26,9 @@ background = "assets/scene/hospital.jpg"
 
 [character]
 number = 3
-heyun = {name = "肖鶴雲", avatar = "assets/character/肖鶴雲/avatar.png", tachie = "assets/character/肖鶴雲/tachie.png"}
-shiqing = {name = "李詩情", avatar = "assets/character/李詩情/avatar.png", tachie = "assets/character/李詩情/tachie.png"}
-police = {name = "警察", avatar = "assets/character/police/avatar.png", tachie = "assets/character/police/tachie.png"}
+heyun = {name = "肖鶴雲", avatar = "assets/character/肖鶴雲/avatar_new.png", tachie = "assets/character/肖鶴雲/tachie.png"}
+shiqing = {name = "李詩情", avatar = "assets/character/李詩情/avatar_new.png", tachie = "assets/character/李詩情/tachie.png"}
+police = {name = "警察", avatar = "assets/character/police/avatar_new.png", tachie = "assets/character/police/tachie.png"}
 
 [item]
 [item.phone]
